@@ -717,7 +717,7 @@ Il semble qu'il existe une forte association positive entre la biomasse dans les
 cor(tree$STBM,tree$LFBM)
 ```
 
-Pour en revenir à l'intrigue, vous devriez toujours annoter vos graphiques. 
+Pour en revenir à nos moutons, vous devriez toujours annoter vos graphiques. 
 
 ```{r}
 plot(tree$STBM,tree$LFBM,
@@ -728,11 +728,73 @@ plot(tree$STBM,tree$LFBM,
 
 
 
-# Application sur un vrai jeu de données
+# Application sur un vrai jeu de données (chauves souris)
 
-ICI COLLER TP1
+Le prix Ig Nobel est attribué chaque année dans différentes disciplines ; il est dédié aux chercheurs
+dont les recherches "font rire, puis font réfléchir" (http://www.improbable.com/ig/winners/). Toutes les
+études récompensées sont méthodologiquement correctes, même si leur sujet laisse parfois sourire.
 
+1. *Quelle est votre étude préférée?*
 
+Le prix Ig Nobel de biologie a été attribué en 2010 à Libiao Zhang, Min Tan, Guangjian Zhu, Jian-
+ping Ye, Tiyu Hong, Shanyi Zhou, Shuyi Zhang (Chine) et Gareth Jones (Royaume-Uni), qui ont montré
+l’existence et étudié les comportements de fellation chez les chauves-souris de l’espèce C. sphinx. Ils ont
+filmé des chauves-souris de nuit et on pu mettre en évidence ce comportement sexuel connu jusqu’alors
+uniquement chez les primates (bonobos, orang-outan et homme) : les femelles de cette chauve-souris, pen-
+dant l’accouplement, peuvent se positionner de manière à lécher la base du sexe du mâle.
+
+Le jeu de données analysé porte sur les temps relatifs de copulation et de fellation. Chaque ligne représente
+un accouplement, pour lequel 3 variables ont été mesurées :
+
+* licking vaut 1 si le comportement de léchage a été observé, 0 dans le cas contraire ;
+* time licking mesure le temps, en secondes, durant lequel le comportement de léchage est observé
+pendant l’accouplement ;
+* time copulation mesure le temps total, en secondes, qu’a duré l’accouplement, léchage inclus.
+
+2. *Quelle commande permet d’obtenir l’affichage des 7 premières lignes du jeu de données*
+
+```{r}
+## Ici il faut faire quelque chose !! 
+```
+
+3. *Quelle commande permet d’obtenir le nombre de lignes et de colonnes de votre table ?*
+
+```{r}
+## Ici aussi (etc)
+```
+
+4. *Quelle commande permet d’obtenir le nom des colonnes de votre table ?*
+5. *Quelle commande permet d’obtenir un aperçu rapide de votre table, comme ci-dessous ?*
+6. *Quelle commande permet d’obtenir la moyenne des temps de copulation pour toutes les données?*
+7. *Quelles commandes permettent de créer deux nouveaux tableaux, un pour chaque comportement ?*
+8. *Quelle commande permet de selectionner les lignes tel que le temps de copulation soit supérieur à 100?*
+9. *Quelle commande permet de selectionner les lignes tel que le temps de copulation soit supérieur à 200 et le temps de léchage inférieur ou égale à 20 ?*
+10. *Quelle commande permet de récupérer le temps de copulation dans le cas où le temps de léchage est supérieur à 20 ?*
+11. *Quelle commande permet d’obtenir la moyenne des temps de copulation par comportement ?*
+12. *Donner deux commandes permettant de savoir dans combien de cas le comportement de léchage a été observé.*
+
+Dans l’étude, les chercheurs ont commencé par regarder s’il existait une relation entre le temps de léchage
+et le temps de copulation total.
+
+13. *Donner la commande permettant de tracer ce graphe, sans oublier les légendes.*
+14. *Rajouter une droite de régression sur ce graphique.*
+
+Le coefficient de corrélation entre le temps de léchage et le temps de copulation (calculé sur l’ensemble
+des données) vaut R = 0.86, et un test statistique montre que cette valeur est significativement différente
+de 0.
+
+15. *Recalculer la valeur du coefficient de corrélation et refaire le test. Pourquoi les chercheurs ne peuvent-ils pas en déduire que le phénomène de léchage est la cause d’un temps de copulation plus long ?*
+
+La corrélation précédente implique que, parmi les couples chez lesquels le comportement de léchage est observé, à chaque seconde de léchage supplémentaire on peut associer un temps moyen tsup supplémentaire de copulation.
+
+16. *Quelle commande permet de connaître tsup ?*
+17. *Quel graphe feriez-vous pour illustrer la différence des temps de copulation entre les couples où l’on observe le phénomène de léchage et les couples où on ne l’observe pas ? Donner la (ou les) commande(s) correspondante(s).*
+
+Article original: http://www.plosone.org/article/info%3Adoi%2F10.1371%2Fjournal.pone.0007595
+Vidéo : http://sciences.blog.lemonde.fr/2009/11/04/la-vie-sexuelle-agitee-des-chauves-souris/
+
+PS: l’IgNobel de 2013 était peut-être plus poétique : "Dung beetles use the milky way for orientation"
+(http://www.sciencedirect.com/science/article/pii/S0960982212015072).
 
 # Graphiques intermédiaires
 
@@ -951,9 +1013,6 @@ dev.off()
 ```
  
  
-# Application sur un vrai jeu de données (lézards)
-
-ICI COLLER EXAM 2017 - sauf lapply etc
 
 # Gestion des données
 
@@ -1276,8 +1335,60 @@ print(summary(x))
 Le fichier montre également l'utilisation de # pour spécifier des commentaires. Tout ce qui suit le # est ignoré. En outre, le fichier illustre l'utilisation de cat et print pour envoyer les résultats à la sortie standard. 
  
 
-# Application sur un vrai jeu de données (lézards, again)
 
-ICI COLLER EXAM 2017 partie sapply lapply et fonction
+# Application sur un vrai jeu de données (lézards)
 
+
+Le  lézard des murailles (\textit{Podarcis muralis}) est très commun en Europe. 
+Son dos est d'une ennuyeuse couleur brune, probablement pas très visible des prédateurs. Par contre, le ventre des mâles peut prendre des couleurs fabuleuses. Tous les lézards muraux n'ont pas la même couleur, certains sont oranges, d'autres blancs ou jaunes. Les chercheurs ont récemment proposé que ces couleurs ont une fonction dans la signalisation sociale. Le lézard pourrait garder ses «vraies couleurs» cachées, loin des regards indiscrets des prédateurs, et les montrer aux autres lézards au moment approprié. 
+
+La selection sexuelle est l'un des principaux processus inpliqués dans l'emergence et le maintien des polymorphismes avec des variations de couleurs dans de nombreux taxa. Si c'est le cas ici, on s'attend à ce que l'intensité de la sélection sexuelle dans les populations soit corrélée avec l'importance du polymorphisme dans les populations. 
+
+
+
+Ici vous allez tester si l'intensité de la selection sexuelle, estimée à partir du sex ratio, prédit la diversité des morphes chez \textit{Podarcis muralis}.
+
+![Podarcis muralis](morphs.jpg){ width=50% }
+
+
+1. *Importer le jeu de données contenu dans "lezard.xlsx" et afficher les 5 premières lignes.*
+
+Chacune des lignes représente une population où des individus ont été capturés. Le nombre de mâles, de femelles ainsi que le nombre de morphes observés a été répertorié. La colonne "richness" correspond au nombre de morphes dans la population et la colonne "eveness" correspond à la « régularité » de la répartition du nombre d'individus entre les morphes.
+
+
+2. *Calculer:*
+  * le nombre de populations (colonne "poblacio" dans la table)
+  * le nombre total de femelles
+  * le nombre total de mâles
+  * le nombre total d'individus
+  
+```{r, eval=FALSE} 
+# A vous de jouer
+``` 
+
+
+3. *Construire une nouvelle colonne contenant le sex ratio pour chacune des populations. Quels sont le minimum, la moyenne et le maximum  des sex ratio observés dans les populations ?* 
+
+$$ Sex ratio = \frac{Nb_{male}}{Nb_{femelle}} $$
+
+
+
+4. *Restreindre votre jeu de données aux populations qui ont 50 lézards ou plus. Quelles populations passent le seuil ?*
+
+5. *Représenter en fonction du nombre de morphes (colonne "richness") la distribution des sex ratio. Qu'est ce que vous observez ?*
+
+6. *Représenter la « régularité » de la répartition du nombre d'individus entre les morphes (eveness) en fonction du sex ratio. Ajouter sur le graphe une droite de tendance. Que pouvez vous conclure ?*
+
+7. *Importer maintenant le jeu de données contenu dans "lezard2.csv". Il contient les caractéristiques (populations, morph, sexe) de chaque individu. Calculer le nombre de morphe pour chacun des sexes par population.*
+
+L'indice de shannon est un indice permettant de mesurer la diversité spécifique. 
+Sa formule est:
+
+$$ S = - \sum \limits_{i=1}^n p_i ln(p_i)$$ avec $n$ le nombre de morphes dans la population et $$ p_i $$  la proportion du $i^{eme}$ morphe dans la population
+
+8. *Faire une fonction pour calculer cet indice puis calculez-le pour chacune des populations.*
+
+9. *Représenter l'indice de shannon en fonction du sex ratio. Ajouter sur le graphe une droite de tendance. Que pouvez vous conclure ?*
+
+10. *Faire de-même en calculant l'indice de shannon par sexe. Que pouvez vous conclure ?*
 
