@@ -34,28 +34,28 @@ R est déja installé sur les ordinateurs des salles de TP. Pour l’installer s
 la page du CRAN http://cran.r-project.org/bin/. R est installé par défaut avec des fonctions de la
 library base. Vous devrez également installer RStudio pour faire les rapports de TP. https://www.rstudio.com/products/rstudio/download/
 
-Le tutoriel est largement inspiré du site suivant, dans lequel vous trouverez (en anglais) des exemples d'application des tests statistiques dans la ligne de ce que vous avez pratiqué en biostatistiques. http://www.cyclismo.org/tutorial/R/
+Le tutoriel est largement inspiré du site suivant, dans lequel vous pourrez également trouver (en anglais) des exemples d'application des tests statistiques du type de ce que vous avez pratiqué en biostatistiques. http://www.cyclismo.org/tutorial/R/
 
 # Importer des données
 
-Ici, nous explorons comment définir un ensemble de données dans une session R. Il y a plusieurs façons de lire des données dans une session R, mais nous nous concentrons sur deux seulement pour rester simple.
+En premier lieu, nous allons importer des données dans une session R. Il y a plusieurs façons de lire des données dans une session R, mais nous nous concentrons sur deux seulement pour rester simple.
 
 ##  Affectation simple
 
-La façon la plus simple de stocker une liste de nombres est d'utiliser la commande c («combiner»). Un vecteur de nombres est stocké sous un nom donné, et le nom est utilisé pour faire référence aux données. Le vecteur est spécifié avec la commande c, et l'affectation est spécifié avec le symbole "<-". 
+La façon la plus simple de stocker des nombres est d'utiliser la commande c (pour «combiner»). Un vecteur de nombres est stocké sous un nom donné, et le nom est utilisé pour faire référence aux données. Le vecteur est spécifié avec la commande c, et l'affectation est spécifié avec le symbole "<-". 
 Les nombres dans la commande c sont séparés par des virgules. A titre d'exemple, nous pouvons créer une nouvelle variable, appelée "bubba" qui contiendra les numéros 3, 5, 7 et 9:
 
 ```{r}
 bubba <- c(3,5,7,9)
 ```
 
-Lorsque vous entrez cette commande, vous ne devriez voir aucune sortie sauf une nouvelle ligne de commande. La commande crée une liste de nombres appelés "bubba". Pour voir quels numéros sont inclus dans bubba tapez "bubba" et appuyez sur la touche Entrée:
+Lorsque vous entrez cette commande, vous ne devriez voir aucune sortie sauf un ">" indiquant un appel à une nouvelle ligne de commande. La commande a pourtant créé une liste de nombres appelés "bubba". Pour voir quels numéros sont inclus dans bubba tapez "bubba" et appuyez sur la touche Entrée:
 
 ```{r}
 bubba 
 ```
 
-Si vous souhaitez travailler avec l'un des numéros, vous pouvez y accéder en utilisant la variable, puis les crochets indiquant le numéro:
+Si vous souhaitez travailler avec l'un des nombres stocker, vous pouvez y accéder en utilisant la variable, puis les crochets indiquant l'indice:
 
 ```{r}
 bubba[2]
@@ -65,9 +65,10 @@ bubba[0]
 
 Notez que la première entrée correspond au numéro 1 et que le zéro peut être utilisé pour indiquer comment l'ordinateur traitera les données. Vous pouvez stocker des chaînes de caractère à l'aide de guillemets simples et doubles, et vous pouvez stocker des nombres réels.
 
+
 ##  Lecture de fichiers
 
-Il est rare d'avoir juste quelques points de données. Il est beaucoup plus commun d'avoir beaucoup de données avec des relations compliquées. Ici, nous allons examiner comment lire un ensemble de données à partir d'un fichier, mais nous devons d'abord discuter du format d'un fichier de données.
+Il est rare d'avoir juste quelques points de données. Il est beaucoup plus commun d'avoir beaucoup de données avec des relations compliquées. Ici, nous allons examiner comment lire un jeu de données à partir d'un fichier, mais nous devons d'abord discuter du format d'un fichier de données.
 
 Nous supposons que le fichier de données est au format appelé "comma separated values" (csv). C'est-à-dire que chaque ligne contient une rangée de valeurs qui peuvent être des nombres ou des lettres, et chaque valeur est séparée par une virgule. Nous supposons également que la toute première rangée contient une liste d'étiquettes qui font référence aux différentes colonnes de valeurs.
 
@@ -85,13 +86,14 @@ Pour obtenir plus d'informations sur les différentes options disponibles, vous 
 ?read.csv
 ```
 
-Si R ne trouve pas le fichier que vous essayez de lire, il se peut qu'il recherche dans le mauvais dossier / répertoire. Si vous utilisez l'interface graphique, vous pouvez modifier le répertoire de travail. Si vous n'êtes pas sûr des fichiers qui se trouvent dans le répertoire de travail actuel, vous pouvez utiliser la commande dir() pour lister les fichiers et la commande getwd() pour déterminer le répertoire de travail actuel:
+Si R ne trouve pas le fichier que vous essayez de lire, il se peut qu'il recherche dans le mauvais dossier / répertoire. Si vous utilisez l'interface graphique, vous pouvez modifier le répertoire de travail. Si vous n'êtes pas sûrs des fichiers qui se trouvent dans le répertoire de travail actuel, vous pouvez utiliser la commande dir() pour lister les fichiers et la commande getwd() pour déterminer le répertoire de travail actuel:
 
 ```{r}
 dir()
 getwd()
 ```
 
+Si vous n'utilisez pas l'interface graphique, alors on peut changer de répertoire de travail avec setwd(), en indiquant le nouveau répertoire entre guillemets dans la parenthèse.
 
 La variable "heisenberg" contient les trois colonnes de données. Chaque colonne reçoit un nom basé sur l'en-tête (la première ligne du fichier). Vous pouvez maintenant accéder à chaque colonne en utilisant un "$":
 
@@ -112,7 +114,7 @@ Nous allons étudier un autre exemple tout au long de ce tutoriel. Le fichier de
 
 La feuille de calcul d'origine se trouve à l'adresse http://cdiac.ornl.gov/ftp/ndp061a/trees91.wk1. Une description du fichier de données se trouve à http://cdiac.ornl.gov/ftp/ndp061a/ndp061a.txt.
 
-Les données contiennet des estimations de la biomasse de pin ponderosa dans une étude réalisée par Dale W. Johnson, J. Timothy Ball et Roger F. Walker (Université du Nevada). La table contient 54 lignes, et chaque ligne représente une observation. Chaque observation comprend des mesures et des marqueurs pour 28 mesures différentes d'un arbre donné. Par exemple, le premier chiffre de chaque rangée est un nombre, 1, 2, 3 ou 4, qui indique un niveau différent d'exposition au dioxyde de carbone. Le sixième nombre dans chaque rangée est une estimation de la biomasse des tiges d'un arbre. Notez que la toute première ligne du fichier est une liste d'étiquettes utilisées pour les différentes colonnes de données.
+Les données contiennent des estimations de la biomasse de pin ponderosa dans une étude réalisée par Dale W. Johnson, J. Timothy Ball et Roger F. Walker (Université du Nevada). La table contient 54 lignes, et chaque ligne représente une observation. Chaque observation comprend des mesures et des marqueurs pour 28 mesures différentes d'un arbre donné. Par exemple, le premier chiffre de chaque rangée est un nombre, 1, 2, 3 ou 4, qui indique un niveau différent d'exposition au dioxyde de carbone. Le sixième nombre dans chaque rangée est une estimation de la biomasse des tiges d'un arbre. Notez que la toute première ligne du fichier est une liste d'étiquettes utilisées pour les différentes colonnes de données.
 
 Les données peuvent être lues dans une variable appelée "tree" en utilisant la commande read.csv. Allez-y!
 
@@ -123,18 +125,16 @@ Les données peuvent être lues dans une variable appelée "tree" en utilisant l
 
 ```
 
-Cela créera une nouvelle variable appelée "tree". Si vous tapez "tree" à l'invite et appuyez sur Entrée, tous les numéros stockés dans la variable seront imprimés. Essayez!
+Cela créera une nouvelle variable appelée "tree". Si vous tapez "tree" à l'invite et appuyez sur Entrée, tous les éléments stockés dans la variable seront imprimés. Essayez!
 
 
 
 
 # Types de données de base 
 
-L'objectif principal de cette introduction est de démontrer quelques types d'informations que R peut gérer. 
-
 ## Types de variables
 
-### Numeric
+### Numeriques (numeric)
 
  
 ```{r}
@@ -180,6 +180,7 @@ mean(a)
 
 ```{r}
 var(a)
+summary(a)
 ```
 
 
@@ -221,9 +222,7 @@ b <- c ( "bonjour" , "toi" )
 b [ 2 ]
 ```
 
-
-
- Une chaîne de caractères contient bien des caractères
+Une chaîne de caractères contient bien des caractères
 
 ```{r}
 typeof(a)
@@ -236,7 +235,7 @@ a
 
 R peut aussi stocker des données de type "facteur". Souvent, une expérience comprend différents niveaux d'une variable explicative (modalités). Par exemple, en examinant l'impact du dioxyde de carbone sur le taux de croissance d'un arbre, vous pouvez essayer d'observer comment différents arbres se développent lorsqu'ils sont exposés à différentes concentrations prédéfinies de dioxyde de carbone. Les différents niveaux sont appelés "modalités du facteurs".
 
-Nous allons regarder le fichier de données dans la table de données tree. Plusieurs variables du fichier sont des facteurs: 
+Nous allons les données dans la dataframe "tree". Plusieurs variables du fichier sont des facteurs: 
 
 ```{r}
 tree <- read.csv(file="trees91.csv",header=TRUE,sep=",");
@@ -246,9 +245,9 @@ summary(tree)
 summary(tree$CHBR)
 ```
 
-Lorsque vous utilisez "summary" sur un facteur, il n'imprime pas le résumé en cinq points, il imprime plutôt les valeurs possibles et la fréquence à laquelle elles se produisent.
+Lorsque vous utilisez "summary" sur un facteur, il n'imprime pas le résumé en cinq points habituel, mais les modalités et leurs fréquences correspondantes.
 
-Dans cet ensemble de données, plusieurs colonnes sont des facteurs, mais les chercheurs ont utilisé des nombres pour indiquer les différents niveaux. Par exemple, la première colonne, intitulée "C", est un facteur. Chaque arbre a été cultivé dans un environnement avec l'un des quatre niveaux possibles de dioxyde de carbone. Les chercheurs ont  qualifié ces quatre environnements en 1, 2, 3 et 4. Malheureusement, R ne peut pas déterminer seul qu'il s'agit de facteurs.
+Dans cet ensemble de données, plusieurs colonnes sont des facteurs, mais les chercheurs ont utilisé des nombres pour indiquer les différents niveaux. Par exemple, la première colonne, intitulée "C", est un facteur. Chaque arbre a été cultivé dans un environnement avec l'un des quatre niveaux possibles de dioxyde de carbone. Les chercheurs ont  qualifié ces quatre environnements en 1, 2, 3 et 4. Malheureusement, R ne peut pas déterminer tout seul qu'il s'agit de facteurs.
 
 C'est un problème courant et il existe un moyen de dire à R de traiter la colonne "C" comme un ensemble de facteurs. Vous spécifiez qu'une variable est un facteur à l'aide de la commande factor. Dans l'exemple suivant, nous convertissons la colonne C en un facteur:
 
@@ -261,11 +260,49 @@ levels(tree$C)
 summary(tree$C)
 ```
 
-Une fois qu'un vecteur est converti en un ensemble de facteurs, alors R le traite différemment. Un ensemble de facteurs a un ensemble discret de valeurs possibles, et il n'est pas logique d'essayer de trouver des moyennes ou d'autres descriptions numériques. Une chose importante est le nombre de fois que chaque facteur apparaît, appelé "fréquences", qui est imprimé en utilisant la commande de résumé.
+Une fois qu'un vecteur est converti en facteur, alors R le traite différemment. Un ensemble de facteurs a un ensemble discret de valeurs possibles, et il n'est pas logique d'essayer de trouver des moyennes ou d'autres descriptions numériques. Une chose importante est le nombre de fois que chaque facteur apparaît, appelé "fréquences", qui est imprimé en utilisant la commande de résumé.
+
+### Matrice (matrix)
+
+Une matrice contient différentes colonnes de même type 
+
+```{r}
+A = matrix( 
+   c(2, 4, 3, 1, 5, 7), # the data elements 
+   nrow=2,              # number of rows 
+   ncol=3,              # number of columns 
+   byrow = TRUE)        # fill matrix by rows 
+ 
+A                      # print the matrix 
+```
+
+Un élément à la ligne m, colonne n de la matrice peut être accédé par :  A[m, n].
+
+```{r}
+A[2, 3] 
+```
+
+La ligne m entière peut être extraite par A[m, ].
+```{r}
+A[2, ] 
+```
+
+Et la colonne n entière par  A[,n]:
+```{r}
+A[, 3] 
+```
+On peut transposer, et même déconstruire une matrice. Attention il faut enregistrer le résultat dans un autre objet pour pouvoir le réutiliser. Si on a vraiment envie on peut même faire un chi2.
+
+```{r}
+t(A)
+c(A)
+B=c(A)
+chisq.test(A)
+```
 
 ### Table de données (data frame)
 
-Une autre façon de stocker les informations est dans un tableau de données (data frame). C'est un moyen de prendre plusieurs vecteurs de types différents et de les stocker dans la même variable. Les vecteurs peuvent être de tous types différents. Par exemple, une dataframe peut contenir plusieurs listes et chaque liste peut être une liste de facteurs, de chaînes ou de nombres.
+Un tableau de données (data frame) est un moyen de prendre plusieurs vecteurs de types différents et de les stocker dans la même variable. Les vecteurs peuvent être de tous types différents. Par exemple, une dataframe peut contenir plusieurs listes et chaque liste peut être une liste de facteurs, de chaînes ou de nombres.
 
 Il existe différentes manières de créer et de manipuler des dataframes. Un exemple de création d'une dataframe est donné ci-dessous:
 
@@ -284,6 +321,18 @@ bubba$second
 bubba$f
 ```
 
+On peut donner des noms de lignes à la dataframe, ce qui est bien pratique pour accéder aux données.
+  
+```{r}
+names(bubba)
+names(bubba)=paste(names(bubba),"toto",sep=".")
+row.names(bubba)=c("a","b","c","d")
+bubba["a","first"]
+bubba["a","first.toto"]
+dim(bubba)
+nrow(bubba)
+ncol(bubba)
+```  
   
 
 ### Booléen (Boolean)
@@ -317,7 +366,7 @@ a|b
 a||b
 ```
 
-Il existe un grand nombre de fonctions qui testent pour déterminer le type d'une variable. Par exemple, la fonction is.numeric peut déterminer si une variable est numérique:
+Il existe un grand nombre de fonctions pour déterminer le type d'une variable. Par exemple, la fonction is.numeric peut déterminer si une variable est numérique:
 
 ```{r}
 a = c(1,2,3)
@@ -325,9 +374,16 @@ is.numeric(a)
 is.factor(a)
 ```
 
-##  Tables
+On pourra aussi convertir un type en un autre. 
 
-Une autre façon courante de stocker des informations est dans un tableau. Nous regardons ici comment définir les tableaux à sens unique et à double sens. Nous regardons seulement comment créer et définir des tables; les fonctions utilisées dans l'analyse des proportions sont examinées dans un autre chapitre.
+```{r}
+a = c(1,2,3)
+is.numeric(a)
+a=as.factor(a)
+is.numeric(a)
+```
+
+##  Tables
 
 ### Tables à une dimension
 
@@ -346,7 +402,7 @@ summary(results)
 
 ### Tables à deux dimensions
 
-Dans l'exemple ci-dessous, nous avons deux questions. Dans la première question, les réponses sont étiquetées «Jamais», «Parfois» ou «Toujours». Dans la deuxième question, les réponses sont intitulées «Oui», «Non» ou «Peut-être». L'ensemble des vecteurs «a» et "b", contiennent la réponse pour chaque mesure. Le troisième élément de "a" est la façon dont la troisième personne a répondu à la première question, et le troisième élément de "b" est la façon dont la troisième personne a répondu à la deuxième question.
+Dans l'exemple ci-dessous, nous avons deux questions. Dans la première question, les réponses sont étiquetées «Jamais», «Parfois» ou «Toujours». Dans la deuxième question, les réponses sont intitulées «Oui», «Non» ou «Peut-être». L'ensemble des vecteurs «a» et "b", contiennent la réponse pour chaque question Le troisième élément de "a" est la façon dont la troisième personne a répondu à la première question, et le troisième élément de "b" est la façon dont la troisième personne a répondu à la deuxième question.
 
 ```{r}
 a <- c("Sometimes","Sometimes","Never","Always","Always","Sometimes","Sometimes","Never")
@@ -382,7 +438,6 @@ Une fois que vous avez un vecteur (ou une liste de nombres) en mémoire, la plup
 
 Attention, parfois le calcul est effectué tout de même, vérifiez bien la taille de vos éléments dans R!!
 
-Ici, nous définissons d'abord un vecteur que nous appellerons "a" et nous verrons comment ajouter et soustraire des nombres constants de tous les nombres du vecteur. Premièrement, le vecteur contiendra les nombres 1, 2, 3 et 4. Nous verrons ensuite comment ajouter 5 à chacun des nombres, soustraire 10 de chacun des nombres, multiplier chaque nombre par 4 et diviser chaque nombre par 5 .
 
 ```{r}
 a <- c(1,2,3,4)
@@ -400,7 +455,7 @@ b <- a - 10
 b
 ``` 
   
-Si vous voulez prendre la racine carrée,  le logarithme, etc., alors les commandes habituelles peuvent être utilisées:
+Si vous voulez prendre la racine carrée,  le logarithme, etc.
 
 ```{r}
 sqrt(a)
@@ -453,8 +508,6 @@ pmin(a,b)
 ``` 
 
 ## Descriptions numériques de base
-
-
 
 Les commandes suivantes peuvent être utilisées pour obtenir la moyenne, la médiane, les quantiles, le minimum, le maximum, la variance et l'écart-type d'un ensemble de nombres:
 
@@ -534,7 +587,7 @@ sum(a)
 sum(a,na.rm=TRUE)
 ``` 
 
-La fonction is.na peut être utilisée pour trouver les données manquantes : NA pour "not available". L'opérateur logique "not" dans R est le !. Les éléments d'un vecteur qui sont "NA"" peuvent être facilement supprimés:
+La fonction is.na peut être utilisée pour trouver les données manquantes : NA pour "not available". L'opérateur logique "not" dans R est le !. Les éléments d'un vecteur qui sont "NA" peuvent être facilement supprimés:
 
 ```{r}
 a <- c(1,2,3,4,NA)
@@ -554,6 +607,10 @@ a = c(6,2,5,3,8,2)
 a
 b = a[a<6]
 b
+tree[1:10,]
+tree[,1:5]
+tree[22,32]
+tree[tree$CHBR=="A1",]
 ``` 
 
 Pour un autre exemple, supposons que vous souhaitiez récupérer les valeurs d'un vecteur1 correspondant à deux modalités différentes d'un facteur dans un autre vecteur2:
@@ -734,61 +791,56 @@ Le prix Ig Nobel est attribué chaque année dans différentes disciplines ; il 
 dont les recherches "font rire, puis font réfléchir" (http://www.improbable.com/ig/winners/). Toutes les
 études récompensées sont méthodologiquement correctes, même si leur sujet laisse parfois sourire.
 
-1. *Quelle est votre étude préférée?*
+> Quelle est votre étude préférée?
 
 Le prix Ig Nobel de biologie a été attribué en 2010 à Libiao Zhang, Min Tan, Guangjian Zhu, Jian-
 ping Ye, Tiyu Hong, Shanyi Zhou, Shuyi Zhang (Chine) et Gareth Jones (Royaume-Uni), qui ont montré
-l’existence et étudié les comportements de fellation chez les chauves-souris de l’espèce C. sphinx. Ils ont
-filmé des chauves-souris de nuit et on pu mettre en évidence ce comportement sexuel connu jusqu’alors
-uniquement chez les primates (bonobos, orang-outan et homme) : les femelles de cette chauve-souris, pen-
-dant l’accouplement, peuvent se positionner de manière à lécher la base du sexe du mâle.
-
-Le jeu de données analysé porte sur les temps relatifs de copulation et de fellation. Chaque ligne représente
-un accouplement, pour lequel 3 variables ont été mesurées :
+l’existence et étudié les comportements de fellation chez les chauves-souris de l’espèce C. sphinx. Ils ont filmé des chauves-souris de nuit et ont pu mettre en évidence ce comportement sexuel connu jusqu’alors uniquement chez les primates (bonobos, orang-outan et homme) : les femelles de cette chauve-souris, pendant l’accouplement, peuvent se positionner de manière à lécher la base du sexe du mâle. Le jeu de données analysé porte sur les temps relatifs de copulation et de fellation. Chaque ligne représente un accouplement, pour lequel 3 variables ont été mesurées :
 
 * licking vaut 1 si le comportement de léchage a été observé, 0 dans le cas contraire ;
 * time licking mesure le temps, en secondes, durant lequel le comportement de léchage est observé
 pendant l’accouplement ;
 * time copulation mesure le temps total, en secondes, qu’a duré l’accouplement, léchage inclus.
 
-2. *Quelle commande permet d’obtenir l’affichage des 7 premières lignes du jeu de données*
+> Quelle commande permet d’obtenir l’affichage des 7 premières lignes du jeu de données?
 
 ```{r}
 ## Ici il faut faire quelque chose !! 
 ```
 
-3. *Quelle commande permet d’obtenir le nombre de lignes et de colonnes de votre table ?*
+> Quelle commande permet d’obtenir le nombre de lignes et de colonnes de votre table ?
 
 ```{r}
 ## Ici aussi (etc)
 ```
 
-4. *Quelle commande permet d’obtenir le nom des colonnes de votre table ?*
-5. *Quelle commande permet d’obtenir un aperçu rapide de votre table, comme ci-dessous ?*
-6. *Quelle commande permet d’obtenir la moyenne des temps de copulation pour toutes les données?*
-7. *Quelles commandes permettent de créer deux nouveaux tableaux, un pour chaque comportement ?*
-8. *Quelle commande permet de selectionner les lignes tel que le temps de copulation soit supérieur à 100?*
-9. *Quelle commande permet de selectionner les lignes tel que le temps de copulation soit supérieur à 200 et le temps de léchage inférieur ou égale à 20 ?*
-10. *Quelle commande permet de récupérer le temps de copulation dans le cas où le temps de léchage est supérieur à 20 ?*
-11. *Quelle commande permet d’obtenir la moyenne des temps de copulation par comportement ?*
-12. *Donner deux commandes permettant de savoir dans combien de cas le comportement de léchage a été observé.*
+> Quelle commande permet d’obtenir le nom des colonnes de votre table ?
 
-Dans l’étude, les chercheurs ont commencé par regarder s’il existait une relation entre le temps de léchage
-et le temps de copulation total.
+> Quelle commande permet d’obtenir la moyenne des temps de copulation pour toutes les données?
 
-13. *Donner la commande permettant de tracer ce graphe, sans oublier les légendes.*
-14. *Rajouter une droite de régression sur ce graphique.*
+> Quelles commandes permettent de créer deux nouveaux tableaux, un pour chaque comportement ?
 
-Le coefficient de corrélation entre le temps de léchage et le temps de copulation (calculé sur l’ensemble
-des données) vaut R = 0.86, et un test statistique montre que cette valeur est significativement différente
-de 0.
+> Quelle commande permet de selectionner les lignes tel que le temps de copulation soit supérieur à 100?
 
-15. *Recalculer la valeur du coefficient de corrélation et refaire le test. Pourquoi les chercheurs ne peuvent-ils pas en déduire que le phénomène de léchage est la cause d’un temps de copulation plus long ?*
+> Quelle commande permet de selectionner les lignes tel que le temps de copulation soit supérieur à 200 et le temps de léchage inférieur ou égale à 20?
 
-La corrélation précédente implique que, parmi les couples chez lesquels le comportement de léchage est observé, à chaque seconde de léchage supplémentaire on peut associer un temps moyen tsup supplémentaire de copulation.
+> Quelle commande permet de récupérer le temps de copulation dans le cas où le temps de léchage est supérieur à 20?
 
-16. *Quelle commande permet de connaître tsup ?*
-17. *Quel graphe feriez-vous pour illustrer la différence des temps de copulation entre les couples où l’on observe le phénomène de léchage et les couples où on ne l’observe pas ? Donner la (ou les) commande(s) correspondante(s).*
+> Quelle commande permet d’obtenir la moyenne des temps de copulation par comportement?
+
+> Donner deux commandes permettant de savoir dans combien de cas le comportement de léchage a été observé.
+
+Dans l’étude, les chercheurs ont commencé par regarder s’il existait une relation entre le temps de léchage et le temps de copulation total.
+
+> Donner la commande permettant de tracer ce graphique, sans oublier les légendes.
+
+> Rajouter une droite de régression sur ce graphique.
+
+Le coefficient de corrélation entre le temps de léchage et le temps de copulation (calculé sur l’ensemble des données) vaut R = 0.86, et un test statistique montre que cette valeur est significativement différente de 0.
+
+> Recalculer la valeur du coefficient de corrélation et refaire le test. Pourquoi les chercheurs ne peuvent-ils pas en déduire que le phénomène de léchage est la cause d’un temps de copulation plus long ?
+
+> Quel graphe feriez-vous pour illustrer la différence des temps de copulation entre les couples où l’on observe le phénomène de léchage et les couples où on ne l’observe pas ? Donner la (ou les) commande(s) correspondante(s).
 
 Article original: http://www.plosone.org/article/info%3Adoi%2F10.1371%2Fjournal.pone.0007595
 Vidéo : http://sciences.blog.lemonde.fr/2009/11/04/la-vie-sexuelle-agitee-des-chauves-souris/
@@ -815,7 +867,7 @@ cor(x,y)
 
 ### Plusieurs jeux de données sur un graphique
 
-Une tâche courante consiste à tracer plusieurs ensembles de données sur le même graphique. Dans de nombreuses situations, la méthode consiste à créer le plot initial, puis à ajouter des informations supplémentaires Par exemple, pour tracer des données bivariées, la commande plot est utilisée pour initialiser et créer le tracé. La commande points peut ensuite être utilisée pour ajouter  données supplémentaires au tracé.
+Une tâche courante consiste à tracer plusieurs ensembles de données sur le même graphique. Dans de nombreuses situations, la méthode consiste à créer le plot initial, puis à ajouter des informations supplémentaires Par exemple, pour tracer des données bivariées, la commande plot est utilisée pour initialiser et créer le tracé. La commande points peut ensuite être utilisée pour ajouter des données supplémentaires au tracé.
 
 Définissez d'abord un ensemble de nombres aléatoires, puis tracez-les. (Ce même jeu de données est utilisé dans tous les exemples ci-dessous.)
 
@@ -829,7 +881,7 @@ y1 <- 2.5*x1 - 1.0 + runif(8,-6,6)
 points(x1,y1,col=2)
 ```
 
-Notez que dans l'exemple précédent, la couleur du second ensemble de points de données est définie à l'aide de l'option col . Vous pouvez essayer différents nombres pour voir quelles couleurs sont disponibles. Notez également que dans l'exemple ci-dessus, les points sont représentés par des cercles. Le symbole utilisé peut être changé en utilisant l'option pch .
+Notez que dans l'exemple précédent, la couleur du second ensemble de points de données est définie à l'aide de l'option col. Vous pouvez essayer différents nombres pour voir quelles couleurs sont disponibles. Notez également que dans l'exemple ci-dessus, les points sont représentés par des cercles. Le symbole utilisé peut être changé en utilisant l'option pch .
 
 ```{r}
 x2 <- runif(8,15,25)
@@ -863,8 +915,6 @@ arrows(xHigh,yHigh,xLow,yLow,col=2,angle=90,length=0.1,code=3)
 
 
 Notez que le code d'option est utilisé pour spécifier où les barres sont dessinées. Sa valeur peut être 1, 2 ou 3. 
-
-
 
 ### Plusieurs graphiques sur une image
 
@@ -1251,8 +1301,6 @@ x
 
 ## Fonctions
 
-Un aperçu superficiel des fonctions est donné ici. Quelques subtilités seront notées, mais R peut être un peu excentrique. Une première chose bizarre: vous pouvez considérer une fonction comme un objet où vous définissez la fonction et l'affectez à un nom de variable.
-
 Pour définir une fonction, vous l'affectez à un nom, et la fonction mot-clé est utilisée pour indiquer le début de la fonction et sa liste d'arguments. La dernière ligne de la fonction est ce qui est retourné. Ainsi, dans l'exemple ci-dessus, la moyenne des nombres est renvoyée.
 
 
@@ -1284,7 +1332,7 @@ newDef(b=10,a=1)
 newDef(10,1)
 ```
 
-Une autre tâche courante consiste à avoir une fonction renvoyer plusieurs éléments. Cela peut être accompli en renvoyant une liste d'éléments. Les objets dans une liste peuvent être accédés en utilisant la même notation $ utilisée pour les trames de données.
+Une autre tâche courante consiste à avoir une fonction qui renvoie plusieurs éléments. Cela peut être accompli en renvoyant une liste d'éléments. Les objets dans une liste peuvent être accédés en utilisant la même notation $ utilisée pour les trames de données.
 
 
 ```{r}
@@ -1301,7 +1349,7 @@ result$stat
 result$number
 ```
 
-Un autre problème potentiel peut survenir lors de l'utilisation d'une fonction dans R.Si une variable précédemment indéfinie apparaît, R regardera la liste des arguments de la fonction. Ensuite, il regardera dans l'espace de travail actuel. Si vous ne faites pas attention, R trouvera la valeur à un endroit où vous ne l'attendez pas, et votre fonction retournera une valeur qui n'est pas correcte. Soyez très prudent sur les noms des variables, en particulier lorsque vous utilisez des fonctions.
+Un autre problème potentiel peut survenir lors de l'utilisation d'une fonction dans R. Si une variable précédemment indéfinie apparaît, R regardera la liste des arguments de la fonction. Ensuite, il regardera dans l'espace de travail actuel. Si vous ne faites pas attention, R trouvera la valeur à un endroit où vous ne l'attendez pas, et votre fonction retournera une valeur qui n'est pas correcte. Soyez très prudent sur les noms des variables, en particulier lorsque vous utilisez des fonctions.
 
 
 ## Exécuter un fichier
@@ -1314,7 +1362,7 @@ Un ensemble de commandes R peut être enregistré dans un fichier, puis exécut�
 source('file.R')
 ``` 
  
-Si vous générez simplement le fichier, les commandes ne sont pas imprimées et les résultats des commandes ne sont pas imprimés. Cela peut être remplacé en utilisant les options echo , print.eval et verbose .
+Si vous générez simplement le fichier, les commandes ne sont pas imprimées et les résultats des commandes ne sont pas imprimés. Cela peut être remédié en utilisant les options echo , print.eval et verbose.
 
 Certains exemples sont donnés en supposant qu'un fichier, simpleEx.R , se trouve dans le répertoire courant. Le contenu du fichier est donné ci-dessous:
 
@@ -1351,44 +1399,44 @@ Ici vous allez tester si l'intensité de la selection sexuelle, estimée à part
 ![Podarcis muralis](morphs.jpg){ width=50% }
 
 
-1. *Importer le jeu de données contenu dans "lezard.xlsx" et afficher les 5 premières lignes.*
+> Importer le jeu de données contenu dans "lezard.xlsx" et afficher les 5 premières lignes.
 
-Chacune des lignes représente une population où des individus ont été capturés. Le nombre de mâles, de femelles ainsi que le nombre de morphes observés a été répertorié. La colonne "richness" correspond au nombre de morphes dans la population et la colonne "eveness" correspond à la « régularité » de la répartition du nombre d'individus entre les morphes.
-
-
-2. *Calculer:*
-  * le nombre de populations (colonne "poblacio" dans la table)
-  * le nombre total de femelles
-  * le nombre total de mâles
-  * le nombre total d'individus
-  
 ```{r, eval=FALSE} 
 # A vous de jouer
 ``` 
 
+Chacune des lignes représente une population où des individus ont été capturés. Le nombre de mâles, de femelles ainsi que le nombre de morphes observés a été répertorié. La colonne "richness" correspond au nombre de morphes dans la population et la colonne "eveness" correspond à la « régularité » de la répartition du nombre d'individus entre les morphes.
 
-3. *Construire une nouvelle colonne contenant le sex ratio pour chacune des populations. Quels sont le minimum, la moyenne et le maximum  des sex ratio observés dans les populations ?* 
+
+> Calculer le nombre de populations (colonne "poblacio" dans la table), le nombre total de femelles, le nombre total de mâles, le nombre total d'individus
+  
+```{r, eval=FALSE} 
+# A vous de jouer (etc)
+``` 
+
+
+> Construire une nouvelle colonne contenant le sex ratio pour chacune des populations. Quels sont le minimum, la moyenne et le maximum  des sex ratio observés dans les populations ? 
 
 $$ Sex ratio = \frac{Nb_{male}}{Nb_{femelle}} $$
 
 
 
-4. *Restreindre votre jeu de données aux populations qui ont 50 lézards ou plus. Quelles populations passent le seuil ?*
+> Restreindre votre jeu de données aux populations qui ont 50 lézards ou plus. Quelles populations passent le seuil ?
 
-5. *Représenter en fonction du nombre de morphes (colonne "richness") la distribution des sex ratio. Qu'est ce que vous observez ?*
+> Représenter en fonction du nombre de morphes (colonne "richness") la distribution des sex ratio. Qu'est ce que vous observez ?
 
-6. *Représenter la « régularité » de la répartition du nombre d'individus entre les morphes (eveness) en fonction du sex ratio. Ajouter sur le graphe une droite de tendance. Que pouvez vous conclure ?*
+> Représenter la « régularité » de la répartition du nombre d'individus entre les morphes (eveness) en fonction du sex ratio. Ajouter sur le graphe une droite de tendance. Que pouvez vous conclure ?
 
-7. *Importer maintenant le jeu de données contenu dans "lezard2.csv". Il contient les caractéristiques (populations, morph, sexe) de chaque individu. Calculer le nombre de morphe pour chacun des sexes par population.*
+> Importer maintenant le jeu de données contenu dans "lezard2.csv". Il contient les caractéristiques (populations, morph, sexe) de chaque individu. Calculer le nombre de morphe pour chacun des sexes par population.
 
 L'indice de shannon est un indice permettant de mesurer la diversité spécifique. 
 Sa formule est:
 
-$$ S = - \sum \limits_{i=1}^n p_i ln(p_i)$$ avec $n$ le nombre de morphes dans la population et $$ p_i $$  la proportion du $i^{eme}$ morphe dans la population
+$$ S = - \sum \limits_{i=1}^n p_i ln(p_i)$$ avec $n$ le nombre de morphes dans la population et $p_i$  la proportion du $i^{eme}$ morphe dans la population
 
-8. *Faire une fonction pour calculer cet indice puis calculez-le pour chacune des populations.*
+> Faire une fonction pour calculer cet indice puis calculez-le pour chacune des populations.
 
-9. *Représenter l'indice de shannon en fonction du sex ratio. Ajouter sur le graphe une droite de tendance. Que pouvez vous conclure ?*
+> Représenter l'indice de shannon en fonction du sex ratio. Ajouter sur le graphe une droite de tendance. Que pouvez vous conclure ?
 
-10. *Faire de-même en calculant l'indice de shannon par sexe. Que pouvez vous conclure ?*
+> Faire de-même en calculant l'indice de shannon par sexe. Que pouvez vous conclure ?
 
