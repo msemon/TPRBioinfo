@@ -929,7 +929,6 @@ barplot(totals[c(3,1,4,2)])
 ```
 
 
-
 ## Imprimer dans un fichier
 
 Il existe plusieurs façons d'imprimer un tracé dans un fichier. 
@@ -1068,6 +1067,184 @@ result$a
 
 # Introduction à la programmation
 
+## Instructions
+
+### if 
+
+L'exécution conditionnelle est disponible en utilisant l'instruction if. 
+
+```{r}
+x = 0.1
+if( x < 0.2)
+  {
+     x <- x + 1
+     cat("increment that number!\n")
+  }
+x
+```
+
+L'instruction else peut être utilisée pour spécifier une autre option. Dans l'exemple ci-dessous, notez que l'instruction else doit être sur la même ligne que l'accolade de fin pour le bloc if précédent.
+
+
+```{r}
+x = 2.0
+if ( x < 0.2)
+ {
+    x <- x + 1
+    cat("increment that number!\n")
+ } else
+ {
+    x <- x - 1
+    cat("nah, make it smaller.\n");
+ }
+x
+```
+
+
+Enfin, les instructions if peuvent être enchaînées.
+
+```{r}
+x = 1.0
+if(x < 0.2)
+{
+    x <- x + 1
+    cat("increment that number!\n")
+} else if (x < 2.0)
+{
+   x <- 2.0*x
+   cat("not big enough!\n")
+} else
+{
+    x <- x - 1
+    cat("nah, make it smaller.\n");
+}
+x
+```
+
+### for
+
+La boucle for peut être utilisée pour répéter un ensemble d'instructions.
+
+Un exemple est donné ci-dessous:
+
+```{r}
+for(lupe in seq(0,1,by=0.3))
+{
+    cat(lupe,"\n");
+}
+x <- c(1,2,4,8,16)
+
+for(loop in x)
+{
+    cat("value of loop: ",loop,"\n");
+}
+```
+
+break est utilisé pour arrêter l'execution de la boucle. 
+
+```{r}
+x <- rnorm(5)
+x
+for(lupe in x)
+ {
+     if (lupe > 2.0)
+         next
+
+     if( (lupe<0.6) && (lupe > 0.5))
+        break
+
+    cat("The value of lupe is ",lupe,"\n");
+ }
+```
+
+### while
+
+La boucle while peut être utilisée pour répéter une série d'instructions, et elle est souvent utilisée lorsque vous ne savez pas à l'avance à quelle fréquence les instructions seront exécutées. 
+
+```{r}
+lupe <- 1;
+x <- 1
+while(x < 4)
+ {
+    x <- rnorm(1,mean=2,sd=3)
+    cat("trying this value: ",x," (",lupe," times in loop)\n");
+    lupe <- lupe + 1
+ }
+```
+
+
+### répéter les instructions
+
+La boucle de répétition est similaire à la boucle while. La différence est que la boucle est réalisée au moins une fois. while ne lancera la boucle que si la condition est vraie la première fois qu'elle est évaluée. Une autre différence est que vous devez spécifier explicitement quand arrêter la boucle en utilisant la commande break .
+
+C'est-à-dire que vous devez exécuter l'instruction break pour sortir de la boucle. 
+
+```{r}
+repeat
+{
+    x <- rnorm(1)
+    if(x < -2.0) break
+}
+x
+```
+
+
+
+## Fonctions
+
+Un aperçu superficiel des fonctions est donné ici. Quelques subtilités seront notées, mais R peut être un peu excentrique. Une première chose bizarre: vous pouvez considérer une fonction comme un objet où vous définissez la fonction et l'affectez à un nom de variable.
+
+Pour définir une fonction, vous l'affectez à un nom, et la fonction mot-clé est utilisée pour indiquer le début de la fonction et sa liste d'arguments. La dernière ligne de la fonction est ce qui est retourné. Ainsi, dans l'exemple ci-dessus, la moyenne des nombres est renvoyée.
+
+
+```{r}
+
+newDef <- function(a,b)
+ {
+     x = runif(10,a,b)
+     mean(x)
+ }
+newDef(-1,1)
+
+newDef
+function(a,b)
+{
+   x = runif(10,a,b)
+   mean(x)
+}
+x <- newDef(0,1)
+x
+
+```
+
+Les arguments sont transmis dans l'ordre: R essaiera de faire correspondre les arguments nommés et de faire correspondre le reste de gauche à droite. Ils peuvent être spécifiés explicitement, cependant.
+
+
+```{r} 
+newDef(b=10,a=1)
+newDef(10,1)
+```
+
+Une autre tâche courante consiste à avoir une fonction renvoyer plusieurs éléments. Cela peut être accompli en renvoyant une liste d'éléments. Les objets dans une liste peuvent être accédés en utilisant la même notation $ utilisée pour les trames de données.
+
+
+```{r}
+c = c(1,2,3,4,5)
+sample <- function(a,b)
+{
+  value = switch(a,"median"=median(b),"mean"=mean(b),"variance"=var(b))
+  largeVals = length(c[c>1])
+  list(stat=value,number=largeVals)
+}
+result <- sample("median",c)
+result
+result$stat
+result$number
+```
+
+Un autre problème potentiel peut survenir lors de l'utilisation d'une fonction dans R.Si une variable précédemment indéfinie apparaît, R regardera la liste des arguments de la fonction. Ensuite, il regardera dans l'espace de travail actuel. Si vous ne faites pas attention, R trouvera la valeur à un endroit où vous ne l'attendez pas, et votre fonction retournera une valeur qui n'est pas correcte. Soyez très prudent sur les noms des variables, en particulier lorsque vous utilisez des fonctions.
+
+
 ## Exécuter un fichier
 
 ### Exécuter les commandes dans un fichier
@@ -1080,405 +1257,24 @@ source('file.R')
  
 Si vous générez simplement le fichier, les commandes ne sont pas imprimées et les résultats des commandes ne sont pas imprimés. Cela peut être remplacé en utilisant les options echo , print.eval et verbose .
 
-Certains exemples sont donnés en supposant qu'un fichier, simpleEx.R , se trouve dans le répertoire courant. Le fichier est donné ci-dessous:
+Certains exemples sont donnés en supposant qu'un fichier, simpleEx.R , se trouve dans le répertoire courant. Le contenu du fichier est donné ci-dessous:
 
 ```{r}
- #  # Définir une variable.
- # x <- rnorm ( 10 )
- # 
- # # calcule la moyenne de x et imprime les résultats.
- # mux = moyenne ( x )
- # cat ( "La moyenne de x est" , moyenne ( x ), "\ n" )
- # 
- # # imprimer un résumé des résultats
- # résumé ( x )
- # cat ( "Le résumé de x est \ n" , résumé ( x ), "\ n" )
- # imprimer ( résumé ( x ))
+ # Define a variable.
+x <- rnorm(10)
+
+# calculate the mean of x and print out the results.
+mux = mean(x)
+cat("The mean of x is ",mean(x),"\n")
+
+# print out a summary of the results
+summary(x)
+cat("The summary of x is \n",summary(x),"\n")
+print(summary(x))
 ```
 
-
-
-Le fichier montre également l'utilisation de # pour spécifier des commentaires. Tout ce qui suit le # est ignoré. En outre, le fichier illustre l'utilisation de cat et print pour envoyer les résultats à la sortie standard. Notez que les commandes ont des options pour envoyer les résultats à un fichier. Utilisez l' aide pour plus d'informations.
-
-La sortie pour les différentes options peut être trouvée ci-dessous: 
-
-```{r}
-
-# 
-# 
-#   > source ( 'simpleEx.R' )
-#  La moyenne de x est -0.4817475
-#  Le résumé de x est
-#  -2.24 -0.5342 -0.2862 -0.4817 -0.1973 0.4259
-#  Min.  1er Qu.  Médiane Moyenne 3e Qu.  Max.
-#  -2.2400 -0.5342 -0.2862 -0.4817 -0.1973 0.4259
-#  >
-#  >
-#  >
-#  > source ( 'simpleEx.R' , echo = TRUE )
-#  Min.  1er Qu.  Médiane Moyenne 3e Qu.  Max.
-#  -2.32600 -0.69140 -0.06772 -0.13540 0.46820 1.69600
-#  >
-#  >
-#  >
-#  > source ( 'simpleEx.R' , print.eval = TRUE )
-#  La moyenne de x est 0,1230581
-#  Min.  1er Qu.  Médiane Moyenne 3e Qu.  Max.
-#  -1.7020 -0.2833 0.1174 0.1231 0.9103 1.2220
-#  Le résumé de x est
-#  -1.702 -0.2833 0.1174 0.1231 0.9103 1.222
-#  Min.  1er Qu.  Médiane Moyenne 3e Qu.  Max.
-#  -1.7020 -0.2833 0.1174 0.1231 0.9103 1.2220
-#  >
-#  >
-#  >
-#  > source ( 'simpleEx.R' , print.eval = FALSE )
-#  La moyenne de x est de 0,6279428
-#  Le résumé de x est
-#  -0.7334 -0.164 0.9335 0.6279 1.23 1.604
-#  Min.  1er Qu.  Médiane Moyenne 3e Qu.  Max.
-#  -0.7334 -0.1640 0.9335 0.6279 1.2300 1.6040
-#  >
-#  >
-#  >
-#  >
-#  > source ( 'simpleEx.R' , verbose = TRUE )
-#  'envir' choisi: <environnement: R_GlobalEnv>
-#  encoding = "native.enc" choisi
-#  -> analysé 6 expressions;  maintenant eval (.) les ing:
-# 
-#  >> >> eval ( expression_nr.1 )
-#  =================
-# 
-#  > # Définir une variable.
-#  > x <- rnorm ( 10 )
-#  curr.fun: symbole <-
-#  .. après 'expression (x <- rnorm (10))'
-# 
-#  >> >> eval ( expression_nr.2 )
-#  =================
-# 
-#  > # calcule la moyenne de x et imprime les résultats.
-#  > mux = moyenne ( x )
-#  curr.fun: symbole =
-#  .. après 'expression (mux = mean (x))'
-# 
-#  >> >> eval ( expression_nr.3 )
-#  =================
-# 
-#  > cat ( "La moyenne de x est" , moyenne ( x ), "\ n" )
-#  La moyenne de x est -0.1090932
-#  curr.fun: symbole du chat
-#  .. après 'expression (cat ("La moyenne de x est", mean (x), "\ n"))'
-# 
-#  >> >> eval ( expression_n ° 4 )
-#  =================
-# 
-#  > # imprimer un résumé des résultats
-#  > résumé ( x )
-#  curr.fun: résumé du symbole
-#  Min.  1er Qu.  Médiane Moyenne 3e Qu.  Max.
-#  -1.3820 -1.0550 -0.1995 -0.1091 0.6813 2.1050
-#  .. après 'expression (résumé (x))'
-# 
-#  >> >> eval ( expression_nr 5 )
-#  =================
-# 
-#  > cat ( "Le résumé de x est \ n" , résumé ( x ), "\ n" )
-#  Le résumé de x est
-#  -1.382 -1.055 -0.1995 -0.1091 0.6813 2.105
-#  curr.fun: symbole du chat
-#  .. après 'expression (cat ("Le résumé de x est \ n", résumé (x), "\ n"))'
-# 
-#  >> >> eval ( expression_nr 6 )
-#  =================
-# 
-#  > imprimer ( résumé ( x ))
-#  Min.  1er Qu.  Médiane Moyenne 3e Qu.  Max.
-#  -1.3820 -1.0550 -0.1995 -0.1091 0.6813 2.1050
-#  curr.fun: impression de symbole
-#  .. après 'expression (print (summary (x)))'
-
+Le fichier montre également l'utilisation de # pour spécifier des commentaires. Tout ce qui suit le # est ignoré. En outre, le fichier illustre l'utilisation de cat et print pour envoyer les résultats à la sortie standard. 
  
-```
- 
-Un problème fréquent qui se produit est que R peut ne pas savoir où trouver un fichier.
-
-  > source ( 'notThere.R' )
- Erreur dans le fichier (nom de fichier, "r", encoding = encoding):
- ne peut pas ouvrir la connexion
- En outre: Message d'avertissement:
- Dans le fichier (filename, "r", encoding = encoding):
- Impossible d'ouvrir le fichier 'notThere.R': aucun fichier ou répertoire de ce type
-
-R va chercher dans le répertoire de travail actuel. Vous pouvez voir quels fichiers sont dans le répertoire en utilisant la commande dir , et vous pouvez déterminer le répertoire courant en utilisant la commande getwd .
-
-  > getwd ()
- [1] "/ home / noir / public_html / tutoriel / R / rst / source / R"
- > dir ()
- [1] "plotting.rData" "power.R" "shadedRegion.R"
-
-Vous pouvez changer le répertoire actuel, et les options disponibles dépendent de la façon dont vous utilisez R. Par exemple sur un PC Windows ou un Macintosh, vous pouvez utiliser les options du menu pour changer le répertoire de travail. Vous pouvez choisir le répertoire en utilisant un navigateur de fichiers graphique. Sinon, vous pouvez passer au bon répertoire avant d'exécuter R ou utiliser la commande setwd .
-
-### if instructions
-
-L'exécution conditionnelle est disponible en utilisant l'instruction if et l'instruction else correspondante. 
- > x = 0,1
- > si ( x < 0,2 )
- {
- x <- x + 1
- cat ("incrémenter ce nombre! \ n")
- }
- incrémenter ce nombre!
- > x
- [1] 1,1
-
-L'instruction else peut être utilisée pour spécifier une autre option. Dans l'exemple ci-dessous, notez que l'instruction else doit être sur la même ligne que l'accolade de fin pour le bloc if précédent.
-
-  > x = 2,0
- > si ( x < 0,2 )
- {
- x <- x + 1
- cat ("incrémenter ce nombre! \ n")
- } autre
- {
- x <- x - 1
- cat ("nah, le rendre plus petit. \ n");
- }
- nah, rends-le plus petit.
- > x
- [1] 1
-
-Enfin, les instructions if peuvent être chaînées pour plusieurs options. L'instruction if est considérée comme un seul bloc de code, donc plus si des instructions peuvent être ajoutées après l' autre .
-
-  > x = 1,0
- > si ( x < 0,2 )
- {
- x <- x + 1
- cat ("incrémenter ce nombre! \ n")
- } else si (x <2,0)
- {
- x <- 2.0 * x
- chat ("pas assez grand! \ n")
- } autre
- {
- x <- x - 1
- cat ("nah, le rendre plus petit. \ n");
- }
- pas assez grand!
- > x
- [1] 2
-
-L'argument de l'instruction if est une expression logique. Une liste complète des opérateurs logiques peut être trouvée dans le document de types en se concentrant sur les variables logiques ( Logique ).
-
-### pour les déclarations
-
-La boucle for peut être utilisée pour répéter un ensemble d'instructions, et elle est utilisée lorsque vous connaissez à l'avance les valeurs que la variable de boucle aura à chaque fois qu'elle traverse la boucle. Le format de base de la boucle for est pour (var in seq) expr
-
-Un exemple est donné ci-dessous:
-
-  > pour ( lupe en seq ( 0 , 1 , par = 0,3 ))
- {
- chat (lupe, "\ n");
- }
- 0
- 0,3
- 0,6
- 0,9
- >
- > x <- c ( 1 , 2 , 4 , 8 , 16 )
- > pour ( boucle en x )
- {
- cat ("valeur de la boucle:", boucle, "\ n");
- }
- valeur de la boucle: 1
- valeur de la boucle: 2
- valeur de la boucle: 4
- valeur de la boucle: 8
- valeur de la boucle: 16
-
-Voir la section sur les pauses pour plus d'options ( pause et prochaines déclarations )
-15.1.4. tandis que les déclarations
-
-La boucle while peut être utilisée pour répéter une série d'instructions, et elle est souvent utilisée lorsque vous ne savez pas à l'avance à quelle fréquence les instructions seront exécutées. Le format de base pour une boucle while est while (cond) expr
-
-  >
- > lupe <- 1 ;
- > x <- 1
- > tandis que ( x < 4 )
- {
- x <- rnorm (1, moyenne = 2, sd = 3)
- cat ("essayant cette valeur:", x, "(", lupe, "fois en boucle) \ n");
- lupe <- lupe + 1
- }
- en essayant cette valeur: -4.163169 (1 fois en boucle)
- essayer cette valeur: 3.061946 (2 fois en boucle)
- essayer cette valeur: 2.10693 (3 fois en boucle)
- essayer cette valeur: -2.06527 (4 fois en boucle)
- essayer cette valeur: 0.8873237 (5 fois en boucle)
- essayer cette valeur: 3.145076 (6 fois en boucle)
- essayer cette valeur: 4.504809 (7 fois en boucle)
-
-Voir la section sur les pauses pour plus d'options ( pause et prochaines déclarations )
-### répéter les instructions
-
-La boucle de répétition est similaire à la boucle while. La différence est qu'il commencera toujours la boucle la première fois. La boucle while ne lancera la boucle que si la condition est vraie la première fois qu'elle est évaluée. Une autre différence est que vous devez spécifier explicitement quand arrêter la boucle en utilisant la commande break .
-
-C'est-à-dire que vous devez exécuter l'instruction break pour sortir de la boucle. 
-
-
-  > répète
- {
- x <- rnorm (1)
- si (x <-2.0) casse
- }
- > x
- [1] -2.300532
-
-Voir la section sur les pauses pour plus d'options ( pause et prochaines déclarations )
-15.1.6. pause et les prochaines instructions
-
-L'instruction break est utilisée pour arrêter l'exécution de la boucle en cours. Il va sortir de la boucle actuelle. L'instruction suivante est utilisée pour ignorer les instructions qui suivent et relancer la boucle en cours. Si une boucle for est utilisée, l'instruction suivante met à jour la variable de boucle.
-
-  > x <- rnorm ( 5 )
- > x
- [1] 1.41699338 2.28086759 -0.01571884 0.56578443 0.60400784
- > pour ( lupe en x )
- {
- si (lupe> 2.0)
- prochain
-
- si ((lupe <0.6) && (lupe> 0.5))
- Pause
-
- cat ("La valeur de lupe est", lupe, "\ n");
- }
- La valeur de lupe est 1.416993
- La valeur de lupe est -0.01571884
-
-### basculer l'instruction
-
-Le commutateur prend une expression et renvoie une valeur dans une liste en fonction de la valeur de l'expression. Cela dépend du type de données de l'expression. La syntaxe de base est switch (instruction, item1, item2, item3, ..., itemN) .
-
-Si le résultat de l'expression est un nombre, il renvoie l'élément de la liste avec le même index. Notez que l'expression est convertie en entier s'il ne s'agit pas d'un nombre entier.
-
-  > x <- as.integer ( 2 )
- > x
- [1] 2
- > z = interrupteur ( x , 1 , 2 , 3 , 4 , 5 )
- > z
- [1] 2
- > x <- 3,5
- > z = interrupteur ( x , 1 , 2 , 3 , 4 , 5 )
- > z
- [1] 3
-
-Si le résultat de l'expression est une chaîne, la liste des éléments doit être de la forme "valueN" = resultN , et l'instruction retournera le résultat correspondant à la valeur.
-
-  > y <- rnorm ( 5 )
- > y
- [1] 0.4218635 -0.8205637 -1.0191267 -0.6080061 -0.6079133
- > x <- "sd"
- > z <- commutateur ( x , "moyenne" = moyenne ( y ), "médiane" = médiane ( y ), "variance" = var ( y ), "sd" = sd ( y ))
- > z
- [1] 0,5571847
- > x <- "médiane"
- > z <- commutateur ( x , "moyenne" = moyenne ( y ), "médiane" = médiane ( y ), "variance" = var ( y ), "sd" = sd ( y ))
- > z
- [1] -0.6080061
-
-### instruction scan
-
-La commande pour lire l'entrée à partir du clavier est l'instruction scan . Il a une grande variété d'options et peut être ajusté à vos besoins spécifiques. Nous regardons seulement les bases ici. L'instruction scan attend la saisie d'un utilisateur et renvoie la valeur saisie.
-
-Lorsque vous utilisez la commande sans nombre défini de lignes, la commande continue à lire les entrées du clavier jusqu'à ce qu'une ligne vierge soit entrée.
-
-  > aide ( scan )
- > a <- scan ( quoi = double ( 0 ))
- 1: 3,5
- 2:
- Lire 1 article
- > un
- [1] 3,5
- > typeof ( a )
- [1] "double"
- >
- > a <- scan ( quoi = double ( 0 ))
- 1: yo!
- 1:
- Erreur dans l'analyse (fichier, quoi, nmax, sep, dec, citation, skip, nlines, na.strings,:
- scan () attendait 'un vrai', 'yo!'
-
-Si vous souhaitez seulement le lire depuis un nombre fixe de lignes, l'option nmax peut spécifier combien de lignes peuvent être tapées, et l'option multi.line peut être utilisée pour désactiver l'entrée multiligne.
-
-  > a <- scan ( quoi = double ( 0 ), nmax = 1 , multi.line = FAUX )
- 1: 6.7
- Lire 1 article
- > un
- [1] 6,7
-
-## Fonctions
-
-Un aperçu superficiel des fonctions de définition est donné ici. Quelques subtilités seront notées, mais R peut être un peu excentrique en ce qui concerne la définition des fonctions. Le premier élément d'étrangeté est que vous pouvez considérer une fonction comme un objet où vous définissez la fonction et l'affectez à un nom de variable.
-
-Pour définir une fonction, vous l'affectez à un nom, et la fonction mot-clé est utilisée pour indiquer le début de la fonction et sa liste d'arguments. 
-
-
-  > newDef <- fonction ( a , b )
- {
- x = runif (10, a, b)
- moyenne (x)
- }
- > nouveauDef ( -1 , 1 )
- [1] 0,06177728
- > newDef
- fonction (a, b)
- {
- x = runif (10, a, b)
- moyenne (x)
- }
-
-La dernière expression de la fonction est ce qui est retourné. Ainsi, dans l'exemple ci-dessus, la moyenne des nombres est renvoyée.
-
-  > x <- newDef ( 0 , 1 )
- > x
- [1] 0.4800442
-
-Les arguments transmis sont mis en correspondance dans l'ordre. Ils peuvent être spécifiés explicitement, cependant.
-
-  > nouveauDef ( b = 10 , a = 1 )
- [1] 4.747509
- > nouveauDef ( 10 , 1 )
- [1] NaN
- Message d'alerte:
- Dans runif (10, a, b): NA produit
-
-Vous pouvez mélanger cette approche, et R essaiera de faire correspondre les arguments nommés et de faire correspondre le reste de gauche à droite. Un autre peu d'étrangeté est que R n'évaluera pas une expression dans la liste d'arguments jusqu'au moment où elle est nécessaire dans la fonction. C'est un comportement différent de celui auquel la plupart des gens sont habitués, alors soyez très prudent à ce sujet. La meilleure règle consiste à ne pas mettre les opérations dans une liste d'arguments si elles importent après l'appel de la fonction.
-
-Une autre tâche courante consiste à avoir une fonction renvoyer plusieurs éléments. Cela peut être accompli en renvoyant une liste d'éléments. Les objets dans une liste peuvent être accédés en utilisant la même notation $ utilisée pour les trames de données.
-
-  > c = c ( 1 , 2 , 3 , 4 , 5 )
- > exemple <- fonction ( a , b )
- {
- value = switch (a, "médiane" = médiane (b), "moyenne" = moyenne (b), "variance" = var (b))
- largeVals = longueur (c [c> 1])
- liste (stat = valeur, nombre = grandVals)
- }
- > résultat <- échantillon ( "médiane" , c )
- > résultat
- $ stat
- [1] 3
-
- nombre $
- [1] 4
-
- > résultat $ stat
- [1] 3
- > résultat $ numéro
- [1] 4
-
-Un autre problème potentiel peut survenir lors de l'utilisation d'une fonction dans R. Lorsqu'il s'agit de déterminer la valeur d'une variable, R utilise un chemin pour rechercher sa valeur. Dans le cas de fonctions, si une variable précédemment indéfinie apparaît, R regardera la liste des arguments de la fonction. Ensuite, il regardera dans l'espace de travail actuel. Si vous ne faites pas attention, R trouvera la valeur à un endroit où vous ne l'attendez pas, et votre fonction retournera une valeur qui n'est pas correcte, et aucune erreur ne sera donnée. Soyez très prudent sur les noms des variables, en particulier lorsque vous utilisez des fonctions.
-
 
 # Application sur un vrai jeu de données (lézards, again)
 
