@@ -1,0 +1,1612 @@
+---
+title: "Tutoriel initiation à R"
+author: "Carine & Marie"
+
+date: "Dernière mise à jour: `r format(Sys.Date(), format = '%d %B %Y')`" 
+output:
+  #pdf_document:
+  #  toc: true
+  #  number_sections: true
+  #  highlight: tango
+  html_document:
+    keep_md: true
+    #code_folding: show
+    theme: united
+    highlight: tango
+    toc: true
+    toc_depth: 3
+    number_sections: true
+    toc_float:
+      collapsed: true
+      smooth_scroll: false
+  
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, results="hide", fig.keep = "none")
+```
+
+
+Le but de ces séances est d’apprendre à utiliser R dans des cas concrets, à produire un rapport reproductible, et à représenter des données avec R de manière optimale. Vous aborderez également l’analyse
+de données.
+
+R est déja installé sur les ordinateurs des salles de TP. Pour l’installer sur votre ordinateur personnel, voir
+la page du CRAN http://cran.r-project.org/bin/. R est installé par défaut avec des fonctions de la
+library base. Vous devrez également installer RStudio pour faire les rapports de TP. https://www.rstudio.com/products/rstudio/download/
+
+Le tutoriel est largement inspiré du site suivant, dans lequel vous trouverez (en anglais) des exemples d'application des tests statistiques dans la ligne de ce que vous avez pratiqué en biostatistiques. http://www.cyclismo.org/tutorial/R/
+
+# Importer des données
+
+Ici, nous explorons comment définir un ensemble de données dans une session R. Il y a plusieurs façons de lire des données dans une session R, mais nous nous concentrons sur deux seulement pour rester simple.
+
+##  Affectation simple
+
+La façon la plus simple de stocker une liste de nombres est d'utiliser la commande c («combiner»). Un vecteur de nombres est stocké sous un nom donné, et le nom est utilisé pour faire référence aux données. Le vecteur est spécifié avec la commande c, et l'affectation est spécifié avec le symbole "<-". 
+Les nombres dans la commande c sont séparés par des virgules. A titre d'exemple, nous pouvons créer une nouvelle variable, appelée "bubba" qui contiendra les numéros 3, 5, 7 et 9:
+
+```{r}
+bubba <- c(3,5,7,9)
+```
+
+Lorsque vous entrez cette commande, vous ne devriez voir aucune sortie sauf une nouvelle ligne de commande. La commande crée une liste de nombres appelés "bubba". Pour voir quels numéros sont inclus dans bubba tapez "bubba" et appuyez sur la touche Entrée:
+
+```{r}
+bubba 
+```
+
+Si vous souhaitez travailler avec l'un des numéros, vous pouvez y accéder en utilisant la variable, puis les crochets indiquant le numéro:
+
+```{r}
+bubba[2]
+bubba[1]
+bubba[0]
+```
+
+Notez que la première entrée correspond au numéro 1 et que le zéro peut être utilisé pour indiquer comment l'ordinateur traitera les données. Vous pouvez stocker des chaînes de caractère à l'aide de guillemets simples et doubles, et vous pouvez stocker des nombres réels.
+
+##  Lecture de fichiers
+
+Il est rare d'avoir juste quelques points de données. Il est beaucoup plus commun d'avoir beaucoup de données avec des relations compliquées. Ici, nous allons examiner comment lire un ensemble de données à partir d'un fichier, mais nous devons d'abord discuter du format d'un fichier de données.
+
+Nous supposons que le fichier de données est au format appelé "comma separated values" (csv). C'est-à-dire que chaque ligne contient une rangée de valeurs qui peuvent être des nombres ou des lettres, et chaque valeur est séparée par une virgule. Nous supposons également que la toute première rangée contient une liste d'étiquettes qui font référence aux différentes colonnes de valeurs.
+
+La commande pour lire un fichier de données est read.csv. Nous devons donner à la commande au moins un argument (le nom du fichier), mais nous allons donner deux arguments optionnels supplémentaires. Le premier argument indique si la première ligne contient les noms des colonnes. Le deuxième argument indique qu'il y a une virgule entre chaque numéro de chaque ligne. La commande suivante va lire dans les données et l'assigner à une variable appelée "heisenberg". Lorsque vous utilisez la commande read.csv, R utilise un type spécifique de variable appelé "data frame". Toutes les données sont stockées sous la forme de colonnes séparées. 
+
+```{r}
+heisenberg <- read.csv(file="simple.csv",head=TRUE,sep=",")
+heisenberg
+summary(heisenberg)
+```
+
+Pour obtenir plus d'informations sur les différentes options disponibles, vous pouvez utiliser la commande help:
+
+```{r}
+?read.csv
+```
+
+Si R ne trouve pas le fichier que vous essayez de lire, il se peut qu'il recherche dans le mauvais dossier / répertoire. Si vous utilisez l'interface graphique, vous pouvez modifier le répertoire de travail. Si vous n'êtes pas sûr des fichiers qui se trouvent dans le répertoire de travail actuel, vous pouvez utiliser la commande dir() pour lister les fichiers et la commande getwd() pour déterminer le répertoire de travail actuel:
+
+```{r}
+dir()
+getwd()
+```
+
+
+La variable "heisenberg" contient les trois colonnes de données. Chaque colonne reçoit un nom basé sur l'en-tête (la première ligne du fichier). Vous pouvez maintenant accéder à chaque colonne en utilisant un "$":
+
+```{r}
+heisenberg$trial
+heisenberg$mass
+heisenberg$velocity
+```
+
+Si vous n'êtes pas sûr des colonnes contenues dans la variable, vous pouvez utiliser la commande names:
+
+```{r}
+names(heisenberg)
+```
+
+
+Nous allons étudier un autre exemple tout au long de ce tutoriel. Le fichier de données a été créé par un groupe à Oak Ridge National Laboratory. Les données d'origine sont données dans une feuille de calcul Excel, et le fichier CSV a été créé en supprimant l'ensemble supérieur de lignes et en l'enregistrant comme un fichier "csv". Ceci est une option pour enregistrer dans Excel. Vous devrez enregistrer le fichier sur votre ordinateur.
+
+La feuille de calcul d'origine se trouve à l'adresse http://cdiac.ornl.gov/ftp/ndp061a/trees91.wk1. Une description du fichier de données se trouve à http://cdiac.ornl.gov/ftp/ndp061a/ndp061a.txt.
+
+Les données contiennet des estimations de la biomasse de pin ponderosa dans une étude réalisée par Dale W. Johnson, J. Timothy Ball et Roger F. Walker (Université du Nevada). La table contient 54 lignes, et chaque ligne représente une observation. Chaque observation comprend des mesures et des marqueurs pour 28 mesures différentes d'un arbre donné. Par exemple, le premier chiffre de chaque rangée est un nombre, 1, 2, 3 ou 4, qui indique un niveau différent d'exposition au dioxyde de carbone. Le sixième nombre dans chaque rangée est une estimation de la biomasse des tiges d'un arbre. Notez que la toute première ligne du fichier est une liste d'étiquettes utilisées pour les différentes colonnes de données.
+
+Les données peuvent être lues dans une variable appelée "tree" en utilisant la commande read.csv. Allez-y!
+
+```{r}
+
+#ajouter ici les commandes pour lire le fichier tree91
+#tree<-
+
+```
+
+Cela créera une nouvelle variable appelée "tree". Si vous tapez "tree" à l'invite et appuyez sur Entrée, tous les numéros stockés dans la variable seront imprimés. Essayez!
+
+
+
+
+# Types de données de base 
+
+L'objectif principal de cette introduction est de démontrer quelques types d'informations que R peut gérer. 
+
+## Types de variables
+
+### Numeric
+
+ 
+```{r}
+a <- 3
+```
+
+Le "<-" dit à R de prendre le numéro à droite du symbole et de le stocker dans une variable dont le nom est donné à gauche. Vous pouvez également utiliser le symbole "=". Lorsque vous effectuez une tâche, R n'imprime aucune information. Si vous voulez voir quelle valeur une variable vient de taper le nom de la variable sur une ligne et appuyez sur la touche Entrée:
+
+```{r}
+a
+```
+
+Cela vous permet de faire toutes sortes d'opérations de base et d'enregistrer les valeurs:
+
+
+```{r}
+b <- sqrt ( a * a +3 )
+b
+```
+
+Si vous voulez obtenir une liste des variables que vous avez définies dans une session particulière, vous pouvez les lister toutes en utilisant la commande ls:
+
+```{r}
+ls ()
+```
+
+
+Vous n'êtes pas limité à simplement enregistrer un seul numéro. Vous pouvez créer un "vecteur" en utilisant la commande c:
+
+```{r}
+a <- c ( 1 , 2 , 3 , 4 , 5 )
+a
+```
+
+
+```{r}
+a +1
+```
+
+```{r}
+mean(a)
+```
+
+```{r}
+var(a)
+```
+
+
+Vous pouvez accéder à des entrées particulières dans le vecteur de la manière suivante:
+
+```{r}
+a <- c ( 1 , 2 , 3 , 4 , 5 )
+a [ 1 ]
+a [ 2 ]
+a [ 0 ]
+a [ 5 ]
+a [ 6 ]
+```
+
+La première entrée dans le vecteur est le premier nombre, et si vous essayez d'obtenir un nombre après le dernier nombre, vous obtenez "NA".
+Pour initialiser une liste de nombres, la commande numérique peut être utilisée. Par exemple, pour créer une liste de 10 nombres, initialisée à zéro, utilisez la commande suivante:
+
+```{r}
+a <- numeric(10)
+a
+```
+
+
+Si vous souhaitez déterminer le type de données utilisé pour une variable, tapez la commande:
+
+```{r}
+typeof(a)
+```
+
+
+### Chaînes de caractères (string)
+
+Vous pouvez également stocker des chaînes de caractères. Une chaîne de caractères est spécifiée en utilisant des guillemets. Les guillemets simples et doubles fonctionnent:
+
+```{r}
+a <- "bonjour"
+a
+b <- c ( "bonjour" , "toi" )
+b [ 2 ]
+```
+
+
+
+ Une chaîne de caractères contient bien des caractères
+
+```{r}
+typeof ( a )
+a = character ( 20 )
+a
+```
+
+
+### Facteurs (Factor)
+
+R peut aussi stocker des données de type "facteur". Souvent, une expérience comprend différents niveaux d'une variable explicative (modalités). Par exemple, en examinant l'impact du dioxyde de carbone sur le taux de croissance d'un arbre, vous pouvez essayer d'observer comment différents arbres se développent lorsqu'ils sont exposés à différentes concentrations prédéfinies de dioxyde de carbone. Les différents niveaux sont appelés "modalités du facteurs".
+
+Nous allons regarder le fichier de données dans la table de données tree. Plusieurs variables du fichier sont des facteurs: 
+
+```{r}
+tree <- read.csv(file="trees91.csv",header=TRUE,sep=",");
+names(tree)
+typeof(tree$CHBR)
+summary(tree)
+summary(tree$CHBR)
+```
+
+Lorsque vous utilisez "summary" sur un facteur, il n'imprime pas le résumé en cinq points, il imprime plutôt les valeurs possibles et la fréquence à laquelle elles se produisent.
+
+Dans cet ensemble de données, plusieurs colonnes sont des facteurs, mais les chercheurs ont utilisé des nombres pour indiquer les différents niveaux. Par exemple, la première colonne, intitulée "C", est un facteur. Chaque arbre a été cultivé dans un environnement avec l'un des quatre niveaux possibles de dioxyde de carbone. Les chercheurs ont  qualifié ces quatre environnements en 1, 2, 3 et 4. Malheureusement, R ne peut pas déterminer seul qu'il s'agit de facteurs.
+
+C'est un problème courant et il existe un moyen de dire à R de traiter la colonne "C" comme un ensemble de facteurs. Vous spécifiez qu'une variable est un facteur à l'aide de la commande factor. Dans l'exemple suivant, nous convertissons la colonne C en un facteur:
+
+```{r}
+tree$C
+summary(tree$C)
+tree$C <- factor(tree$C)
+tree$C
+levels(tree$C)
+summary(tree$C)
+```
+
+Une fois qu'un vecteur est converti en un ensemble de facteurs, alors R le traite différemment. Un ensemble de facteurs a un ensemble discret de valeurs possibles, et il n'est pas logique d'essayer de trouver des moyennes ou d'autres descriptions numériques. Une chose importante est le nombre de fois que chaque facteur apparaît, appelé "fréquences", qui est imprimé en utilisant la commande de résumé.
+
+### Table de données (data frame)
+
+Une autre façon de stocker les informations est dans un tableau de données (data frame). C'est un moyen de prendre plusieurs vecteurs de types différents et de les stocker dans la même variable. Les vecteurs peuvent être de tous types différents. Par exemple, une dataframe peut contenir plusieurs listes et chaque liste peut être une liste de facteurs, de chaînes ou de nombres.
+
+Il existe différentes manières de créer et de manipuler des dataframes. Un exemple de création d'une dataframe est donné ci-dessous:
+
+
+```{r}
+a <- c(1,2,3,4)
+b <- c(2,4,6,8)
+levels <- factor(c("A","B","A","B"))
+bubba <- data.frame(first=a,
+                      second=b,
+                      f=levels)
+bubba
+summary(bubba)
+bubba$first
+bubba$second
+bubba$f
+```
+
+  
+
+### Booléen (Boolean)
+
+Un autre type de données important est le type logique, qui prend deux valeurs prédéfinies, TRUE ou FALSE :
+ 
+```{r}
+a = TRUE
+typeof(a)
+b = FALSE
+typeof(b)
+```
+
+Les opérateurs logiques standards peuvent être utilisés:
+< 	moins que
+> 	super
+<= 	inférieur ou égal
+>= 	supérieur ou égal
+== 	égal à
+!= 	différent de
+|| 	ou
+! 	ne pas
+&& 	et
+
+Notez qu'il existe une différence entre les opérateurs qui agissent sur les entrées dans un vecteur et le vecteur entier:
+
+```{r}
+a = c(TRUE,FALSE)
+b = c(FALSE,FALSE)
+a|b
+a||b
+```
+
+Il existe un grand nombre de fonctions qui testent pour déterminer le type d'une variable. Par exemple, la fonction is.numeric peut déterminer si une variable est numérique:
+
+```{r}
+a = c(1,2,3)
+is.numeric(a)
+is.factor(a)
+```
+
+##  Tables
+
+Une autre façon courante de stocker des informations est dans un tableau. Nous regardons ici comment définir les tableaux à sens unique et à double sens. Nous regardons seulement comment créer et définir des tables; les fonctions utilisées dans l'analyse des proportions sont examinées dans un autre chapitre.
+
+### Tables à une dimension
+
+Les tableaux à une dimension ne sont pas l'exemple le plus intéressant, mais c'est un bon point de départ. Une façon de créer une table utilise la commande "table". 
+
+```{r}
+a <- factor(c("A","A","B","A","B","B","C","A","C"))
+results <- table(a)
+results
+a
+attributes(results)
+summary(results)
+```
+
+
+
+### Tables à deux dimensions
+
+Dans l'exemple ci-dessous, nous avons deux questions. Dans la première question, les réponses sont étiquetées «Jamais», «Parfois» ou «Toujours». Dans la deuxième question, les réponses sont intitulées «Oui», «Non» ou «Peut-être». L'ensemble des vecteurs «a» et "b", contiennent la réponse pour chaque mesure. Le troisième élément de "a" est la façon dont la troisième personne a répondu à la première question, et le troisième élément de "b" est la façon dont la troisième personne a répondu à la deuxième question.
+
+```{r}
+a <- c("Sometimes","Sometimes","Never","Always","Always","Sometimes","Sometimes","Never")
+b <- c("Maybe","Maybe","Yes","Maybe","Maybe","No","Yes","No")
+results <- table(a,b)
+results
+``` 
+
+
+La commande table nous permet de faire un calcul très rapide, et nous pouvons immédiatement voir que deux personnes qui ont dit "Peut-être" à la première question ont aussi dit "Parfois" à la deuxième question.
+
+Il est possible de saisir manuellement des tableaux. Vous entrez toutes les données dans une longue liste, mais dites à R de les diviser en un certain nombre de colonnes:
+
+```{r}
+sexsmoke<-matrix(c(70,120,65,140),ncol=2,byrow=TRUE)
+rownames(sexsmoke)<-c("male","female")
+colnames(sexsmoke)<-c("smoke","nosmoke")
+sexsmoke <- as.table(sexsmoke)
+sexsmoke
+``` 
+
+La commande matrix crée une matrice deux par deux. 
+L'option "byrow=T" indique que les numéros sont d'abord remplis dans les lignes et que ncols = 2 indique qu'il y a deux colonnes.
+
+
+# Opérations de base et descriptions numériques
+
+Nous examinons certaines des opérations de base que vous pouvez effectuer sur des listes de nombres. 
+
+## Opérations de base
+
+Une fois que vous avez un vecteur (ou une liste de nombres) en mémoire, la plupart des opérations de base sont disponibles. La plupart des opérations de base agissent sur un vecteur entier et peuvent être utilisées pour effectuer rapidement un grand nombre de calculs avec une seule commande. Il y a une chose à noter, si vous effectuez une opération sur plus d'un vecteur, il est souvent nécessaire que les vecteurs contiennent tous le même nombre d'entrées.
+
+Attention, parfois le calcul est effectué tout de même, vérifiez bien la taille de vos éléments dans R!!
+
+Ici, nous définissons d'abord un vecteur que nous appellerons "a" et nous verrons comment ajouter et soustraire des nombres constants de tous les nombres du vecteur. Premièrement, le vecteur contiendra les nombres 1, 2, 3 et 4. Nous verrons ensuite comment ajouter 5 à chacun des nombres, soustraire 10 de chacun des nombres, multiplier chaque nombre par 4 et diviser chaque nombre par 5 .
+
+```{r}
+a <- c(1,2,3,4)
+a
+a + 5
+a - 10
+a*4
+a/5
+``` 
+ 
+Nous pouvons sauvegarder les résultats dans un autre vecteur appelé b :
+
+```{r}
+b <- a - 10
+b
+``` 
+  
+Si vous voulez prendre la racine carrée,  le logarithme, etc., alors les commandes habituelles peuvent être utilisées:
+
+```{r}
+sqrt(a)
+exp(a)
+log(a)
+exp(log(a))
+``` 
+  
+En combinant les opérations et en utilisant des parenthèses, vous pouvez créer des expressions plus compliquées:
+
+    
+```{r}
+c <- (a + sqrt(a))/(exp(2)+1)
+c
+``` 
+  
+Notez que vous pouvez faire les mêmes opérations avec des arguments vectoriels. Par exemple pour ajouter les éléments du vecteur a aux éléments du vecteur b, utilisez la commande suivante:
+
+```{r}
+a + b
+``` 
+  
+L'opération est effectuée élément par élément. Notez que ceci est vrai pour presque toutes les fonctions de base. Vous pouvez donc rassembler toutes sortes d'expressions compliquées:
+
+```{r}
+a*b
+a/b
+(a+3)/(sqrt(1-b)*2-1)
+``` 
+
+  Attention, lorsque vous effectuez des opérations sur des vecteurs, ils sont effectués élément par élément. Tous les vecteurs dans une expression doivent donc avoir la même longueur. Si les longueurs des vecteurs diffèrent, vous pouvez recevoir un message d'erreur, ou pire, aucun message d'avertissement et des résultats imprévisibles:
+
+```{r}
+a <- c(1,2,3)
+b <- c(10,11,12,13)
+a+b
+``` 
+  
+Lorsque vous travaillez dans R et que vous créez de nouveaux vecteurs, il peut être facile de perdre la trace des variables que vous avez définies. Pour obtenir une liste de toutes les variables qui ont été définies, utilisez la commande ls():
+
+ 
+Enfin, gardez à l'esprit  les opérations de base fonctionnent presque toujours élément par élément mais il y a de rares exceptions à cette règle générale. Par exemple, si vous regardez le minimum de deux vecteurs en utilisant la commande min, vous obtiendrez le minimum de tous les chiffres. 
+
+
+```{r}
+a <- c(1,-2,3,-4)
+b <- c(-1,2,-3,4)
+min(a,b)
+pmin(a,b)
+``` 
+
+## Descriptions numériques de base
+
+
+
+Les commandes suivantes peuvent être utilisées pour obtenir la moyenne, la médiane, les quantiles, le minimum, le maximum, la variance et l'écart-type d'un ensemble de nombres:
+
+
+```{r}
+mean(tree$LFBM)
+median(tree$LFBM)
+quantile(tree$LFBM)
+min(tree$LFBM)
+max(tree$LFBM)
+var(tree$LFBM)
+sd(tree$LFBM)
+``` 
+ 
+
+Enfin, la commande summary affichera les valeurs min, max, mean, median et quantiles:
+La commande de résumé est particulièrement agréable parce que si vous lui donnez une datafra:e, elle imprimera le résumé pour chaque vecteur:
+
+```{r}
+summary(tree)
+``` 
+
+
+## Opérations sur les vecteurs
+
+Ici, nous regardons certaines commandes couramment utilisées qui effectuent des opérations sur des vecteurs Les commandes incluent les commandes sort , min , max et sum. Tout d'abord, la commande sort peut trier le vecteur donné dans l'ordre croissant ou décroissant:
+
+```{r}
+a = c(2,4,6,3,1,5)
+b = sort(a)
+c = sort(a,decreasing = TRUE)
+a
+b
+c
+``` 
+
+Les commandes min et max trouvent les nombres minimum et maximum dans le vecteur:
+
+```{r}
+min(a)
+max(a)
+``` 
+
+Enfin, la commande sum additionne les nombres dans le vecteur:
+
+```{r}
+sum(a)
+``` 
+
+
+
+
+
+#  Indexation dans les vecteurs
+
+Contenu
+
+    * Indexation avec des logiques
+    * Non disponible ou valeurs manquantes
+    * Indices avec expression logique 
+
+Étant donné un vecteur de données, une tâche commune consiste à isoler des entrées particulières ou à censurer des éléments répondant à certains critères. Ici, nous montrons comment utiliser la notation d'indexation de R pour sélectionner des éléments spécifiques dans un vecteur.
+
+## Indexation avec des logiques
+
+Nous donnons d'abord un exemple de la façon de sélectionner des éléments spécifiques dans un vecteur. La première étape consiste à définir un vecteur de données, et la seconde étape consiste à définir un vecteur constitué de valeurs logiques. Lorsque le vecteur de valeurs logiques est utilisé pour l'index dans le vecteur de valeurs de données, seuls les éléments correspondant aux variables évaluées sur TRUE sont renvoyés:
+
+  > a <- c ( 1 , 2 , 3 , 4 , 5 )
+ > b <- c ( VRAI , FAUX , FAUX , VRAI , FAUX )
+ > a [ b ]
+ [1] 1 4
+ > max ( a [ b ])
+ [1] 4
+ > somme ( a [ b ])
+ [1] 5
+
+## Non disponible ou valeurs manquantes
+
+Un problème commun concerne les entrées de données marquées NA ou non disponibles. Il existe une variable prédéfinie appelée NA qui peut être utilisée pour indiquer des informations manquantes. Le problème avec ceci est que certaines fonctions lancent une erreur si l'une des entrées dans les données est NA. Certaines fonctions vous permettent d'ignorer les valeurs manquantes grâce à des options spéciales:
+
+  > a <- c ( 1 , 2 , 3 , 4 , NA )
+ > un
+ [1] 1 2 3 4 NA
+ > somme ( a )
+ [1] NA
+ > sum ( a , na.rm = TRUE )
+ [1] 10
+
+Il y a cependant d'autres moments où cette option n'est pas disponible, ou si vous voulez simplement les censurer. La fonction is.na peut être utilisée pour déterminer quels éléments ne sont pas disponibles. L'opérateur logique "not" dans R est le ! symbole. Lorsqu'ils sont utilisés avec la notation d'indexation, les éléments d'un vecteur qui sont NA peuvent être facilement supprimés:
+
+  > a <- c ( 1 , 2 , 3 , 4 , NA )
+ > is.na ( a )
+ [1] FAUX FAUX FAUX FAUX VRAI
+ > !  is.na ( a )
+ [1] VRAI VRAI VRAI VRAI FAUX
+ > a [ !  is.na ( a )]
+ [1] 1 2 3 4
+ > b <- a [ !  is.na ( a )]
+ > b
+ [1] 1 2 3 4
+
+### Indices avec expression logique
+
+Toute expression logique peut être utilisée comme un index qui ouvre un large éventail de possibilités. Par exemple, vous pouvez supprimer ou mettre en évidence des entrées correspondant à des critères spécifiques. Par exemple, vous pouvez supprimer toutes les entrées au-dessus d'une certaine valeur:
+
+  > a = c ( 6 , 2 , 5 , 3 , 8 , 2 )
+ > un
+ [1] 6 2 5 3 8 2
+ > b = a [ a < 6 ]
+ > b
+ [1] 2 5 3 2
+
+Pour un autre exemple, supposons que vous souhaitiez rassembler les valeurs correspondant à deux facteurs différents dans un autre vecteur:
+
+  > d = data.frame ( one = as.factor ( c ( 'a' , 'a' , 'b' , 'b' , 'c' , 'c' )),
+ deux = c (1,2,3,4,5,6))
+ > d
+ un deux
+ 1 a 1
+ 2 a 2
+ 3 b 3
+ 4 b 4
+ 5 c 5
+ 6 c 6
+ > both = d $ deux [( d $ un == 'a' ) |  ( d $ un == 'b' )]
+ > les deux
+ [1] 1 2 3 4
+
+Notez qu'un seul '|' a été utilisé dans l'exemple précédent. Il y a une différence entre '||' et '|'. Une barre unique effectuera une opération vectorielle, terme par terme, tandis qu'une barre double évaluera un seul résultat TRUE ou FALSE:
+
+  > ( c ( VRAI , VRAI )) |  ( c ( FAUX , VRAI ))
+ [1] VRAI VRAI
+ > ( c ( VRAI , VRAI )) ||  ( c ( FAUX , VRAI ))
+ [1] VRAI
+ > ( c ( VRAI , VRAI )) & ( c ( FAUX , VRAI ))
+ [1] FAUX VRAI
+ > ( c ( VRAI , VRAI )) && ( c ( FAUX , VRAI ))
+ [1] FAUX
+
+
+
+# Graphiques de base
+
+
+Ceci est une introduction de base à certaines des commandes de graphique.
+
+## histogramme
+ 
+
+Pour tracer un histogramme des données, lire le fichier w1.dat dans objet et utiliser la commande "hist" sur la colonne "vals"
+
+```{r}
+w1 <- read.csv(file="w1.dat",sep=",",head=TRUE)
+hist(w1$vals)
+hist(w1$vals,main="Distribution of w1",xlab="w1")
+``` 
+
+Comme vous pouvez le voir, R calculera automatiquement les intervalles à utiliser. Il y a beaucoup d'options pour déterminer comment couper les intervalles. Si vous souhaitez en savoir plus sur les options, consultez la page d'aide:
+
+```{r}
+help(hist)
+hist(w1$vals,breaks=2)
+hist(w1$vals,breaks=4)
+hist(w1$vals,breaks=6)
+``` 
+
+ 
+ Vous pouvez également faire varier les limites de la zone tracée en utilisant l'option xlim. Cette option prend un vecteur avec deux entrées:
+
+```{r}
+hist(w1$vals,breaks=12,xlim=c(0,10))
+hist(w1$vals,breaks=12,xlim=c(-1,2))
+hist(w1$vals,breaks=12,xlim=c(0,2))
+``` 
+
+Vous devez toujours annoter vos graphiques et il existe plusieurs façons d'ajouter des titres et des libellés. Une façon est dans la commande hist elle-même:
+
+```{r}
+hist(w1$vals,
+       main='Leaf BioMass in High CO2 Environment',
+       xlab='BioMass of Leaves')
+``` 
+
+vous pouvez utiliser la commande title:
+
+```{r}
+hist(w1$vals,
+       main='Leaf BioMass in High CO2 Environment',
+       xlab='BioMass of Leaves')
+title('Leaf BioMass in High CO2 Environment',xlab='BioMass of Leaves')
+``` 
+
+Notez que cela ajoute simplement le titre et les étiquettes et écrira au-dessus de tous les titres ou étiquettes que vous avez déjà.
+
+Il n'est pas rare d'ajouter d'autres types de graphiques à un histogramme. Par exemple, l'une des options consiste à l'ajouter à un tracé qui a déjà été dessiné. Par exemple, vous pouvez avoir un histogramme avec un stripchart en haut. L'ajout du graphique peut vous donner une meilleure idée de la densité des données:
+
+```{r}
+hist(w1$vals,main='Leaf BioMass in High CO2 Environment',xlab='BioMass of Leaves',ylim=c(0,16))
+stripchart(w1$vals,add=TRUE,at=15.5)
+``` 
+
+
+## Boxplots 
+
+Une boîte à moustache fournit une représentation graphique de la médiane, des quartiles, du maximum et du minimum d'un ensemble de données. 
+
+Nous utilisons d'abord le jeu de données w1 et regardons le boxplot de la colonne vals:
+
+```{r}
+boxplot(w1$vals)
+``` 
+
+Il s'agit d'un graphique très simple, et le titre et les étiquettes peuvent être spécifiés exactement de la même manière que dans hist:
+
+```{r}
+boxplot(w1$vals,
+          main='Leaf BioMass in High CO2 Environment',
+          ylab='BioMass of Leaves')
+``` 
+
+Notez que l'orientation par défaut est de tracer le boxplot verticalement. Pour cette raison, nous avons utilisé l'option ylab pour spécifier l'étiquette de l'axe. Il y a un grand nombre d'options pour cette commande. Pour voir plus d'options voir la page d'aide:
+
+
+A titre d'exemple, vous pouvez spécifier que le boxplot soit tracé horizontalement:
+
+```{r}
+ boxplot(w1$vals,
+          main='Leaf BioMass in High CO2 Environment',
+          xlab='BioMass of Leaves',
+          horizontal=TRUE)
+``` 
+
+L'option de tracer la boîte à l'horizontale peut être utilisée pour afficher une boîte à moustaches sur la même image qu'un histogramme. Vous devez spécifier l'option add, spécifier où placer le plot box en utilisant l'option at, et désactiver l'ajout d'axes en utilisant l'option axes: 
+
+```{r}
+ hist(w1$vals,main='Leaf BioMass in High CO2 Environment',xlab='BioMass of Leaves',ylim=c(0,16))
+boxplot(w1$vals,horizontal=TRUE,at=15.5,add=TRUE,axes=FALSE)
+``` 
+
+
+Pour la deuxième partie sur les boxplots, nous allons travailler sur l'objet "tree", qui provient du fichier trees91.csv. Nous devons spécifier quelles colonnes sont des facteurs:
+
+```{r}
+tree <- read.csv(file="trees91.csv",sep=",",head=TRUE)
+tree$C <- factor(tree$C)
+tree$N <- factor(tree$N)
+``` 
+
+Nous pouvons tracer le boxplot pour la biomasse de la tige:
+
+
+```{r}
+boxplot(tree$STBM,
+          main='Stem BioMass in Different CO2 Environments',
+          ylab='BioMass of Stems')
+``` 
+
+mais les arbres ont été cultivés dans différents types d'environnements. La commande boxplot peut être utilisée pour tracer une boîte à moustaches distincte pour chaque niveau. 
+
+```{r}
+boxplot(tree$STBM~tree$C)
+```
+
+Notez que pour le niveau appelé "2", il y a quatre valeurs aberrantes qui sont représentées par des petits cercles. 
+
+
+
+## Scatter Plots
+
+Nous examinons la relation entre la biomasse de la tige (STBM) et la biomasse foliaire (LFBM).
+
+La commande pour tracer chaque paire de points en tant que coordonnée x et y-coorindate est "plot:"
+
+```{r}
+plot(tree$STBM,tree$LFBM)
+```
+
+Il semble qu'il existe une forte association positive entre la biomasse dans les tiges d'un arbre et les feuilles de l'arbre. Cela semble être une relation linéaire. En fait, la corrélation entre ces deux ensembles d'observations est assez élevée: 
+
+```{r}
+cor(tree$STBM,tree$LFBM)
+```
+
+Pour en revenir à l'intrigue, vous devriez toujours annoter vos graphiques. 
+
+```{r}
+plot(tree$STBM,tree$LFBM,
+       main="Relationship Between Stem and Leaf Biomass",
+       xlab="Stem Biomass",
+       ylab="Leaf Biomass")
+```
+
+
+
+# Application sur un vrai jeu de données
+
+ICI COLLER TP1
+
+
+
+# Graphiques intermédiaires
+
+La section est divisée en trois sections. L'objectif de la première section est de représenter graphiquement les données continues. L'objectif de la deuxième section est de représenter graphiquement des données discrètes. La troisième section offre quelques options diverses utiles dans divers contextes.
+
+## Données continues
+
+
+Dans les exemples ci-dessous, un ensemble de données est défini en utilisant le générateur de nombres aléatoires normalement distribués de R.
+
+```{r}
+x <- rnorm(10,sd=5,mean=20)
+y <- 2.5*x-1.0+rnorm(10,sd=9,mean=0)
+cor(x,y)
+
+```
+
+
+### Plusieurs jeux de données sur un graphique
+
+Une tâche courante consiste à tracer plusieurs ensembles de données sur le même graphique. Dans de nombreuses situations, la méthode consiste à créer le plot initial, puis à ajouter des informations supplémentaires Par exemple, pour tracer des données bivariées, la commande plot est utilisée pour initialiser et créer le tracé. La commande points peut ensuite être utilisée pour ajouter  données supplémentaires au tracé.
+
+Définissez d'abord un ensemble de nombres aléatoires, puis tracez-les. (Ce même jeu de données est utilisé dans tous les exemples ci-dessous.)
+
+```{r}
+x <- rnorm(10,sd=5,mean=20)
+y <- 2.5*x - 1.0 + rnorm(10,sd=9,mean=0)
+cor(x,y)
+plot(x,y,xlab="Independent",ylab="Dependent",main="Random Stuff")
+x1 <- runif(8,15,25)
+y1 <- 2.5*x1 - 1.0 + runif(8,-6,6)
+points(x1,y1,col=2)
+```
+
+Notez que dans l'exemple précédent, la couleur du second ensemble de points de données est définie à l'aide de l'option col . Vous pouvez essayer différents nombres pour voir quelles couleurs sont disponibles. Notez également que dans l'exemple ci-dessus, les points sont représentés par des cercles. Le symbole utilisé peut être changé en utilisant l'option pch .
+
+```{r}
+x2 <- runif(8,15,25)
+y2 <- 2.5*x2 - 1.0 + runif(8,-6,6)
+plot(x,y,xlab="Independent",ylab="Dependent",main="Random Stuff")
+points(x2,y2,col=3,pch=2)
+```
+
+
+Une autre option utile consiste à ajouter une légende. Cela peut être fait avec la commande legend. Les options de la commande, dans l'ordre, sont les coordonnées x et y sur le tracé pour placer la légende suivie d'une liste d'étiquettes à utiliser. Il existe un grand nombre d'autres options, utilisez donc help (légende) pour voir plus d'options. Par exemple, une liste de couleurs peut être donnée avec l'option col , et une liste de symboles peut être donnée avec l'option pch .
+
+```{r}
+plot(x,y,xlab="Independent",ylab="Dependent",main="Random Stuff")
+points(x1,y1,col=2,pch=3)
+points(x2,y2,col=4,pch=5)
+legend(14,70,c("Original","one","two"),col=c(1,2,4),pch=c(1,3,5))
+```
+
+### Barres d'erreur
+
+Une autre tâche courante consiste à ajouter des barres d'erreur à un ensemble de points de données. Cela peut être accompli en utilisant la commande arrows. La commande arrows prend deux paires de coordonnées, c'est-à-dire deux paires de valeurs x et y . La commande dessine ensuite une ligne entre chaque paire et ajoute une "tête de flèche" avec une longueur et un angle donnés. 
+
+```{r}
+plot(x,y,xlab="Independent",ylab="Dependent",main="Random Stuff")
+xHigh <- x
+yHigh <- y + abs(rnorm(10,sd=3.5))
+xLow <- x
+yLow <- y - abs(rnorm(10,sd=3.1))
+arrows(xHigh,yHigh,xLow,yLow,col=2,angle=90,length=0.1,code=3)
+```
+
+
+Notez que le code d'option est utilisé pour spécifier où les barres sont dessinées. Sa valeur peut être 1, 2 ou 3. 
+
+
+
+### Plusieurs graphiques sur une image
+
+Les graphiques sont disposés dans un tableau où le nombre par défaut de lignes et de colonnes est un (un graphique par page par défaut). Le paramètre mfrow est un vecteur avec deux entrées. La première entrée est le nombre de lignes d'images. La deuxième entrée est le nombre de colonnes. Dans l'exemple ci-dessus, les graphiques ont été disposées en une rangée avec deux graphiques
+
+```{r}
+par(mfrow=c(2,3))
+numberWhite <- rhyper(400,4,5,3)
+numberChipped <- rhyper(400,2,7,3)
+boxplot(numberWhite,main="first plot")
+boxplot(numberChipped,main="second plot")
+plot(jitter(numberWhite),jitter(numberChipped),xlab="Number White Marbles Drawn",
+       ylab="Number Chipped Marbles Drawn",main="Pulling Marbles With Jitter")
+hist(numberWhite,main="fourth plot")
+hist(numberChipped,main="fifth plot")
+mosaicplot(table(numberWhite,numberChipped),main="sixth plot")
+```
+
+
+
+### Tracés de densité
+
+Il y a des moments où vous ne voulez pas tracer des points spécifiques mais souhaitez tracer une densité. Cela peut être fait en utilisant la commande smoothScatter .
+
+```{r}
+numberWhite <- rhyper(30,4,5,3)
+numberChipped <- rhyper(30,2,7,3)
+smoothScatter(numberWhite,numberChipped,
+             xlab="White Marbles",ylab="Chipped Marbles",main="Drawing Marbles")
+```
+
+
+### Colorier des régions
+
+Une région ombrée peut être tracée en utilisant la commande polygone. La commande polygone prend une paire de vecteurs, x et y , et ombre la région délimitée par les paires de coordonnées. Dans l'exemple ci-dessous, un carré bleu est dessiné. Les sommets sont définis à partir de la partie inférieure gauche. Cinq paires de points sont données car le point de départ et le point final sont les mêmes.
+
+```{r}
+x = c(-1,1,1,-1,-1)
+y = c(-1,-1,1,1,-1)
+plot(x,y)
+polygon(x,y,col='blue')
+```
+
+Un exemple plus compliqué est donné ci-dessous. Dans cet exemple, la région de rejet pour un test d'hypothèse du côté droit est tracée, et elle est ombrée en rouge. 
+
+```{r}
+stdDev <- 0.75;
+x <- seq(-5,5,by=0.01)
+y <- dnorm(x,sd=stdDev)
+right <- qnorm(0.95,sd=stdDev)
+plot(x,y,type="l",xaxt="n",ylab="p",
+       xlab=expression(paste('Assumed Distribution of ',bar(x))),
+       axes=FALSE,ylim=c(0,max(y)*1.05),xlim=c(min(x),max(x)),
+       frame.plot=FALSE)
+axis(1,at=c(-5,right,0,5),
+       pos = c(0,0),
+       labels=c(expression(' '),expression(bar(x)[cr]),expression(mu[0]),expression(' ')))
+axis(2)
+xReject <- seq(right,5,by=0.01)
+yReject <- dnorm(xReject,sd=stdDev)
+polygon(c(xReject,xReject[length(xReject)],xReject[1]),
+          c(yReject,0, 0), col='red')
+```
+
+
+Les axes sont dessinés séparément. Ceci est fait en supprimant d'abord le tracé des axes dans la commande plot , et l'axe horizontal est dessiné séparément. Notez également que la commande expression est utilisée pour tracer un caractère grec et également produire des indices.
+
+
+## Données discrètes
+
+
+Dans les exemples ci-dessous, un ensemble de données est défini à l'aide du générateur de nombres aléatoires hypergéométriques de R.
+
+```{r}
+numberWhite <- rhyper ( 30 , 4 , 5 , 3 )
+numberChipped <- rhyper ( 30 , 2 , 7 , 3 )
+```
+
+### Barplot
+
+La commande plot tentera de produire les graphiques appropriés en fonction du type de données. Les données définies ci-dessus, cependant, sont des données numériques. La commande as.factor est utilisée pour convertir les données en facteurs et garantit que R les traite comme des données discrètes.
+
+```{r}
+numberWhite <- rhyper(30,4,5,3)
+numberWhite <- as.factor(numberWhite)
+plot(numberWhite)
+```
+
+Dans ce cas, R produira un barplot. La commande barplot peut également être utilisée pour créer un barplot. La commande barplot nécessite cependant un vecteur de hauteurs, et vous ne pouvez pas simplement lui donner les données brutes. Ces valeurs peuvent être facilement calculées à l'aide de la commande table.
+
+
+```{r}
+numberWhite <- rhyper(30,4,5,3)
+totals <- table(numberWhite)
+totals
+barplot(totals,main="Number Draws",ylab="Frequency",xlab="Draws")
+```
+
+
+Dans l'exemple précédent, la commande barplot est utilisée pour définir le titre du tracé et les libellés des axes. Les étiquettes sur les graduations pour l'axe horizontal sont générées automatiquement à l'aide des étiquettes de la table. Vous pouvez modifier les étiquettes en définissant les noms de ligne de la table.
+
+```{r}
+numberWhite <- rhyper(30,4,5,3)
+totals <- table(numberWhite)
+rownames(totals) <- c("none","one","two","three")
+barplot(totals,main="Number Draws",ylab="Frequency",xlab="Draws")
+```
+
+L'ordre des fréquences est le même que celui de la table. Si vous modifiez l'ordre dans le tableau, cela changera la façon dont il apparaît dans le graphique à barres. Par exemple, si vous souhaitez organiser les fréquences dans l'ordre décroissant, vous pouvez utiliser la commande de tri avec l'option décroissante.
+
+```{r}
+barplot(sort(totals,decreasing=TRUE),main="Number Draws",ylab="Frequency",xlab="Draws")
+```
+
+Les fonctions d'indexation de R peuvent être utilisées pour changer l'ordre des fréquences manuellement.
+
+```{r}
+totals
+sort(totals,decreasing=TRUE)
+numberWhite
+totals[c(3,1,4,2)]
+numberWhite
+barplot(totals[c(3,1,4,2)])
+```
+
+
+
+## Imprimer dans un fichier
+
+Il existe plusieurs façons d'imprimer un tracé dans un fichier. 
+Dans l'exemple ci-dessous, la fenêtre en cours est imprimée dans un fichier png appelé "hist.png" d'une largeur de 200 pixels.
+
+```{r,eval=FALSE}
+x = rnorm(100)
+hist(x)
+dev.print(device=png,width=200,"hist.png")
+```
+
+
+Une autre façon d'imprimer dans un fichier consiste à créer un périphérique. Une fois le périphérique créé, les différentes commandes de traçage sont données, puis le périphérique est désactivé pour écrire dans le fichier.
+
+```{r}
+png(file="hist.png")
+hist(x)
+rug(x,side=1)
+dev.off()
+```
+ 
+ 
+# Application sur un vrai jeu de données (lézards)
+
+ICI COLLER EXAM 2017
+
+# Gestion des données
+
+Contenu
+
+    * Ajouter des données
+    * Application de fonctions sur des éléments de données 
+
+Ici, nous examinons certaines tâches courantes qui se présentent lors du traitement des données. Ces tâches vont de l'assemblage de différents ensembles de données en des formes plus pratiques et des façons d'appliquer des fonctions à différentes parties des ensembles de données. Les rubriques de cette section démontrent une partie de la puissance de R, mais cela peut ne pas être clair au premier abord. Les fonctions sont couramment utilisées dans une grande variété de circonstances pour un certain nombre de raisons différentes. Ces outils m'ont permis d'économiser beaucoup de temps et d'efforts dans des circonstances que je n'aurais pas prédites à l'avance.
+
+La chose importante à noter, cependant, est que cette section est appelée " Data Management". "Il n'est pas appelé" Manipulation de données " . Les "politiciens" manipulent "les données, nous les" gérons ".
+
+## Ajout de données
+
+Lorsque vous avez plus d'un ensemble de données, vous pouvez les rapprocher. Vous pouvez regrouper différents ensembles de données en les ajoutant en tant que lignes ( rbind ) ou en les ajoutant en tant que colonnes ( cbind ). Le premier exemple montre comment cela est fait avec deux trames de données. Les arguments des fonctions peuvent prendre n'importe quel nombre d'objets. Nous n'en utilisons que deux ici pour simplifier la démonstration, mais des trames de données supplémentaires peuvent être ajoutées dans le même appel. Il est important de noter que lorsque vous regroupez des éléments en tant que lignes, les noms des objets dans le bloc de données doivent être identiques.
+
+  > a <- data.frame ( one = c ( 0 , 1 , 2 ), deux = c ( "a" , "a" , "b" ))
+ > b <- data.frame ( un = c ( 10 , 11 , 12 ), deux = c ( "c" , "c" , "d" ))
+ > un
+ un deux
+ 1 0 a
+ 2 1 a
+ 3 2 b
+ > b
+ un deux
+ 1 10 c
+ 2 11 c
+ 3 12 d
+ > v <- rbind ( a , b )
+ > typeof ( v )
+ [1] "liste"
+ > v
+ un deux
+ 1 0 a
+ 2 1 a
+ 3 2 b
+ 4 10 c
+ 5 11 c
+ 6 12 d
+ > w <- cbind ( a , b )
+ > typeof ( w )
+ [1] "liste"
+ > w
+ un deux un deux
+ 1 0 a 10 c
+ 2 1 a 11 c
+ 3 2 b 12 d
+ > names ( w ) = c ( "un" , "deux" , "trois" , "quatre" )
+ > w
+ un deux trois quatre
+ 1 0 a 10 c
+ 2 1 a 11 c
+ 3 2 b 12 d
+
+Les mêmes commandes fonctionnent également avec des vecteurs et des matrices et se comportent de la même manière.
+
+  > A = matrice ( c ( 1 , 2 , 3 , 4 , 5 , 6 ), ncol = 3 , byrow = VRAI )
+ > A
+ [, 1] [, 2] [, 3]
+ [1,] 1 2 3
+ [2,] 4 5 6
+ > B = matrice ( c ( 10 , 20 , 30 , 40 , 50 , 60 ), ncol = 3 , byrow = VRAI )
+ > B
+ [, 1] [, 2] [, 3]
+ [1,] 10 20 30
+ [2,] 40 50 60
+ > V <- rbind ( A , B )
+ > typeof ( V )
+ [1] "double"
+ > V
+ [, 1] [, 2] [, 3]
+ [1,] 1 2 3
+ [2,] 4 5 6
+ [3,] 10 20 30
+ [4,] 40 50 60
+ > W <- cbind ( A , B )
+ > typeof ( W )
+ [1] "double"
+ > W
+ [, 1] [, 2] [, 3] [, 4] [, 5] [, 6]
+ [1,] 1 2 3 10 20 30
+ [2,] 4 5 6 40 50 60
+
+## Application de fonctions sur des éléments de données
+
+Les diverses fonctions d' application peuvent être un outil précieux lorsque vous essayez de travailler avec des sous-ensembles dans un ensemble de données. Les différentes versions des commandes apply permettent de prendre une fonction et d'exécuter une opération sur chaque partie des données. Il existe une grande variété de ces commandes, mais nous n'en examinons que deux. Le premier ensemble, lapply et sapply , est utilisé pour appliquer une fonction à chaque élément d'une liste. Le deuxième, tapply , est utilisé pour appliquer une fonction sur chaque ensemble divisé par un ensemble donné de facteurs.
+
+### Opérations sur les listes et les vecteurs
+
+Tout d'abord, la commande lapply est utilisée pour prendre une liste d'éléments et effectuer une fonction sur chaque membre de la liste. Autrement dit, la liste comprend un certain nombre d'objets différents. Vous voulez effectuer une opération sur chaque objet de la liste. Vous pouvez utiliser Lappply pour indiquer à R de parcourir chaque élément de la liste et d'effectuer l'action souhaitée sur chaque élément.
+
+Dans l'exemple suivant, une liste est créée avec trois éléments. Le premier est un ensemble de nombres générés aléatoirement avec une distribution normale. Le second est un ensemble de nombres générés aléatoirement avec une distribution exponentielle. Le dernier est un ensemble de facteurs. Un résumé est ensuite effectué sur chaque élément de la liste.
+
+  > x <- liste ( a = rnorm ( 200 , moyenne = 1 , sd = 10 ),
+ b = rexp (300,10,0),
+ c = as.facteur (c ("a", "b", "b", "b", "c", "c")))
+ > lapply ( x , résumé )
+ $ a
+ Min.  1er Qu.  Médiane Moyenne 3e Qu.  Max.
+ -26.65000 -6.91200 -0.39250 0.09478 6.86700 32.00000
+
+ $ b
+ Min.  1er Qu.  Médiane Moyenne 3e Qu.  Max.
+ 0.0001497 0.0242300 0.0633300 0.0895400 0.1266000 0.7160000
+
+ $ c
+ abc
+ 1 3 2
+
+La commande lapply retourne une liste. Les entrées de la liste portent le même nom que les entrées de la liste qui lui est transmise. Les valeurs de chaque entrée sont les résultats de l'application de la fonction. La fonction Sapply est similaire, mais la différence est qu'elle essaie de transformer le résultat en un vecteur ou une matrice si possible. Si cela n'a pas de sens, alors il retourne une liste comme la commande lapply . 
+
+
+  > x <- liste ( a = rnorm ( 8 , moyenne = 1 , sd = 10 ), b = rexp ( 10 , 10.0 ))
+ > x
+ $ a
+ [1] -0.3881426 6.2910959 13.0265859 -1.5296377 6.9285984 -28.3050569
+ [7] 11.9119731 -7.6036997
+
+ $ b
+ [1] 0.212689007 0.081818395 0.222462531 0.181424705 0.168476454 0.002924134
+ [7] 0,007010114 0,016301837 0,081291728 0,055426055
+
+ > val <- lapply ( x , mean )
+ > typeof ( val )
+ [1] "liste"
+ > val
+ $ a
+ [1] 0,04146456
+
+ $ b
+ [1] 0,1029825
+
+ > val $ a
+ [1] 0,04146456
+ > val $ b
+ [1] 0,1029825
+ >
+ >
+ > autre <- sapply ( x , mean )
+ > typeof ( autre )
+ [1] "double"
+ > autre
+ un B
+ 0.04146456 0.10298250
+ > autre [ 1 ]
+ une
+ 0,04146456
+ > autre [ 2 ]
+ b
+ 0,1029825
+
+### Opérations par facteurs
+
+Une autre variante largement utilisée des fonctions d' application est la fonction tapply . La fonction tapply prendra une liste de données, généralement un vecteur, une liste de facteurs de la même liste et une fonction. Il appliquera ensuite la fonction à chaque sous-ensemble de données correspondant à chacun des facteurs.
+
+  > val <- data.frame ( a = c ( 1 , 2 , 10 , 20 , 5 , 50 ),
+ b = as.factor (c ("a", "a", "b", "b", "a", "b")))
+ > val
+ un B
+ 1 1 a
+ 2 2 a
+ 3 10 b
+ 4 20 b
+ 5 5 a
+ 6 50 b
+ > résultat <- tapply ( val $ a , val $ b , moyenne )
+ > typeof ( résultat )
+ [1] "double"
+ > résultat
+ un B
+ 2.666667 26.666667
+ > résultat [ 1 ]
+ une
+ 2.666667
+ > résultat [ 2 ]
+ b
+ 26.66667
+ > résultat <- tapply ( val $ a , val $ b , résumé )
+ > typeof ( résultat )
+ [1] "liste"
+ > résultat
+ $ a
+ Min.  1er Qu.  Médiane Moyenne 3e Qu.  Max.
+ 1.000 1.500 2.000 2.667 3.500 5.000
+
+ $ b
+ Min.  1er Qu.  Médiane Moyenne 3e Qu.  Max.
+ 10.00 15.00 20.00 26.67 35.00 50.00
+
+ > résultat $ a
+ Min.  1er Qu.  Médiane Moyenne 3e Qu.  Max.
+ 1.000 1.500 2.000 2.667 3.500 5.000
+ > résultat $ b
+ Min.  1er Qu.  Médiane Moyenne 3e Qu.  Max.
+ 10.00 15.00 20.00 26.67 35.00 50.00
+
+
+# Introduction à la programmation
+
+Contenu
+
+* Exécuter un fichier
+* Les fonctions 
+
+Nous regardons les commandes en cours d'exécution à partir d'un fichier source. Nous incluons également une vue d'ensemble des différentes instructions utilisées pour le contrôle-flux qui détermine quel code est exécuté par l'interpréteur.
+
+## Exécuter un fichier
+
+Contenu
+
+* Exécuter les commandes dans un fichier
+* si déclarations
+* pour les déclarations
+* tandis que les déclarations
+* répéter les déclarations
+* pause et prochaines déclarations
+* changement d'instruction
+* instruction de scan 
+
+Dans la section suivante, les moyens d'exécuter les commandes dans un fichier en utilisant la commande source sont donnés. Les sections restantes sont utilisées pour répertorier les différentes options de contrôle de flux disponibles dans la définition du langage R. La définition de la langue a une grande variété de fonctions de contrôle qui peuvent être trouvées en utilisant la commande help .
+
+  > aide ( Contrôle )
+ >
+
+### Exécuter les commandes dans un fichier
+
+Un ensemble de commandes R peut être enregistré dans un fichier, puis exécuté comme si vous l'aviez tapé depuis la ligne de commande. La commande source est utilisée pour lire le fichier et exécuter les commandes dans la même séquence que celle donnée dans le fichier.
+
+  > source ( 'fichier.R' )
+ > aide ( source )
+ >
+
+Si vous générez simplement le fichier, les commandes ne sont pas imprimées et les résultats des commandes ne sont pas imprimés. Cela peut être remplacé en utilisant les options echo , print.eval et verbose .
+
+Certains exemples sont donnés en supposant qu'un fichier, simpleEx.R , se trouve dans le répertoire courant. Le fichier est donné ci-dessous:
+
+```{r}
+ #  # Définir une variable.
+ # x <- rnorm ( 10 )
+ # 
+ # # calcule la moyenne de x et imprime les résultats.
+ # mux = moyenne ( x )
+ # cat ( "La moyenne de x est" , moyenne ( x ), "\ n" )
+ # 
+ # # imprimer un résumé des résultats
+ # résumé ( x )
+ # cat ( "Le résumé de x est \ n" , résumé ( x ), "\ n" )
+ # imprimer ( résumé ( x ))
+```
+
+
+
+Le fichier montre également l'utilisation de # pour spécifier des commentaires. Tout ce qui suit le # est ignoré. En outre, le fichier illustre l'utilisation de cat et print pour envoyer les résultats à la sortie standard. Notez que les commandes ont des options pour envoyer les résultats à un fichier. Utilisez l' aide pour plus d'informations.
+
+La sortie pour les différentes options peut être trouvée ci-dessous: 
+
+```{r}
+
+# 
+# 
+#   > source ( 'simpleEx.R' )
+#  La moyenne de x est -0.4817475
+#  Le résumé de x est
+#  -2.24 -0.5342 -0.2862 -0.4817 -0.1973 0.4259
+#  Min.  1er Qu.  Médiane Moyenne 3e Qu.  Max.
+#  -2.2400 -0.5342 -0.2862 -0.4817 -0.1973 0.4259
+#  >
+#  >
+#  >
+#  > source ( 'simpleEx.R' , echo = TRUE )
+#  Min.  1er Qu.  Médiane Moyenne 3e Qu.  Max.
+#  -2.32600 -0.69140 -0.06772 -0.13540 0.46820 1.69600
+#  >
+#  >
+#  >
+#  > source ( 'simpleEx.R' , print.eval = TRUE )
+#  La moyenne de x est 0,1230581
+#  Min.  1er Qu.  Médiane Moyenne 3e Qu.  Max.
+#  -1.7020 -0.2833 0.1174 0.1231 0.9103 1.2220
+#  Le résumé de x est
+#  -1.702 -0.2833 0.1174 0.1231 0.9103 1.222
+#  Min.  1er Qu.  Médiane Moyenne 3e Qu.  Max.
+#  -1.7020 -0.2833 0.1174 0.1231 0.9103 1.2220
+#  >
+#  >
+#  >
+#  > source ( 'simpleEx.R' , print.eval = FALSE )
+#  La moyenne de x est de 0,6279428
+#  Le résumé de x est
+#  -0.7334 -0.164 0.9335 0.6279 1.23 1.604
+#  Min.  1er Qu.  Médiane Moyenne 3e Qu.  Max.
+#  -0.7334 -0.1640 0.9335 0.6279 1.2300 1.6040
+#  >
+#  >
+#  >
+#  >
+#  > source ( 'simpleEx.R' , verbose = TRUE )
+#  'envir' choisi: <environnement: R_GlobalEnv>
+#  encoding = "native.enc" choisi
+#  -> analysé 6 expressions;  maintenant eval (.) les ing:
+# 
+#  >> >> eval ( expression_nr.1 )
+#  =================
+# 
+#  > # Définir une variable.
+#  > x <- rnorm ( 10 )
+#  curr.fun: symbole <-
+#  .. après 'expression (x <- rnorm (10))'
+# 
+#  >> >> eval ( expression_nr.2 )
+#  =================
+# 
+#  > # calcule la moyenne de x et imprime les résultats.
+#  > mux = moyenne ( x )
+#  curr.fun: symbole =
+#  .. après 'expression (mux = mean (x))'
+# 
+#  >> >> eval ( expression_nr.3 )
+#  =================
+# 
+#  > cat ( "La moyenne de x est" , moyenne ( x ), "\ n" )
+#  La moyenne de x est -0.1090932
+#  curr.fun: symbole du chat
+#  .. après 'expression (cat ("La moyenne de x est", mean (x), "\ n"))'
+# 
+#  >> >> eval ( expression_n ° 4 )
+#  =================
+# 
+#  > # imprimer un résumé des résultats
+#  > résumé ( x )
+#  curr.fun: résumé du symbole
+#  Min.  1er Qu.  Médiane Moyenne 3e Qu.  Max.
+#  -1.3820 -1.0550 -0.1995 -0.1091 0.6813 2.1050
+#  .. après 'expression (résumé (x))'
+# 
+#  >> >> eval ( expression_nr 5 )
+#  =================
+# 
+#  > cat ( "Le résumé de x est \ n" , résumé ( x ), "\ n" )
+#  Le résumé de x est
+#  -1.382 -1.055 -0.1995 -0.1091 0.6813 2.105
+#  curr.fun: symbole du chat
+#  .. après 'expression (cat ("Le résumé de x est \ n", résumé (x), "\ n"))'
+# 
+#  >> >> eval ( expression_nr 6 )
+#  =================
+# 
+#  > imprimer ( résumé ( x ))
+#  Min.  1er Qu.  Médiane Moyenne 3e Qu.  Max.
+#  -1.3820 -1.0550 -0.1995 -0.1091 0.6813 2.1050
+#  curr.fun: impression de symbole
+#  .. après 'expression (print (summary (x)))'
+
+ 
+```
+ 
+Un problème fréquent qui se produit est que R peut ne pas savoir où trouver un fichier.
+
+  > source ( 'notThere.R' )
+ Erreur dans le fichier (nom de fichier, "r", encoding = encoding):
+ ne peut pas ouvrir la connexion
+ En outre: Message d'avertissement:
+ Dans le fichier (filename, "r", encoding = encoding):
+ Impossible d'ouvrir le fichier 'notThere.R': aucun fichier ou répertoire de ce type
+
+R va chercher dans le répertoire de travail actuel. Vous pouvez voir quels fichiers sont dans le répertoire en utilisant la commande dir , et vous pouvez déterminer le répertoire courant en utilisant la commande getwd .
+
+  > getwd ()
+ [1] "/ home / noir / public_html / tutoriel / R / rst / source / R"
+ > dir ()
+ [1] "plotting.rData" "power.R" "shadedRegion.R"
+
+Vous pouvez changer le répertoire actuel, et les options disponibles dépendent de la façon dont vous utilisez R. Par exemple sur un PC Windows ou un Macintosh, vous pouvez utiliser les options du menu pour changer le répertoire de travail. Vous pouvez choisir le répertoire en utilisant un navigateur de fichiers graphique. Sinon, vous pouvez passer au bon répertoire avant d'exécuter R ou utiliser la commande setwd .
+
+### if instructions
+
+L'exécution conditionnelle est disponible en utilisant l'instruction if et l'instruction else correspondante. 
+ > x = 0,1
+ > si ( x < 0,2 )
+ {
+ x <- x + 1
+ cat ("incrémenter ce nombre! \ n")
+ }
+ incrémenter ce nombre!
+ > x
+ [1] 1,1
+
+L'instruction else peut être utilisée pour spécifier une autre option. Dans l'exemple ci-dessous, notez que l'instruction else doit être sur la même ligne que l'accolade de fin pour le bloc if précédent.
+
+  > x = 2,0
+ > si ( x < 0,2 )
+ {
+ x <- x + 1
+ cat ("incrémenter ce nombre! \ n")
+ } autre
+ {
+ x <- x - 1
+ cat ("nah, le rendre plus petit. \ n");
+ }
+ nah, rends-le plus petit.
+ > x
+ [1] 1
+
+Enfin, les instructions if peuvent être chaînées pour plusieurs options. L'instruction if est considérée comme un seul bloc de code, donc plus si des instructions peuvent être ajoutées après l' autre .
+
+  > x = 1,0
+ > si ( x < 0,2 )
+ {
+ x <- x + 1
+ cat ("incrémenter ce nombre! \ n")
+ } else si (x <2,0)
+ {
+ x <- 2.0 * x
+ chat ("pas assez grand! \ n")
+ } autre
+ {
+ x <- x - 1
+ cat ("nah, le rendre plus petit. \ n");
+ }
+ pas assez grand!
+ > x
+ [1] 2
+
+L'argument de l'instruction if est une expression logique. Une liste complète des opérateurs logiques peut être trouvée dans le document de types en se concentrant sur les variables logiques ( Logique ).
+
+### pour les déclarations
+
+La boucle for peut être utilisée pour répéter un ensemble d'instructions, et elle est utilisée lorsque vous connaissez à l'avance les valeurs que la variable de boucle aura à chaque fois qu'elle traverse la boucle. Le format de base de la boucle for est pour (var in seq) expr
+
+Un exemple est donné ci-dessous:
+
+  > pour ( lupe en seq ( 0 , 1 , par = 0,3 ))
+ {
+ chat (lupe, "\ n");
+ }
+ 0
+ 0,3
+ 0,6
+ 0,9
+ >
+ > x <- c ( 1 , 2 , 4 , 8 , 16 )
+ > pour ( boucle en x )
+ {
+ cat ("valeur de la boucle:", boucle, "\ n");
+ }
+ valeur de la boucle: 1
+ valeur de la boucle: 2
+ valeur de la boucle: 4
+ valeur de la boucle: 8
+ valeur de la boucle: 16
+
+Voir la section sur les pauses pour plus d'options ( pause et prochaines déclarations )
+15.1.4. tandis que les déclarations
+
+La boucle while peut être utilisée pour répéter une série d'instructions, et elle est souvent utilisée lorsque vous ne savez pas à l'avance à quelle fréquence les instructions seront exécutées. Le format de base pour une boucle while est while (cond) expr
+
+  >
+ > lupe <- 1 ;
+ > x <- 1
+ > tandis que ( x < 4 )
+ {
+ x <- rnorm (1, moyenne = 2, sd = 3)
+ cat ("essayant cette valeur:", x, "(", lupe, "fois en boucle) \ n");
+ lupe <- lupe + 1
+ }
+ en essayant cette valeur: -4.163169 (1 fois en boucle)
+ essayer cette valeur: 3.061946 (2 fois en boucle)
+ essayer cette valeur: 2.10693 (3 fois en boucle)
+ essayer cette valeur: -2.06527 (4 fois en boucle)
+ essayer cette valeur: 0.8873237 (5 fois en boucle)
+ essayer cette valeur: 3.145076 (6 fois en boucle)
+ essayer cette valeur: 4.504809 (7 fois en boucle)
+
+Voir la section sur les pauses pour plus d'options ( pause et prochaines déclarations )
+### répéter les instructions
+
+La boucle de répétition est similaire à la boucle while. La différence est qu'il commencera toujours la boucle la première fois. La boucle while ne lancera la boucle que si la condition est vraie la première fois qu'elle est évaluée. Une autre différence est que vous devez spécifier explicitement quand arrêter la boucle en utilisant la commande break .
+
+C'est-à-dire que vous devez exécuter l'instruction break pour sortir de la boucle. 
+
+
+  > répète
+ {
+ x <- rnorm (1)
+ si (x <-2.0) casse
+ }
+ > x
+ [1] -2.300532
+
+Voir la section sur les pauses pour plus d'options ( pause et prochaines déclarations )
+15.1.6. pause et les prochaines instructions
+
+L'instruction break est utilisée pour arrêter l'exécution de la boucle en cours. Il va sortir de la boucle actuelle. L'instruction suivante est utilisée pour ignorer les instructions qui suivent et relancer la boucle en cours. Si une boucle for est utilisée, l'instruction suivante met à jour la variable de boucle.
+
+  > x <- rnorm ( 5 )
+ > x
+ [1] 1.41699338 2.28086759 -0.01571884 0.56578443 0.60400784
+ > pour ( lupe en x )
+ {
+ si (lupe> 2.0)
+ prochain
+
+ si ((lupe <0.6) && (lupe> 0.5))
+ Pause
+
+ cat ("La valeur de lupe est", lupe, "\ n");
+ }
+ La valeur de lupe est 1.416993
+ La valeur de lupe est -0.01571884
+
+### basculer l'instruction
+
+Le commutateur prend une expression et renvoie une valeur dans une liste en fonction de la valeur de l'expression. Cela dépend du type de données de l'expression. La syntaxe de base est switch (instruction, item1, item2, item3, ..., itemN) .
+
+Si le résultat de l'expression est un nombre, il renvoie l'élément de la liste avec le même index. Notez que l'expression est convertie en entier s'il ne s'agit pas d'un nombre entier.
+
+  > x <- as.integer ( 2 )
+ > x
+ [1] 2
+ > z = interrupteur ( x , 1 , 2 , 3 , 4 , 5 )
+ > z
+ [1] 2
+ > x <- 3,5
+ > z = interrupteur ( x , 1 , 2 , 3 , 4 , 5 )
+ > z
+ [1] 3
+
+Si le résultat de l'expression est une chaîne, la liste des éléments doit être de la forme "valueN" = resultN , et l'instruction retournera le résultat correspondant à la valeur.
+
+  > y <- rnorm ( 5 )
+ > y
+ [1] 0.4218635 -0.8205637 -1.0191267 -0.6080061 -0.6079133
+ > x <- "sd"
+ > z <- commutateur ( x , "moyenne" = moyenne ( y ), "médiane" = médiane ( y ), "variance" = var ( y ), "sd" = sd ( y ))
+ > z
+ [1] 0,5571847
+ > x <- "médiane"
+ > z <- commutateur ( x , "moyenne" = moyenne ( y ), "médiane" = médiane ( y ), "variance" = var ( y ), "sd" = sd ( y ))
+ > z
+ [1] -0.6080061
+
+### instruction scan
+
+La commande pour lire l'entrée à partir du clavier est l'instruction scan . Il a une grande variété d'options et peut être ajusté à vos besoins spécifiques. Nous regardons seulement les bases ici. L'instruction scan attend la saisie d'un utilisateur et renvoie la valeur saisie.
+
+Lorsque vous utilisez la commande sans nombre défini de lignes, la commande continue à lire les entrées du clavier jusqu'à ce qu'une ligne vierge soit entrée.
+
+  > aide ( scan )
+ > a <- scan ( quoi = double ( 0 ))
+ 1: 3,5
+ 2:
+ Lire 1 article
+ > un
+ [1] 3,5
+ > typeof ( a )
+ [1] "double"
+ >
+ > a <- scan ( quoi = double ( 0 ))
+ 1: yo!
+ 1:
+ Erreur dans l'analyse (fichier, quoi, nmax, sep, dec, citation, skip, nlines, na.strings,:
+ scan () attendait 'un vrai', 'yo!'
+
+Si vous souhaitez seulement le lire depuis un nombre fixe de lignes, l'option nmax peut spécifier combien de lignes peuvent être tapées, et l'option multi.line peut être utilisée pour désactiver l'entrée multiligne.
+
+  > a <- scan ( quoi = double ( 0 ), nmax = 1 , multi.line = FAUX )
+ 1: 6.7
+ Lire 1 article
+ > un
+ [1] 6,7
+
+## Fonctions
+
+Un aperçu superficiel des fonctions de définition est donné ici. Quelques subtilités seront notées, mais R peut être un peu excentrique en ce qui concerne la définition des fonctions. Le premier élément d'étrangeté est que vous pouvez considérer une fonction comme un objet où vous définissez la fonction et l'affectez à un nom de variable.
+
+Pour définir une fonction, vous l'affectez à un nom, et la fonction mot-clé est utilisée pour indiquer le début de la fonction et sa liste d'arguments. 
+
+
+  > newDef <- fonction ( a , b )
+ {
+ x = runif (10, a, b)
+ moyenne (x)
+ }
+ > nouveauDef ( -1 , 1 )
+ [1] 0,06177728
+ > newDef
+ fonction (a, b)
+ {
+ x = runif (10, a, b)
+ moyenne (x)
+ }
+
+La dernière expression de la fonction est ce qui est retourné. Ainsi, dans l'exemple ci-dessus, la moyenne des nombres est renvoyée.
+
+  > x <- newDef ( 0 , 1 )
+ > x
+ [1] 0.4800442
+
+Les arguments transmis sont mis en correspondance dans l'ordre. Ils peuvent être spécifiés explicitement, cependant.
+
+  > nouveauDef ( b = 10 , a = 1 )
+ [1] 4.747509
+ > nouveauDef ( 10 , 1 )
+ [1] NaN
+ Message d'alerte:
+ Dans runif (10, a, b): NA produit
+
+Vous pouvez mélanger cette approche, et R essaiera de faire correspondre les arguments nommés et de faire correspondre le reste de gauche à droite. Un autre peu d'étrangeté est que R n'évaluera pas une expression dans la liste d'arguments jusqu'au moment où elle est nécessaire dans la fonction. C'est un comportement différent de celui auquel la plupart des gens sont habitués, alors soyez très prudent à ce sujet. La meilleure règle consiste à ne pas mettre les opérations dans une liste d'arguments si elles importent après l'appel de la fonction.
+
+Une autre tâche courante consiste à avoir une fonction renvoyer plusieurs éléments. Cela peut être accompli en renvoyant une liste d'éléments. Les objets dans une liste peuvent être accédés en utilisant la même notation $ utilisée pour les trames de données.
+
+  > c = c ( 1 , 2 , 3 , 4 , 5 )
+ > exemple <- fonction ( a , b )
+ {
+ value = switch (a, "médiane" = médiane (b), "moyenne" = moyenne (b), "variance" = var (b))
+ largeVals = longueur (c [c> 1])
+ liste (stat = valeur, nombre = grandVals)
+ }
+ > résultat <- échantillon ( "médiane" , c )
+ > résultat
+ $ stat
+ [1] 3
+
+ nombre $
+ [1] 4
+
+ > résultat $ stat
+ [1] 3
+ > résultat $ numéro
+ [1] 4
+
+Un autre problème potentiel peut survenir lors de l'utilisation d'une fonction dans R. Lorsqu'il s'agit de déterminer la valeur d'une variable, R utilise un chemin pour rechercher sa valeur. Dans le cas de fonctions, si une variable précédemment indéfinie apparaît, R regardera la liste des arguments de la fonction. Ensuite, il regardera dans l'espace de travail actuel. Si vous ne faites pas attention, R trouvera la valeur à un endroit où vous ne l'attendez pas, et votre fonction retournera une valeur qui n'est pas correcte, et aucune erreur ne sera donnée. Soyez très prudent sur les noms des variables, en particulier lorsque vous utilisez des fonctions.
+
+
