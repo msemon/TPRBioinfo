@@ -936,7 +936,7 @@ points(x2,y2,col=4,pch=5)
 legend(14,70,c("Original","one","two"),col=c(1,2,4),pch=c(1,3,5))
 ```
 
-### Barres d'erreur
+### Barres d'erreur 
 
 Une autre tâche courante consiste à ajouter des barres d'erreur à un ensemble de points de données. Cela peut être accompli en utilisant la commande arrows. La commande arrows prend deux paires de coordonnées, c'est-à-dire deux paires de valeurs x et y . La commande dessine ensuite une ligne entre chaque paire et ajoute une "tête de flèche" avec une longueur et un angle donnés. 
 
@@ -1077,9 +1077,9 @@ barplot(totals[c(3,1,4,2)])
 ```
 
 
-## Imprimer dans un fichier
+## Imprimer dans un fichier XXX Sauvegarder dans un fichier XXXX
 
-Il existe plusieurs façons d'imprimer un tracé dans un fichier. 
+Il existe plusieurs façons d'enregister un graphique dans un fichier. 
 Dans l'exemple ci-dessous, la fenêtre en cours est imprimée dans un fichier png appelé "hist.png" d'une largeur de 200 pixels.
 
 ```{r,eval=FALSE}
@@ -1089,7 +1089,7 @@ dev.print(device=png,width=200,"hist.png")
 ```
 
 
-Une autre façon d'imprimer dans un fichier consiste à créer un périphérique. Une fois le périphérique créé, les différentes commandes de traçage sont données, puis le périphérique est désactivé pour écrire dans le fichier.
+Une autre façon de sauvegarder un graphique dans un fichier consiste à créer un périphérique. Une fois le périphérique créé, les différentes commandes de traçage sont données, puis le périphérique est désactivé pour écrire dans le fichier.
 
 ```{r}
 png(file="hist.png")
@@ -1162,6 +1162,40 @@ Les différentes versions des commandes apply permettent de prendre une fonction
 
 Tout d'abord, la commande lapply est utilisée pour prendre une liste d'éléments et effectuer une fonction sur chaque membre de la liste. Autrement dit, la liste comprend un certain nombre d'objets différents. Vous voulez effectuer une opération sur chaque objet de la liste. Vous pouvez utiliser lappply pour indiquer à R de parcourir chaque élément de la liste et d'effectuer l'action souhaitée sur chaque élément.
 
+
+XXXXXXXXXXXXX
+En fait là il aurait déjà fallut introduire les fonctions
+mettre la section instructions + fonctions avant "application de fonctions"? 
+XXXXXXXXXXXXX
+
+XXXX
+Petit exemples pas trop compliqués:
+```{r, eval=FALSE}
+lapply(list(9,16,24), sqrt)
+lapply(list(1,2,3), function(x){x*x})
+```
+
+
+> Faire une fonction qui renvoie la somme des carrée d'une liste de nombres"
+
+
+```{r, eval=FALSE}
+
+somme_carre_list <- function( ... ) {
+  ...
+}
+
+
+
+somme_carre_list(list(1,2,3,4,5,6))
+
+```
+
+XXXX
+
+
+
+
 Dans l'exemple suivant, une liste est créée avec trois éléments. Le premier est un ensemble de nombres générés aléatoirement avec une distribution normale. Le second est un ensemble de nombres générés aléatoirement avec une distribution exponentielle. Le dernier est un ensemble de facteurs. Un résumé est ensuite effectué sur chaque élément de la liste.
 
 ```{r,eval=FALSE}
@@ -1210,6 +1244,45 @@ result$a
 ```
 
 
+
+
+
+XXXXX
+
+### Opérations sur un tableau
+
+La fonction apply prend un tableau, et une fonction.  ...
+
+```{r,eval=FALSE}
+val <- data.frame(a=runif(10,1,10),
+                    b=runif(10,1,10),
+                  c=runif(10,1,10))
+val
+
+val$mean = apply(val,1,mean)
+
+val
+
+val["total",] = apply(val,2,sum)
+val
+
+```
+
+> Faire la meme chose sur val2 XX (pour rappeler la partie indexation)
+
+```{r,eval=FALSE}
+val2 <- data.frame(name=LETTERS[1:10],
+                  a=runif(10,1,10),
+                    b=runif(10,1,10),
+                  c=runif(10,1,10))
+val2
+
+```
+
+XXXX
+
+
+
 # Introduction à la programmation
 
 ## Instructions
@@ -1217,6 +1290,8 @@ result$a
 ### if 
 
 L'exécution conditionnelle est disponible en utilisant l'instruction if. 
+
+XXX print plutot que cat ? XXXX
 
 ```{r}
 x = 0.1
@@ -1285,6 +1360,9 @@ for(loop in x)
 }
 ```
 
+
+XXX Vous verrez plus loin une autre manière de faire des itérations avec les fonctions apply qui seront alors à priviligiez XXXX
+
 break est utilisé pour arrêter l'execution de la boucle. 
 
 ```{r}
@@ -1320,6 +1398,8 @@ while(x < 4)
 
 ### répéter les instructions
 
+XXXXX Est ce que c'est necesaire ? XXXX
+
 La boucle de répétition est similaire à la boucle while. La différence est que la boucle est réalisée au moins une fois. while ne lancera la boucle que si la condition est vraie la première fois qu'elle est évaluée. Une autre différence est que vous devez spécifier explicitement quand arrêter la boucle en utilisant la commande break .
 
 C'est-à-dire que vous devez exécuter l'instruction break pour sortir de la boucle. 
@@ -1338,6 +1418,36 @@ x
 ## Fonctions
 
 Pour définir une fonction, vous l'affectez à un nom, et la fonction mot-clé est utilisée pour indiquer le début de la fonction et sa liste d'arguments. La dernière ligne de la fonction est ce qui est retourné. Ainsi, dans l'exemple ci-dessus, la moyenne des nombres est renvoyée.
+
+XXXXXXXXXXX
+
+
+```{r}
+
+somme <- function(a,b)
+{ 
+  return(a+b)
+  }
+
+somme(1,5)
+```
+
+La valeur retournée par la fonction est celle contenue de return
+ou la derniere valeur de la fonctiont.
+
+```{r}
+
+somme <- function(a,b)
+{ a+b}
+somme(1,5)
+```
+
+
+
+Vous pouvez aussi appeler d'autre fonctions dans vos fonctions:
+
+
+XXXXXXXXXXXXXXXXX
 
 
 ```{r}
@@ -1368,7 +1478,38 @@ newDef(b=10,a=1)
 newDef(10,1)
 ```
 
+
+XXXXXXXXXXX
+
+Fonction avec argument optionnel ?
+
+XXXXXXXXXXXXX
+
+
 Une autre tâche courante consiste à avoir une fonction qui renvoie plusieurs éléments. Cela peut être accompli en renvoyant une liste d'éléments. Les objets dans une liste peuvent être accédés en utilisant la même notation $ utilisée pour les trames de données.
+
+XXXXXXXXXXXX
+Exemple plus simple non ?
+
+
+```{r}
+c = c(1,2,3,4,5)
+petites_stats <- function(x)
+{
+  m = mean(x)
+  min = min(x)
+  max = max(x)
+  len = length(x)
+  return(list(min=min,max=max,len=len,mean=mean))
+}
+result <- petites_stats(c)
+result
+result$min
+result$mean
+```
+
+
+
 
 
 ```{r}
@@ -1385,8 +1526,43 @@ result$stat
 result$number
 ```
 
+
+XXXXXXXXXXXXXXX
+
 Un autre problème potentiel peut survenir lors de l'utilisation d'une fonction dans R. Si une variable précédemment indéfinie apparaît, R regardera la liste des arguments de la fonction. Ensuite, il regardera dans l'espace de travail actuel. Si vous ne faites pas attention, R trouvera la valeur à un endroit où vous ne l'attendez pas, et votre fonction retournera une valeur qui n'est pas correcte. Soyez très prudent sur les noms des variables, en particulier lorsque vous utilisez des fonctions.
 
+
+
+
+XXXXXXX
+Petits exercices:
+
+> Faire une fonction "paire" qui prend un nombre x, et renvoie TRUE ou FALSE si ce nombre est paire.
+
+```{r ,eval=F}
+paire(2)
+paire(5)
+paire(2.3)
+```
+
+
+> Faire une fonction "somme_carre"" qui prend 2 nombres x et y, et renvoie la somme des carrées de ces 2 nombres.
+
+```{r ,eval=F}
+somme_carre(2,563)
+somme_carre(7,95)
+somme_carre(-2, 4)
+```
+
+
+> Faire une fonction "filtre_positif" qui prend un vecteur de nombres, et renvoie les valeurs possitives.
+
+```{r ,eval=F}
+filtre_positif(c(1,-2,85,-9,-2,0))
+filtre_positif(c(-1,-2))
+```
+
+XXXXXXXXXXX
 
 ## Exécuter un fichier
 
