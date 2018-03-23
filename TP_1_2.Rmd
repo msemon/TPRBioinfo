@@ -263,11 +263,24 @@ summary(tree$C)
 Une fois qu'un vecteur est converti en facteur, alors R le traite différemment. Un ensemble de facteurs a un ensemble discret de valeurs possibles, et il n'est pas logique d'essayer de trouver des moyennes ou d'autres descriptions numériques. Une chose importante est le nombre de fois que chaque facteur apparaît, appelé "fréquences", qui est imprimé en utilisant la commande de résumé.
 
 
+Pour rajouter un élément dans un facteur, c'est **très** compliqué. Bon courage donc :
 
-XXXX Comment ajouter un élément à une liste de facteur XXXX
+```{r}
+fac=c("A","B","B","C")
+is.factor(fac)
+fac=as.factor(fac)
+c(fac,"C")
+c(as.character(fac),"D")
+fac=as.factor(c(as.character(fac),"D"))
+```
 
-XXXX Utiliser stringsasfactor=F dans read.csv si lXXXXX
+On peut aussi interdire à R de faire les conversions automatiques:
 
+```{r}
+tree <- read.csv(file="trees91.csv",header=TRUE,sep=",",stringsAsFactors=F);
+names(tree)
+typeof(tree$CHBR)
+```
 
 ### Matrice (matrix)
 
@@ -342,9 +355,12 @@ ncol(bubba)
 ```  
   
 
-XXXX quand l'on utile read csv on crée un objet de type data frame XXXXX
+quand utilise read.csv, on créé un data.frame
 
-
+```{r}
+tree <- read.csv(file="trees91.csv",header=TRUE,sep=",",stringsAsFactors=F);
+is.data.frame(tree)
+```
 
 
 ### Booléen (Boolean)
@@ -383,12 +399,7 @@ a|b
 a||b
 ```
 
-XXXXX
 > Quelle est la différence entre a|b et a||b ?
-
-XXXX
-
-
 
 Il existe un grand nombre de fonctions pour déterminer le type d'une variable. Par exemple, la fonction is.numeric peut déterminer si une variable est numérique:
 
@@ -407,9 +418,7 @@ a=as.factor(a)
 is.numeric(a)
 ```
 
-##  Tables
-
-XXX Tables de contingences ? XXXXXX
+##  Tables de contingence
 
 ### Tables à une dimension
 
@@ -823,20 +832,13 @@ Le prix Ig Nobel de biologie a été attribué en 2010 à Libiao Zhang, Min Tan,
 ping Ye, Tiyu Hong, Shanyi Zhou, Shuyi Zhang (Chine) et Gareth Jones (Royaume-Uni), qui ont montré
 l’existence et étudié les comportements de fellation chez les chauves-souris de l’espèce C. sphinx. Ils ont filmé des chauves-souris de nuit et ont pu mettre en évidence ce comportement sexuel connu jusqu’alors uniquement chez les primates (bonobos, orang-outan et homme) : les femelles de cette chauve-souris, pendant l’accouplement, peuvent se positionner de manière à lécher la base du sexe du mâle. Le jeu de données analysé porte sur les temps relatifs de copulation et de fellation. Chaque ligne représente un accouplement, pour lequel 3 variables ont été mesurées :
 
-XXX ou est le jeu de données ?XXX
-
-
 * licking vaut 1 si le comportement de léchage a été observé, 0 dans le cas contraire ;
 * time licking mesure le temps, en secondes, durant lequel le comportement de léchage est observé
 pendant l’accouplement ;
 * time copulation mesure le temps total, en secondes, qu’a duré l’accouplement, léchage inclus.
 
-XXXX
+> Récupérer le jeu de données sur le portail des études (chauves-souris-fellatio-data.txt) et l'importer.
 
-> Importer le jeu de données
-
-
-XXX
 
 > Quelle commande permet d’obtenir l’affichage des 7 premières lignes du jeu de données?
 
@@ -1077,7 +1079,7 @@ barplot(totals[c(3,1,4,2)])
 ```
 
 
-## Imprimer dans un fichier XXX Sauvegarder dans un fichier XXXX
+## Sauvegarder dans un fichier
 
 Il existe plusieurs façons d'enregister un graphique dans un fichier. 
 Dans l'exemple ci-dessous, la fenêtre en cours est imprimée dans un fichier png appelé "hist.png" d'une largeur de 200 pixels.
@@ -1103,8 +1105,6 @@ dev.off()
 # Gestion des données
 
 Nous examinons ici certaines tâches courantes qui se présentent lors du traitement des données. Ces tâches vont de l'assemblage de différents ensembles de données aux façons d'appliquer des fonctions à différentes parties des ensembles de données. Les fonctions sont couramment utilisées dans une grande variété de circonstances pour un certain nombre de raisons différentes. 
-
-## Ajout de données
 
 Lorsque vous avez plus d'un ensemble de données, vous pouvez les combiner. Vous pouvez regrouper différents ensembles de données en les combinant par ligne (rbind) ou par colonnes (cbind). Le premier exemple montre cela avec deux dataframes. Les arguments des fonctions peuvent prendre n'importe quel nombre d'objets. Nous n'en utilisons que deux ici pour simplifier la démonstration. Il est important de noter que lorsque vous regroupez des tables par lignes, les noms des objets dans les tables doivent être identiques.
 
@@ -1152,153 +1152,20 @@ w=merge(a,b,by.x="two",by.y="two",all.x=T,all.y=T)
 w
 ```
 
-
-
-## Application de fonctions sur des éléments de données
-
-Les différentes versions des commandes apply permettent de prendre une fonction et d'exécuter une opération sur chaque partie des données. Il existe une grande variété de ces commandes, mais nous n'en examinons que deux. Le premier ensemble, lapply et sapply, est utilisé pour appliquer une fonction à chaque élément d'une liste. Le deuxième, tapply, est utilisé pour appliquer une fonction sur chaque ensemble divisé par un ensemble donné de facteurs.
-
-### Opérations sur les listes et les vecteurs
-
-Tout d'abord, la commande lapply est utilisée pour prendre une liste d'éléments et effectuer une fonction sur chaque membre de la liste. Autrement dit, la liste comprend un certain nombre d'objets différents. Vous voulez effectuer une opération sur chaque objet de la liste. Vous pouvez utiliser lappply pour indiquer à R de parcourir chaque élément de la liste et d'effectuer l'action souhaitée sur chaque élément.
-
-
-XXXXXXXXXXXXX
-En fait là il aurait déjà fallut introduire les fonctions
-mettre la section instructions + fonctions avant "application de fonctions"? 
-XXXXXXXXXXXXX
-
-XXXX
-Petit exemples pas trop compliqués:
-```{r, eval=FALSE}
-lapply(list(9,16,24), sqrt)
-lapply(list(1,2,3), function(x){x*x})
-```
-
-
-> Faire une fonction qui renvoie la somme des carrée d'une liste de nombres"
-
-
-```{r, eval=FALSE}
-
-somme_carre_list <- function( ... ) {
-  ...
-}
-
-
-
-somme_carre_list(list(1,2,3,4,5,6))
-
-```
-
-XXXX
-
-
-
-
-Dans l'exemple suivant, une liste est créée avec trois éléments. Le premier est un ensemble de nombres générés aléatoirement avec une distribution normale. Le second est un ensemble de nombres générés aléatoirement avec une distribution exponentielle. Le dernier est un ensemble de facteurs. Un résumé est ensuite effectué sur chaque élément de la liste.
-
-```{r,eval=FALSE}
-x <- list(a=rnorm(200,mean=1,sd=10),
-            b=rexp(300,10.0),
-            c=as.factor(c("a","b","b","b","c","c")))
-lapply(x,summary)
-```
-
-La commande lapply retourne une liste. Les entrées de la liste portent le même nom que les entrées de la liste qui lui est transmise en entrée. Les valeurs de chaque entrée sont les résultats de l'application de la fonction. La fonction sapply est similaire, mais la différence est qu'elle essaie de transformer le résultat en un vecteur ou une matrice si possible. Si cela n'a pas de sens, alors il retourne une liste comme la commande lapply . 
-
-```{r,eval=FALSE}
-x <- list(a=rnorm(8,mean=1,sd=10),b=rexp(10,10.0))
-x
-val <- lapply(x,mean)
-typeof(val)
-val
-val$a
-val$b
-other <- sapply(x,mean)
-typeof(other)
-other
-other[1]
-other[2]
-```
-
-
-
-### Opérations groupées par modalités d'un facteur
-
-La fonction tapply prend une liste de données, généralement un vecteur, un facteur, et une fonction. Il appliquera ensuite la fonction à chaque sous-ensemble de données correspondant à chaque modalité du facteur.
-
-```{r,eval=FALSE}
-val <- data.frame(a=c(1,2,10,20,5,50),
-                    b=as.factor(c("a","a","b","b","a","b")))
-val
-result <- tapply(val$a,val$b,mean)
-typeof(result)
-result
-result[1]
-result[2]
-result <- tapply(val$a,val$b,summary)
-typeof(result)
-result
-result$a
-```
-
-
-
-
-
-XXXXX
-
-### Opérations sur un tableau
-
-La fonction apply prend un tableau, et une fonction.  ...
-
-```{r,eval=FALSE}
-val <- data.frame(a=runif(10,1,10),
-                    b=runif(10,1,10),
-                  c=runif(10,1,10))
-val
-
-val$mean = apply(val,1,mean)
-
-val
-
-val["total",] = apply(val,2,sum)
-val
-
-```
-
-> Faire la meme chose sur val2 XX (pour rappeler la partie indexation)
-
-```{r,eval=FALSE}
-val2 <- data.frame(name=LETTERS[1:10],
-                  a=runif(10,1,10),
-                    b=runif(10,1,10),
-                  c=runif(10,1,10))
-val2
-
-```
-
-XXXX
-
-
-
 # Introduction à la programmation
 
-## Instructions
+## Instructions de base
 
 ### if 
 
 L'exécution conditionnelle est disponible en utilisant l'instruction if. 
-
-XXX print plutot que cat ? XXXX
 
 ```{r}
 x = 0.1
 if( x < 0.2)
   {
      x <- x + 1
-     cat("increment that number!\n")
+     print("increment that number!\n")
   }
 x
 ```
@@ -1311,11 +1178,11 @@ x = 2.0
 if ( x < 0.2)
  {
     x <- x + 1
-    cat("increment that number!\n")
+    print("increment that number!\n")
  } else
  {
     x <- x - 1
-    cat("nah, make it smaller.\n");
+    print("nah, make it smaller.\n");
  }
 x
 ```
@@ -1361,24 +1228,8 @@ for(loop in x)
 ```
 
 
-XXX Vous verrez plus loin une autre manière de faire des itérations avec les fonctions apply qui seront alors à priviligiez XXXX
+Vous verrez plus loin une autre manière de faire des itérations avec les fonctions apply qui seront alors à priviligier.
 
-break est utilisé pour arrêter l'execution de la boucle. 
-
-```{r}
-x <- rnorm(5)
-x
-for(lupe in x)
- {
-     if (lupe > 2.0)
-         next
-
-     if( (lupe<0.6) && (lupe > 0.5))
-        break
-
-    cat("The value of lupe is ",lupe,"\n");
- }
-```
 
 ### while
 
@@ -1396,30 +1247,12 @@ while(x < 4)
 ```
 
 
-### répéter les instructions
 
-XXXXX Est ce que c'est necesaire ? XXXX
+## Fonctions 
 
-La boucle de répétition est similaire à la boucle while. La différence est que la boucle est réalisée au moins une fois. while ne lancera la boucle que si la condition est vraie la première fois qu'elle est évaluée. Une autre différence est que vous devez spécifier explicitement quand arrêter la boucle en utilisant la commande break .
-
-C'est-à-dire que vous devez exécuter l'instruction break pour sortir de la boucle. 
-
-```{r}
-repeat
-{
-    x <- rnorm(1)
-    if(x < -2.0) break
-}
-x
-```
-
-
-
-## Fonctions
+### Fonctions simples
 
 Pour définir une fonction, vous l'affectez à un nom, et la fonction mot-clé est utilisée pour indiquer le début de la fonction et sa liste d'arguments. La dernière ligne de la fonction est ce qui est retourné. Ainsi, dans l'exemple ci-dessus, la moyenne des nombres est renvoyée.
-
-XXXXXXXXXXX
 
 
 ```{r}
@@ -1433,22 +1266,19 @@ somme(1,5)
 ```
 
 La valeur retournée par la fonction est celle contenue de return
-ou la derniere valeur de la fonctiont.
+ou la derniere valeur de la fonction.
 
 ```{r}
-
 somme <- function(a,b)
-{ a+b}
+{
+  a+b
+}
+
 somme(1,5)
+
 ```
 
-
-
-Vous pouvez aussi appeler d'autre fonctions dans vos fonctions:
-
-
-XXXXXXXXXXXXXXXXX
-
+Vous pouvez aussi appeler d'autres fonctions dans vos fonctions:
 
 ```{r}
 
@@ -1470,6 +1300,8 @@ x
 
 ```
 
+
+### Arguments des fonctions 
 Les arguments sont transmis dans l'ordre: R essaiera de faire correspondre les arguments nommés et de faire correspondre le reste de gauche à droite. Ils peuvent être spécifiés explicitement, cependant.
 
 
@@ -1481,16 +1313,12 @@ newDef(10,1)
 
 XXXXXXXXXXX
 
-Fonction avec argument optionnel ?
+Fonction avec argument optionnel ? A FAIRE
 
 XXXXXXXXXXXXX
 
 
 Une autre tâche courante consiste à avoir une fonction qui renvoie plusieurs éléments. Cela peut être accompli en renvoyant une liste d'éléments. Les objets dans une liste peuvent être accédés en utilisant la même notation $ utilisée pour les trames de données.
-
-XXXXXXXXXXXX
-Exemple plus simple non ?
-
 
 ```{r}
 c = c(1,2,3,4,5)
@@ -1509,35 +1337,12 @@ result$mean
 ```
 
 
-
-
-
-```{r}
-c = c(1,2,3,4,5)
-sample <- function(a,b)
-{
-  value = switch(a,"median"=median(b),"mean"=mean(b),"variance"=var(b))
-  largeVals = length(c[c>1])
-  list(stat=value,number=largeVals)
-}
-result <- sample("median",c)
-result
-result$stat
-result$number
-```
-
-
-XXXXXXXXXXXXXXX
-
 Un autre problème potentiel peut survenir lors de l'utilisation d'une fonction dans R. Si une variable précédemment indéfinie apparaît, R regardera la liste des arguments de la fonction. Ensuite, il regardera dans l'espace de travail actuel. Si vous ne faites pas attention, R trouvera la valeur à un endroit où vous ne l'attendez pas, et votre fonction retournera une valeur qui n'est pas correcte. Soyez très prudent sur les noms des variables, en particulier lorsque vous utilisez des fonctions.
 
 
+### Petits exercices:
 
-
-XXXXXXX
-Petits exercices:
-
-> Faire une fonction "paire" qui prend un nombre x, et renvoie TRUE ou FALSE si ce nombre est paire.
+> Faire une fonction "paire" qui prend un nombre x, et renvoie TRUE ou FALSE si ce nombre est pair.
 
 ```{r ,eval=F}
 paire(2)
@@ -1546,7 +1351,7 @@ paire(2.3)
 ```
 
 
-> Faire une fonction "somme_carre"" qui prend 2 nombres x et y, et renvoie la somme des carrées de ces 2 nombres.
+> Faire une fonction "somme_carre"" qui prend 2 nombres x et y, et renvoie la somme des carrés de ces 2 nombres.
 
 ```{r ,eval=F}
 somme_carre(2,563)
@@ -1555,14 +1360,121 @@ somme_carre(-2, 4)
 ```
 
 
-> Faire une fonction "filtre_positif" qui prend un vecteur de nombres, et renvoie les valeurs possitives.
+> Faire une fonction qui trace un histogramme, l'enregistre en pdf, en mettant la couleur et le titre en option. 
 
 ```{r ,eval=F}
-filtre_positif(c(1,-2,85,-9,-2,0))
-filtre_positif(c(-1,-2))
+x=runif(1000)
 ```
 
-XXXXXXXXXXX
+
+> Faire une fonction "filtre_positif" qui prend un vecteur de nombres, et renvoie les valeurs positives.
+
+
+## la famille des fonctions apply (comment faire une boucle en R)
+
+Les différentes versions des commandes apply permettent de prendre une fonction et d'exécuter une opération sur chaque partie des données. Il existe une grande variété de ces commandes, mais nous n'en examinons que deux. Le premier ensemble, lapply et sapply, est utilisé pour appliquer une fonction à chaque élément d'une liste. Le deuxième, tapply, est utilisé pour appliquer une fonction sur chaque ensemble divisé par un ensemble donné de facteurs.
+
+### Opérations sur les listes et les vecteurs
+
+Tout d'abord, la commande lapply est utilisée pour prendre une liste d'éléments et effectuer une fonction sur chaque membre de la liste. Autrement dit, la liste comprend un certain nombre d'objets différents. Vous voulez effectuer une opération sur chaque objet de la liste. Vous pouvez utiliser lappply pour indiquer à R de parcourir chaque élément de la liste et d'effectuer l'action souhaitée sur chaque élément.
+
+```{r, eval=FALSE}
+lapply(list(9,16,24), sqrt)
+lapply(list(1,2,3), function(x){x*x})
+```
+
+
+> Faire une fonction qui renvoie la somme des carrée d'une liste de nombres
+
+```{r, eval=FALSE}
+somme_carre_list <- function( ... ) {
+  ...
+}
+
+somme_carre_list(list(1,2,3,4,5,6))
+
+```
+
+
+
+Dans l'exemple suivant, une liste est créée avec trois éléments. Le premier est un ensemble de nombres générés aléatoirement avec une distribution normale. Le second est un ensemble de nombres générés aléatoirement avec une distribution exponentielle. Le dernier est un ensemble de facteurs. Un résumé est ensuite effectué sur chaque élément de la liste.
+
+```{r,eval=FALSE}
+x <- list(bibi=rnorm(200,mean=1,sd=10),
+            bobo=rexp(300,10.0),
+            babar=as.factor(c("a","b","b","b","c","c")))
+lapply(x,summary)
+```
+
+La commande lapply retourne une liste. Les entrées de la liste portent le même nom que les entrées de la liste qui lui est transmise en entrée. Les valeurs de chaque entrée sont les résultats de l'application de la fonction. La fonction sapply est similaire, mais la différence est qu'elle essaie de transformer le résultat en un vecteur ou une matrice si possible. Si cela n'a pas de sens, alors il retourne une liste comme la commande lapply . 
+
+```{r,eval=FALSE}
+x <- list(a=rnorm(8,mean=1,sd=10),b=rexp(10,10.0))
+x
+val <- lapply(x,mean)
+typeof(val)
+val
+val$a
+val$b
+other <- sapply(x,mean)
+typeof(other)
+other
+other[1]
+other[2]
+```
+
+
+### Opérations groupées par modalités d'un facteur
+
+La fonction tapply prend une liste de données, généralement un vecteur, un facteur, et une fonction. Il appliquera ensuite la fonction à chaque sous-ensemble de données correspondant à chaque modalité du facteur.
+
+```{r,eval=FALSE}
+val <- data.frame(a=c(1,2,10,20,5,50),
+                    b=as.factor(c("a","a","b","b","a","b")))
+val
+result <- tapply(val$a,val$b,mean)
+typeof(result)
+result
+result[1]
+result[2]
+result <- tapply(val$a,val$b,summary)
+typeof(result)
+result
+result$a
+```
+
+
+### Opérations sur un tableau
+
+La fonction apply prend un tableau, et une fonction.  ...
+
+```{r,eval=FALSE}
+val <- data.frame(a=runif(10,1,10),
+                    b=runif(10,1,10),
+                  c=runif(10,1,10))
+val
+
+val$mean = apply(val,1,mean)
+
+val
+
+val["total",] = apply(val,2,sum)
+val
+
+```
+
+> Faire la meme chose sur val2 
+
+```{r,eval=FALSE}
+val2 <- data.frame(name=LETTERS[1:10],
+                  a=runif(10,1,10),
+                    b=runif(10,1,10),
+                  c=runif(10,1,10))
+val2
+
+```
+
+
 
 ## Exécuter un fichier
 
