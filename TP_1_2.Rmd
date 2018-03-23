@@ -211,7 +211,7 @@ typeof(a)
 ```
 
 
-### Chaînes de caractères (string)
+### Chaînes de caractères (String)
 
 Vous pouvez également stocker des chaînes de caractères. Une chaîne de caractères est spécifiée en utilisant des guillemets. Les guillemets simples et doubles fonctionnent:
 
@@ -261,6 +261,13 @@ summary(tree$C)
 ```
 
 Une fois qu'un vecteur est converti en facteur, alors R le traite différemment. Un ensemble de facteurs a un ensemble discret de valeurs possibles, et il n'est pas logique d'essayer de trouver des moyennes ou d'autres descriptions numériques. Une chose importante est le nombre de fois que chaque facteur apparaît, appelé "fréquences", qui est imprimé en utilisant la commande de résumé.
+
+
+
+XXXX Comment ajouter un élément à une liste de facteur XXXX
+
+XXXX Utiliser stringsasfactor=F dans read.csv si lXXXXX
+
 
 ### Matrice (matrix)
 
@@ -335,6 +342,11 @@ ncol(bubba)
 ```  
   
 
+XXXX quand l'on utile read csv on crée un objet de type data frame XXXXX
+
+
+
+
 ### Booléen (Boolean)
 
 Un autre type de données important est le type logique, qui prend deux valeurs prédéfinies, TRUE ou FALSE :
@@ -347,15 +359,20 @@ typeof(b)
 ```
 
 Les opérateurs logiques standards peuvent être utilisés:
-< 	moins que
-> 	super
-<= 	inférieur ou égal
->= 	supérieur ou égal
-== 	égal à
-!= 	différent de
-|| 	ou
-! 	ne pas
-&& 	et
+
+
+|Operateur||
+|---|---|
+|< 	|moins que|
+|> 	|super|
+|<= 	|inférieur ou égal|
+|>= 	|supérieur ou égal|
+|== 	|égal à|
+|!= 	|différent de|
+| \|\| 	|ou|
+|! 	|ne pas|
+|&& |	et|
+
 
 Notez qu'il existe une différence entre les opérateurs qui agissent sur les entrées dans un vecteur et le vecteur entier:
 
@@ -365,6 +382,13 @@ b = c(FALSE,FALSE)
 a|b
 a||b
 ```
+
+XXXXX
+> Quelle est la différence entre a|b et a||b ?
+
+XXXX
+
+
 
 Il existe un grand nombre de fonctions pour déterminer le type d'une variable. Par exemple, la fonction is.numeric peut déterminer si une variable est numérique:
 
@@ -385,6 +409,8 @@ is.numeric(a)
 
 ##  Tables
 
+XXX Tables de contingences ? XXXXXX
+
 ### Tables à une dimension
 
 Les tableaux à une dimension ne sont pas l'exemple le plus intéressant, mais c'est un bon point de départ. Une façon de créer une table utilise la commande "table". 
@@ -402,7 +428,7 @@ summary(results)
 
 ### Tables à deux dimensions
 
-Dans l'exemple ci-dessous, nous avons deux questions. Dans la première question, les réponses sont étiquetées «Jamais», «Parfois» ou «Toujours». Dans la deuxième question, les réponses sont intitulées «Oui», «Non» ou «Peut-être». L'ensemble des vecteurs «a» et "b", contiennent la réponse pour chaque question Le troisième élément de "a" est la façon dont la troisième personne a répondu à la première question, et le troisième élément de "b" est la façon dont la troisième personne a répondu à la deuxième question.
+Dans l'exemple ci-dessous, nous avons deux questions. Dans la première question, les réponses sont étiquetées «Jamais», «Parfois» ou «Toujours». Dans la deuxième question, les réponses sont intitulées «Oui», «Non» ou «Peut-être». L'ensemble des vecteurs "a" et "b", contiennent la réponse pour chaque question. Le troisième élément de "a" est la façon dont la troisième personne a répondu à la première question, et le troisième élément de "b" est la façon dont la troisième personne a répondu à la deuxième question.
 
 ```{r}
 a <- c("Sometimes","Sometimes","Never","Always","Always","Sometimes","Sometimes","Never")
@@ -797,10 +823,20 @@ Le prix Ig Nobel de biologie a été attribué en 2010 à Libiao Zhang, Min Tan,
 ping Ye, Tiyu Hong, Shanyi Zhou, Shuyi Zhang (Chine) et Gareth Jones (Royaume-Uni), qui ont montré
 l’existence et étudié les comportements de fellation chez les chauves-souris de l’espèce C. sphinx. Ils ont filmé des chauves-souris de nuit et ont pu mettre en évidence ce comportement sexuel connu jusqu’alors uniquement chez les primates (bonobos, orang-outan et homme) : les femelles de cette chauve-souris, pendant l’accouplement, peuvent se positionner de manière à lécher la base du sexe du mâle. Le jeu de données analysé porte sur les temps relatifs de copulation et de fellation. Chaque ligne représente un accouplement, pour lequel 3 variables ont été mesurées :
 
+XXX ou est le jeu de données ?XXX
+
+
 * licking vaut 1 si le comportement de léchage a été observé, 0 dans le cas contraire ;
 * time licking mesure le temps, en secondes, durant lequel le comportement de léchage est observé
 pendant l’accouplement ;
 * time copulation mesure le temps total, en secondes, qu’a duré l’accouplement, léchage inclus.
+
+XXXX
+
+> Importer le jeu de données
+
+
+XXX
 
 > Quelle commande permet d’obtenir l’affichage des 7 premières lignes du jeu de données?
 
@@ -867,7 +903,7 @@ cor(x,y)
 
 ### Plusieurs jeux de données sur un graphique
 
-Une tâche courante consiste à tracer plusieurs ensembles de données sur le même graphique. Dans de nombreuses situations, la méthode consiste à créer le plot initial, puis à ajouter des informations supplémentaires Par exemple, pour tracer des données bivariées, la commande plot est utilisée pour initialiser et créer le tracé. La commande points peut ensuite être utilisée pour ajouter des données supplémentaires au tracé.
+Une tâche courante consiste à tracer plusieurs ensembles de données sur le même graphique. Dans de nombreuses situations, la méthode consiste à créer le plot initial, puis à ajouter des informations supplémentaires. Par exemple, pour tracer des données bivariées, la commande plot est utilisée pour initialiser et créer le tracé. La commande points peut ensuite être utilisée pour ajouter des données supplémentaires au tracé.
 
 Définissez d'abord un ensemble de nombres aléatoires, puis tracez-les. (Ce même jeu de données est utilisé dans tous les exemples ci-dessous.)
 
