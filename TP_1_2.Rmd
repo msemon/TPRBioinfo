@@ -592,7 +592,27 @@ Enfin, la commande sum additionne les nombres dans le vecteur:
 sum(a)
 ``` 
 
+## Génération automatique de vecteurs
 
+#### seq()
+
+```{r}
+seq(1,20)
+seq(1,20,3)
+seq(1,20,length=3)
+```
+
+#### rep()
+
+```{r}
+rep(c("A","B"),20)
+```
+
+#### LETTERS
+
+```{r}
+LETTERS
+```
 
 #  Indexation dans les vecteurs
 
@@ -611,7 +631,7 @@ max(a[b])
 sum(a[b])
 ``` 
 
-## Non disponible ou valeurs manquantes
+## Non disponible ou valeurs manquantes (NA)
 
 Un problème commun concerne les entrées de données marquées NA ou non disponibles. Il existe une variable prédéfinie appelée NA qui peut être utilisée pour indiquer des informations manquantes. Le problème avec ceci est que certaines fonctions lancent une erreur si l'une des entrées dans les données est NA. Certaines fonctions vous permettent d'ignorer les valeurs manquantes grâce à des options spéciales:
 
@@ -690,6 +710,14 @@ help(hist)
 hist(w1$vals,breaks=2)
 hist(w1$vals,breaks=4)
 hist(w1$vals,breaks=6)
+``` 
+
+Attention, lorsque vous utilisez l'option breaks=x (avec x un nombre), x sera une suggestion et R essayera de faire au mieux. Si vous voulez imposer un nombre vous devez imposer vous meme les bordures.
+ 
+```{r}
+hist(w1$vals,breaks=c(0,0.25,0.5,0.75,1,1.25,1.5,1.75,2))
+b = seq(min(w1$vals),max(w1$vals),length=4+1)
+hist(w1$vals,breaks=b)
 ``` 
 
  
@@ -1248,7 +1276,7 @@ while(x < 4)
 
 
 
-## Fonctions 
+## Fonctions
 
 ### Fonctions simples
 
