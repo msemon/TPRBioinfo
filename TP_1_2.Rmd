@@ -1055,10 +1055,10 @@ barplot(totals,main="Number Draws",ylab="Frequency",xlab="Draws")
 Dans l'exemple précédent, la commande barplot est utilisée pour définir le titre du tracé et les libellés des axes. Les étiquettes sur les graduations pour l'axe horizontal sont générées automatiquement à l'aide des étiquettes de la table. Vous pouvez modifier les étiquettes en définissant les noms de ligne de la table.
 
 ```{r}
-numberWhite <- rhyper(30,4,5,3)
-totals <- table(numberWhite)
-rownames(totals) <- c("none","one","two","three")
-barplot(totals,main="Number Draws",ylab="Frequency",xlab="Draws")
+#numberWhite <- rhyper(30,4,5,3)
+#totals <- table(numberWhite)
+#rownames(totals) <- c("none","one","two","three")
+#barplot(totals,main="Number Draws",ylab="Frequency",xlab="Draws")
 ```
 
 L'ordre des fréquences est le même que celui de la table. Si vous modifiez l'ordre dans le tableau, cela changera la façon dont il apparaît dans le graphique à barres. Par exemple, si vous souhaitez organiser les fréquences dans l'ordre décroissant, vous pouvez utiliser la commande de tri avec l'option décroissante.
@@ -1311,12 +1311,6 @@ newDef(10,1)
 ```
 
 
-XXXXXXXXXXX
-
-Fonction avec argument optionnel ? A FAIRE
-
-XXXXXXXXXXXXX
-
 
 Une autre tâche courante consiste à avoir une fonction qui renvoie plusieurs éléments. Cela peut être accompli en renvoyant une liste d'éléments. Les objets dans une liste peuvent être accédés en utilisant la même notation $ utilisée pour les trames de données.
 
@@ -1560,7 +1554,169 @@ $$ S = - \sum \limits_{i=1}^n p_i ln(p_i)$$ avec $n$ le nombre de morphes dans l
 
 > Faire une fonction pour calculer cet indice puis calculez-le pour chacune des populations.
 
+> Avez vous bien utilisé la famille apply, et la fonction "table"? Sinon, corrigez les lignes suivantes pour le faire
+
+```{r, eval=FALSE} 
+calc_shannon <- function(x) {
+  p = length(x)
+  p=p[p>0]
+  s = p
+  return(s)
+}
+
+shannon_l = tapply(x, x, calc_shannon)
+``` 
+
 > Représenter l'indice de shannon en fonction du sex ratio. Ajouter sur le graphe une droite de tendance. Que pouvez vous conclure ?
 
 > Faire de-même en calculant l'indice de shannon par sexe. Que pouvez vous conclure ?
 
+
+# Petits exercices et précisions pour terminer 
+
+## Retour sur les fonctions
+
+### Une nouvelle fonction est créée par une construction de la forme :
+
+```{r, eval=FALSE} 
+fun.name <- function(arglist)
+{
+expr
+}
+``` 
+
+avec :
+- fun.name : le nom d’un objet où est stockéee la fonction.
+- arglist : une liste d’arguments formels. Elle peut être vide (dans ce cas la fonction n'a pas d’arguments), avoir quelques noms formels séparés par des virgules, avoir des arguments de la forme nom = valeur pour donner une valeur par défaut à l'argument.
+- expr : typiquement un bloc d’expressions.
+Dans la fonction il peut y avoir un appel à return(val) qui arrête
+la fonction et renvoie la valeur val. Si rien n’est précisé la fonction
+renvoie la valeur de la dernière expression du bloc.
+
+
+### L’argument spécial point-point-point
+
+L'argument point-point-point permet à une fonction
+d'accepter un nombre quelconque d’arguments.
+L'argument point-point-point (...) indique que la fonction
+accepte n'importe quoi d’autre comme argument. Ce qu’il
+adviendra de ces arguments est déterminé par la fonction. En
+général ils sont transmis à d'autres fonctions. Par exemple,
+une fonction graphique de haut niveau transmettra l’argument
+point-point-point à des fonctions graphiques de bas niveau
+pour traitement.
+
+
+Supposons que nous voulions d ́efinir une fonction qui dessine un
+nuage de points et y ajoute une droite de r ́egression :
+```{r, eval=FALSE} 
+f <- function(x, y, ...) {
+plot.default(x = x, y = y, ...)
+abline(coef = lm(y~x)$coef)
+}
+f(1:10,1:10)
+```
+
+Comme nous avons transmis l’argument point-point-point à
+plot.default(), tout ce que plot.default() sait faire, notre
+fonction f() sait le faire également.
+
+```{r, eval=FALSE} 
+f(1:10, 1:10, main = "Titre de ce graphique", pch = 19, col = "blue",
+las = 1, panel.first = grid(col = "pink", lty = "solid"))
+```
+
+### Illustration de la neutralisation de l’affichage automatique dans les fonctions:
+
+Si l'on souhaite afficher des choses dans une fonction (bien pratique pour débugguer) alors utiliser la fonction print.
+
+```{r, eval=FALSE} 
+f1 <- function(x = pi) { x ; 0}
+f1()
+[1] 0
+f2 <- function(x = pi) { print(x) ; 0}
+f2()
+```
+
+### Détermination de la valeur d'une variable dans une fonction
+
+
+Quand une expression fait appel à une variable, comment la
+valeur de cette variable est elle déterminée ?
+
+Si une variable n’est pas trouvée à l’intérieur de la fonction,
+elle est recherchée en dehors de la fonction. Tout ce que l’on a à retenir est
+que :
+une variable définie à l'exterieur de la fonction est accessible
+aussi dans la fonction. Si deux variables avec le même nom
+sont définies à l'intérieur et à l'exterieur de la fonction, c’est la
+variable locale qui sera utilisée.
+Une erreur aura lieu si aucune variable avec le nom demandé
+n’est trouvée.
+
+```{r, eval=FALSE} 
+mavariable <- 1
+mafonction1 <- function() {
+mavariable <- 5
+print(mavariable)
+}
+mafonction1()
+mavariable
+mafonction2 <- function() {
+print(mavariable)
+}
+mafonction2()
+```
+
+### Petits exercices
+
+> Créer	une	séquence d'ADN aléatoire de	1000 nucléotides. Combien de	fois est présent chaque	nucléotide?	
+
+> Lancer cette fonction 1000 fois et représenter la distribution du nombre de "A". Ajouter une verticale sur le graphique qui montre la moyenne attendue.   Mettre un titre.
+  	
+> Encapsuler la manip précédente dans une fonction, qui prend le nucléotide demandé en argument, une couleur pour le graphique et le sauve.
+
+> Appliquer cette fonction pour tous les nucléotides.
+
+
+\textit{Nosema ceranae} est un champignon microscopique, qui provoque une maladie répandue chez abeilles,
+Ce microchampignon n'existe hors des cellules de son hôte que sous la forme de spores métaboliquement inactives. Ces spores, infectieuses, permettent la transmission de maladies entre individus. 
+
+![Nosema ceranae](Nosema1.jpg){ width=30% }	
+
+Daren Eiri et ses collaborateurs (PLOS One, 2015; doi:10.1371/journal.pone.0126330) ont exposé des larves d'abeille de trois jours à une dose unique de spores de \textit{Nosema ceranae} de 40 000 (40 K), 10 000 (10 K), zéro ou 40 K autoclavée.
+Ils ont ensuite compté le nombre de spores chez les larves d'abeilles de 8 jours, et chez les adultes, ainsi que mesuré la durée de vie des abeilles.
+
+
+> Importer le jeu de données contenu dans "NosemaS1_Table.xls" et afficher les 5 premières lignes.
+
+
+Chacune des lignes représente une abeille étudiée. L'identifiant de la colonie, et le poids de l'abeille à l'émergence a été répertorié.
+
+> Calculer:
+
+  * le nombre total d'abeilles
+  * le nombre d'abeilles par type de traitement
+  * le poids moyen des abeilles, en mg par traitement (le stocker dans une nouvelle colonne de la table): avez vous l'impression qu'il soit différent?
+  
+> Représenter la distribution du poids en mg en fonction de la colonie.
+
+> Faire une fonction qui représente, pour une colonie donnée, la distribution du poids par traitement.
+
+> Importer maintenant le jeu de données dans "NosemaS4_Table.xls" et afficher les 5 premières lignes (qui correspondent aux 5 premieres abeilles). La première colonne est le traitement, la seconde est la durée de vie de l'abeille.
+
+Reproduire la Figure 3 de l'article Eiri et al. 
+
+![Figure 3 de Eiri et al](fig3.png){ width=50% }
+
+
+Pour cela il est possible de procéder par étapes:
+
+* Fabriquer un vecteur qui contient les ages en jours de 1 à 40
+* Récupérer la sous-table qui contient les abeilles controles
+* Fabriquer une fonction qui compte, pour un age donné, la proportion d'abeilles qui ont survécu au moins jusqu'à cet age
+* Appliquer cette fonction à tous les ages
+* Faire un graphique qui montre les ages en fonction des pourcentages de survie pour les controles
+* Ajouter sur le graphique les pourcentages de survie pour les 10K, et 40K.
+* Ajouter les légendes
+* Enregistrer votre figure au format pdf
