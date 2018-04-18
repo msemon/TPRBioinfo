@@ -1707,7 +1707,7 @@ mafonction2()
 > Appliquer cette fonction pour tous les nucléotides.
 
 
-\textit{Nosema ceranae} est un champignon microscopique, qui provoque une maladie répandue chez abeilles,
+Nosema ceranae est un champignon microscopique, qui provoque une maladie répandue chez abeilles.
 Ce microchampignon n'existe hors des cellules de son hôte que sous la forme de spores métaboliquement inactives. Ces spores, infectieuses, permettent la transmission de maladies entre individus. 
 
 ![Nosema ceranae](Nosema1.jpg){ width=30% }	
@@ -1729,7 +1729,95 @@ Chacune des lignes représente une abeille étudiée. L'identifiant de la coloni
   
 > Représenter la distribution du poids en mg en fonction de la colonie.
 
-> Faire une fonction qui représente, pour une colonie donnée, la distribution du poids par traitement.
+> Faire une fonction qui représente, pour une colonie donnée, la distribution du poids en fonction du traitement.
+
+> Démarrage de ggplot2 en douceur
+
+
+```{r, eval=FALSE} 
+library(ggplot2)
+p = ggplot(data = df1, aes(y = `Bee weight (g)`, x = `Treatment (# spores)`))
+p
+```
+
+Aucun graphique ne s’affiche ici : en effet, ce que l’on a stocké, dans l’objet p, n’est pas un graphique complet, mais une base de travail. Cette base définit les coordonnées y du graphique dans l’argument aes (aesthetics). 
+
+
+Rajoutons désormais un objet géométrique, geom_point, qui va projeter, sur le graphique, des points aux coordonnées précédemment définies.
+
+```{r, eval=FALSE} 
+p + geom_point()
+```
+
+Divisons le graphique en projetant les points de chaque colonie dans une facette différente du graphique. 
+
+
+```{r, eval=FALSE} 
+p + geom_point()+facet_grid(.~ `Colony Label`)
+```
+
+Le graphique ci-dessus présente un problème fréquent : l’axe horizontal du graphique est illisible. Grâce à l’argument scale_x_continuous, on va pouvoir clarifier cet axe en n’y faisant figurer que certaines valeurs :
+
+```{r, eval=FALSE} 
+p + geom_point() +
+  facet_grid(. ~ `Colony Label`) +
+  scale_x_continuous(breaks = c(0, 10000, 40000))
+```
+
+Ensuite on peut aussi changer les étiquettes des axes, c'est nettement plus joli, non? Ha bon, tant pis.
+
+```{r, eval=FALSE} 
+p + geom_point() +
+  facet_grid(. ~ `Colony Label`) +
+  scale_x_continuous(breaks = c(0, 10000, 40000), labels=c("0","1e4","4e4"))
+```
+
+On souhaite encore procéder à une dernière modification, en rajoutant une régression locale à travers les points de chaque facette. Pas que ça ait grand sens, sur 3 concentrations, mais bon. Au passage, si on modifie l'objet p, on a moins de lignes à copier-coller.
+
+```{r, eval=FALSE} 
+ p <- p + geom_point() +
+  facet_grid(. ~ `Colony Label`) +
+  scale_x_continuous(breaks = c(0, 10000, 40000), labels=c("0","1e4","4e4"))
+
+p + geom_smooth(method = "loess", se = FALSE,
+                size = 1, color = "black")
+```                
+    
+Si on veut des axes in french    
+                
+```{r, eval=FALSE} 
+ p +
+ geom_smooth(method = "loess", se = FALSE,
+                size = 1, color = "black") + 
+  labs(x= "Traitement (nb spores)",y = "Poids des abeilles (g)\n")
+```                
+
+
+Si on aime la sobriété des couleurs 
+
+```{r, eval=FALSE} 
+ ggplot(data = df1, aes(y = `Bee weight (g)`, x = `Treatment (# spores)`)) + geom_point(color = "grey50") +
+  facet_grid(. ~ `Colony Label`) +
+  scale_x_continuous(breaks = c(0, 10000, 40000), labels=c("0","1e4","4e4"))+
+geom_smooth(method = "loess", se = FALSE,
+                size = 1, color = "black") + 
+labs(x= "Traitement (nb spores)",y = "Poids des abeilles (g)\n")+
+      theme_bw() +
+  theme(strip.background = element_rect(fill = "grey90", color = "grey50"),
+        strip.text = element_text(size = rel(1)),
+        panel.grid = element_blank())
+```         
+
+Pourquoi pas un boxplot, soyons fous. Attention pour les boxplots il faut donner un factor en x. Mais sinon on a basculé très facilement de la visualisation sous forme de niveaux de traitements à une visualisation par boxplots. Ces basculements sont très faciles à envisager dès que l’on maîtrise les principaux éléments de ggplot2. Ca tombe bien : plus qu'un dernier exercice, et vous attaquez le TP ggplot2.
+
+```{r, eval=FALSE} 
+ggplot(data = df1, aes(y = `Bee weight (g)`, x = factor(`Treatment (# spores)`)))+ geom_boxplot() +
+facet_grid(. ~ `Colony Label`) +
+scale_x_discrete(labels = c("0","+","++"))+
+labs(x= "Traitement (nb spores)",y = "Poids des abeilles (g)\n")
+
+```   
+
 
 > Importer maintenant le jeu de données dans "NosemaS4_Table.xls" et afficher les 5 premières lignes (qui correspondent aux 5 premieres abeilles). La première colonne est le traitement, la seconde est la durée de vie de l'abeille.
 
@@ -1748,3 +1836,11 @@ Pour cela il est possible de procéder par étapes:
 * Ajouter sur le graphique les pourcentages de survie pour les 10K, et 40K.
 * Ajouter les légendes
 * Enregistrer votre figure au format pdf
+
+
+
+# Sources
+
+
+http://larmarange.github.io/analyse-R/intro-ggplot2.html
+

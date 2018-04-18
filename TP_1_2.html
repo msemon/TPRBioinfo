@@ -244,7 +244,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Tutoriel initiation à R</h1>
 <h4 class="author"><em>Carine &amp; Marie</em></h4>
-<h4 class="date"><em>Dernière mise à jour: 23 mars 2018</em></h4>
+<h4 class="date"><em>Dernière mise à jour: 18 avril 2018</em></h4>
 
 </div>
 
@@ -361,8 +361,17 @@ tree$C
 <span class="kw">levels</span>(tree$C)
 <span class="kw">summary</span>(tree$C)</code></pre></div>
 <p>Une fois qu’un vecteur est converti en facteur, alors R le traite différemment. Un ensemble de facteurs a un ensemble discret de valeurs possibles, et il n’est pas logique d’essayer de trouver des moyennes ou d’autres descriptions numériques. Une chose importante est le nombre de fois que chaque facteur apparaît, appelé “fréquences”, qui est imprimé en utilisant la commande de résumé.</p>
-<p>XXXX Comment ajouter un élément à une liste de facteur XXXX</p>
-<p>XXXX Utiliser stringsasfactor=F dans read.csv si lXXXXX</p>
+<p>Pour rajouter un élément dans un facteur, c’est <strong>très</strong> compliqué. Bon courage donc :</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fac=<span class="kw">c</span>(<span class="st">&quot;A&quot;</span>,<span class="st">&quot;B&quot;</span>,<span class="st">&quot;B&quot;</span>,<span class="st">&quot;C&quot;</span>)
+<span class="kw">is.factor</span>(fac)
+fac=<span class="kw">as.factor</span>(fac)
+<span class="kw">c</span>(fac,<span class="st">&quot;C&quot;</span>)
+<span class="kw">c</span>(<span class="kw">as.character</span>(fac),<span class="st">&quot;D&quot;</span>)
+fac=<span class="kw">as.factor</span>(<span class="kw">c</span>(<span class="kw">as.character</span>(fac),<span class="st">&quot;D&quot;</span>))</code></pre></div>
+<p>On peut aussi interdire à R de faire les conversions automatiques:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tree &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="dt">file=</span><span class="st">&quot;trees91.csv&quot;</span>,<span class="dt">header=</span><span class="ot">TRUE</span>,<span class="dt">sep=</span><span class="st">&quot;,&quot;</span>,<span class="dt">stringsAsFactors=</span>F);
+<span class="kw">names</span>(tree)
+<span class="kw">typeof</span>(tree$CHBR)</code></pre></div>
 </div>
 <div id="matrice-matrix" class="section level3">
 <h3><span class="header-section-number">2.1.4</span> Matrice (matrix)</h3>
@@ -411,7 +420,9 @@ bubba[<span class="st">&quot;a&quot;</span>,<span class="st">&quot;first.toto&qu
 <span class="kw">dim</span>(bubba)
 <span class="kw">nrow</span>(bubba)
 <span class="kw">ncol</span>(bubba)</code></pre></div>
-<p>XXXX quand l’on utile read csv on crée un objet de type data frame XXXXX</p>
+<p>quand utilise read.csv, on créé un data.frame</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tree &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="dt">file=</span><span class="st">&quot;trees91.csv&quot;</span>,<span class="dt">header=</span><span class="ot">TRUE</span>,<span class="dt">sep=</span><span class="st">&quot;,&quot;</span>,<span class="dt">stringsAsFactors=</span>F);
+<span class="kw">is.data.frame</span>(tree)</code></pre></div>
 </div>
 <div id="booleen-boolean" class="section level3">
 <h3><span class="header-section-number">2.1.6</span> Booléen (Boolean)</h3>
@@ -472,8 +483,9 @@ b =<span class="st"> </span><span class="ot">FALSE</span>
 b =<span class="st"> </span><span class="kw">c</span>(<span class="ot">FALSE</span>,<span class="ot">FALSE</span>)
 a|b
 a||b</code></pre></div>
-<p>XXXXX &gt; Quelle est la différence entre a|b et a||b ?</p>
-<p>XXXX</p>
+<blockquote>
+<p>Quelle est la différence entre a|b et a||b ?</p>
+</blockquote>
 <p>Il existe un grand nombre de fonctions pour déterminer le type d’une variable. Par exemple, la fonction is.numeric peut déterminer si une variable est numérique:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>)
 <span class="kw">is.numeric</span>(a)
@@ -485,9 +497,8 @@ a=<span class="kw">as.factor</span>(a)
 <span class="kw">is.numeric</span>(a)</code></pre></div>
 </div>
 </div>
-<div id="tables" class="section level2">
-<h2><span class="header-section-number">2.2</span> Tables</h2>
-<p>XXX Tables de contingences ? XXXXXX</p>
+<div id="tables-de-contingence" class="section level2">
+<h2><span class="header-section-number">2.2</span> Tables de contingence</h2>
 <div id="tables-a-une-dimension" class="section level3">
 <h3><span class="header-section-number">2.2.1</span> Tables à une dimension</h3>
 <p>Les tableaux à une dimension ne sont pas l’exemple le plus intéressant, mais c’est un bon point de départ. Une façon de créer une table utilise la commande “table”.</p>
@@ -728,6 +739,9 @@ tree$N &lt;-<span class="st"> </span><span class="kw">factor</span>(tree$N)</cod
 <li>time copulation mesure le temps total, en secondes, qu’a duré l’accouplement, léchage inclus.</li>
 </ul>
 <blockquote>
+<p>Récupérer le jeu de données sur le portail des études (chauves-souris-fellatio-data.txt) et l’importer.</p>
+</blockquote>
+<blockquote>
 <p>Quelle commande permet d’obtenir l’affichage des 7 premières lignes du jeu de données?</p>
 </blockquote>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Ici il faut faire quelque chose !! </code></pre></div>
@@ -787,7 +801,7 @@ y &lt;-<span class="st"> </span><span class="fl">2.5</span>*x<span class="fl">-1
 <span class="kw">cor</span>(x,y)</code></pre></div>
 <div id="plusieurs-jeux-de-donnees-sur-un-graphique" class="section level3">
 <h3><span class="header-section-number">7.1.1</span> Plusieurs jeux de données sur un graphique</h3>
-<p>Une tâche courante consiste à tracer plusieurs ensembles de données sur le même graphique. Dans de nombreuses situations, la méthode consiste à créer le plot initial, puis à ajouter des informations supplémentaires Par exemple, pour tracer des données bivariées, la commande plot est utilisée pour initialiser et créer le tracé. La commande points peut ensuite être utilisée pour ajouter des données supplémentaires au tracé.</p>
+<p>Une tâche courante consiste à tracer plusieurs ensembles de données sur le même graphique. Dans de nombreuses situations, la méthode consiste à créer le plot initial, puis à ajouter des informations supplémentaires. Par exemple, pour tracer des données bivariées, la commande plot est utilisée pour initialiser et créer le tracé. La commande points peut ensuite être utilisée pour ajouter des données supplémentaires au tracé.</p>
 <p>Définissez d’abord un ensemble de nombres aléatoires, puis tracez-les. (Ce même jeu de données est utilisé dans tous les exemples ci-dessous.)</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">10</span>,<span class="dt">sd=</span><span class="dv">5</span>,<span class="dt">mean=</span><span class="dv">20</span>)
 y &lt;-<span class="st"> </span><span class="fl">2.5</span>*x -<span class="st"> </span><span class="fl">1.0</span> +<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">10</span>,<span class="dt">sd=</span><span class="dv">9</span>,<span class="dt">mean=</span><span class="dv">0</span>)
@@ -884,10 +898,10 @@ totals &lt;-<span class="st"> </span><span class="kw">table</span>(numberWhite)
 totals
 <span class="kw">barplot</span>(totals,<span class="dt">main=</span><span class="st">&quot;Number Draws&quot;</span>,<span class="dt">ylab=</span><span class="st">&quot;Frequency&quot;</span>,<span class="dt">xlab=</span><span class="st">&quot;Draws&quot;</span>)</code></pre></div>
 <p>Dans l’exemple précédent, la commande barplot est utilisée pour définir le titre du tracé et les libellés des axes. Les étiquettes sur les graduations pour l’axe horizontal sont générées automatiquement à l’aide des étiquettes de la table. Vous pouvez modifier les étiquettes en définissant les noms de ligne de la table.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">numberWhite &lt;-<span class="st"> </span><span class="kw">rhyper</span>(<span class="dv">30</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">3</span>)
-totals &lt;-<span class="st"> </span><span class="kw">table</span>(numberWhite)
-<span class="kw">rownames</span>(totals) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;none&quot;</span>,<span class="st">&quot;one&quot;</span>,<span class="st">&quot;two&quot;</span>,<span class="st">&quot;three&quot;</span>)
-<span class="kw">barplot</span>(totals,<span class="dt">main=</span><span class="st">&quot;Number Draws&quot;</span>,<span class="dt">ylab=</span><span class="st">&quot;Frequency&quot;</span>,<span class="dt">xlab=</span><span class="st">&quot;Draws&quot;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#numberWhite &lt;- rhyper(30,4,5,3)</span>
+<span class="co">#totals &lt;- table(numberWhite)</span>
+<span class="co">#rownames(totals) &lt;- c(&quot;none&quot;,&quot;one&quot;,&quot;two&quot;,&quot;three&quot;)</span>
+<span class="co">#barplot(totals,main=&quot;Number Draws&quot;,ylab=&quot;Frequency&quot;,xlab=&quot;Draws&quot;)</span></code></pre></div>
 <p>L’ordre des fréquences est le même que celui de la table. Si vous modifiez l’ordre dans le tableau, cela changera la façon dont il apparaît dans le graphique à barres. Par exemple, si vous souhaitez organiser les fréquences dans l’ordre décroissant, vous pouvez utiliser la commande de tri avec l’option décroissante.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">barplot</span>(<span class="kw">sort</span>(totals,<span class="dt">decreasing=</span><span class="ot">TRUE</span>),<span class="dt">main=</span><span class="st">&quot;Number Draws&quot;</span>,<span class="dt">ylab=</span><span class="st">&quot;Frequency&quot;</span>,<span class="dt">xlab=</span><span class="st">&quot;Draws&quot;</span>)</code></pre></div>
 <p>Les fonctions d’indexation de R peuvent être utilisées pour changer l’ordre des fréquences manuellement.</p>
@@ -899,13 +913,13 @@ numberWhite
 <span class="kw">barplot</span>(totals[<span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">2</span>)])</code></pre></div>
 </div>
 </div>
-<div id="imprimer-dans-un-fichier" class="section level2">
-<h2><span class="header-section-number">7.3</span> Imprimer dans un fichier</h2>
-<p>Il existe plusieurs façons d’imprimer un tracé dans un fichier. Dans l’exemple ci-dessous, la fenêtre en cours est imprimée dans un fichier png appelé “hist.png” d’une largeur de 200 pixels.</p>
+<div id="sauvegarder-dans-un-fichier" class="section level2">
+<h2><span class="header-section-number">7.3</span> Sauvegarder dans un fichier</h2>
+<p>Il existe plusieurs façons d’enregister un graphique dans un fichier. Dans l’exemple ci-dessous, la fenêtre en cours est imprimée dans un fichier png appelé “hist.png” d’une largeur de 200 pixels.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x =<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">100</span>)
 <span class="kw">hist</span>(x)
 <span class="kw">dev.print</span>(<span class="dt">device=</span>png,<span class="dt">width=</span><span class="dv">200</span>,<span class="st">&quot;hist.png&quot;</span>)</code></pre></div>
-<p>Une autre façon d’imprimer dans un fichier consiste à créer un périphérique. Une fois le périphérique créé, les différentes commandes de traçage sont données, puis le périphérique est désactivé pour écrire dans le fichier.</p>
+<p>Une autre façon de sauvegarder un graphique dans un fichier consiste à créer un périphérique. Une fois le périphérique créé, les différentes commandes de traçage sont données, puis le périphérique est désactivé pour écrire dans le fichier.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">png</span>(<span class="dt">file=</span><span class="st">&quot;hist.png&quot;</span>)
 <span class="kw">hist</span>(x)
 <span class="kw">rug</span>(x,<span class="dt">side=</span><span class="dv">1</span>)
@@ -915,8 +929,6 @@ numberWhite
 <div id="gestion-des-donnees" class="section level1">
 <h1><span class="header-section-number">8</span> Gestion des données</h1>
 <p>Nous examinons ici certaines tâches courantes qui se présentent lors du traitement des données. Ces tâches vont de l’assemblage de différents ensembles de données aux façons d’appliquer des fonctions à différentes parties des ensembles de données. Les fonctions sont couramment utilisées dans une grande variété de circonstances pour un certain nombre de raisons différentes.</p>
-<div id="ajout-de-donnees" class="section level2">
-<h2><span class="header-section-number">8.1</span> Ajout de données</h2>
 <p>Lorsque vous avez plus d’un ensemble de données, vous pouvez les combiner. Vous pouvez regrouper différents ensembles de données en les combinant par ligne (rbind) ou par colonnes (cbind). Le premier exemple montre cela avec deux dataframes. Les arguments des fonctions peuvent prendre n’importe quel nombre d’objets. Nous n’en utilisons que deux ici pour simplifier la démonstration. Il est important de noter que lorsque vous regroupez des tables par lignes, les noms des objets dans les tables doivent être identiques.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">one=</span><span class="kw">c</span>( <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>),<span class="dt">two=</span><span class="kw">c</span>(<span class="st">&quot;a&quot;</span>,<span class="st">&quot;a&quot;</span>,<span class="st">&quot;b&quot;</span>))
 b &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">one=</span><span class="kw">c</span>(<span class="dv">10</span>,<span class="dv">11</span>,<span class="dv">12</span>),<span class="dt">two=</span><span class="kw">c</span>(<span class="st">&quot;c&quot;</span>,<span class="st">&quot;c&quot;</span>,<span class="st">&quot;d&quot;</span>))
@@ -951,53 +963,10 @@ w
 w=<span class="kw">merge</span>(a,b,<span class="dt">by.x=</span><span class="st">&quot;two&quot;</span>,<span class="dt">by.y=</span><span class="st">&quot;two&quot;</span>,<span class="dt">all.x=</span>T,<span class="dt">all.y=</span>T)
 w</code></pre></div>
 </div>
-<div id="application-de-fonctions-sur-des-elements-de-donnees" class="section level2">
-<h2><span class="header-section-number">8.2</span> Application de fonctions sur des éléments de données</h2>
-<p>Les différentes versions des commandes apply permettent de prendre une fonction et d’exécuter une opération sur chaque partie des données. Il existe une grande variété de ces commandes, mais nous n’en examinons que deux. Le premier ensemble, lapply et sapply, est utilisé pour appliquer une fonction à chaque élément d’une liste. Le deuxième, tapply, est utilisé pour appliquer une fonction sur chaque ensemble divisé par un ensemble donné de facteurs.</p>
-<div id="operations-sur-les-listes-et-les-vecteurs" class="section level3">
-<h3><span class="header-section-number">8.2.1</span> Opérations sur les listes et les vecteurs</h3>
-<p>Tout d’abord, la commande lapply est utilisée pour prendre une liste d’éléments et effectuer une fonction sur chaque membre de la liste. Autrement dit, la liste comprend un certain nombre d’objets différents. Vous voulez effectuer une opération sur chaque objet de la liste. Vous pouvez utiliser lappply pour indiquer à R de parcourir chaque élément de la liste et d’effectuer l’action souhaitée sur chaque élément.</p>
-<p>Dans l’exemple suivant, une liste est créée avec trois éléments. Le premier est un ensemble de nombres générés aléatoirement avec une distribution normale. Le second est un ensemble de nombres générés aléatoirement avec une distribution exponentielle. Le dernier est un ensemble de facteurs. Un résumé est ensuite effectué sur chaque élément de la liste.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">a=</span><span class="kw">rnorm</span>(<span class="dv">200</span>,<span class="dt">mean=</span><span class="dv">1</span>,<span class="dt">sd=</span><span class="dv">10</span>),
-            <span class="dt">b=</span><span class="kw">rexp</span>(<span class="dv">300</span>,<span class="fl">10.0</span>),
-            <span class="dt">c=</span><span class="kw">as.factor</span>(<span class="kw">c</span>(<span class="st">&quot;a&quot;</span>,<span class="st">&quot;b&quot;</span>,<span class="st">&quot;b&quot;</span>,<span class="st">&quot;b&quot;</span>,<span class="st">&quot;c&quot;</span>,<span class="st">&quot;c&quot;</span>)))
-<span class="kw">lapply</span>(x,summary)</code></pre></div>
-<p>La commande lapply retourne une liste. Les entrées de la liste portent le même nom que les entrées de la liste qui lui est transmise en entrée. Les valeurs de chaque entrée sont les résultats de l’application de la fonction. La fonction sapply est similaire, mais la différence est qu’elle essaie de transformer le résultat en un vecteur ou une matrice si possible. Si cela n’a pas de sens, alors il retourne une liste comme la commande lapply .</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">a=</span><span class="kw">rnorm</span>(<span class="dv">8</span>,<span class="dt">mean=</span><span class="dv">1</span>,<span class="dt">sd=</span><span class="dv">10</span>),<span class="dt">b=</span><span class="kw">rexp</span>(<span class="dv">10</span>,<span class="fl">10.0</span>))
-x
-val &lt;-<span class="st"> </span><span class="kw">lapply</span>(x,mean)
-<span class="kw">typeof</span>(val)
-val
-val$a
-val$b
-other &lt;-<span class="st"> </span><span class="kw">sapply</span>(x,mean)
-<span class="kw">typeof</span>(other)
-other
-other[<span class="dv">1</span>]
-other[<span class="dv">2</span>]</code></pre></div>
-</div>
-<div id="operations-groupees-par-modalites-dun-facteur" class="section level3">
-<h3><span class="header-section-number">8.2.2</span> Opérations groupées par modalités d’un facteur</h3>
-<p>La fonction tapply prend une liste de données, généralement un vecteur, un facteur, et une fonction. Il appliquera ensuite la fonction à chaque sous-ensemble de données correspondant à chaque modalité du facteur.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">val &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">a=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">10</span>,<span class="dv">20</span>,<span class="dv">5</span>,<span class="dv">50</span>),
-                    <span class="dt">b=</span><span class="kw">as.factor</span>(<span class="kw">c</span>(<span class="st">&quot;a&quot;</span>,<span class="st">&quot;a&quot;</span>,<span class="st">&quot;b&quot;</span>,<span class="st">&quot;b&quot;</span>,<span class="st">&quot;a&quot;</span>,<span class="st">&quot;b&quot;</span>)))
-val
-result &lt;-<span class="st"> </span><span class="kw">tapply</span>(val$a,val$b,mean)
-<span class="kw">typeof</span>(result)
-result
-result[<span class="dv">1</span>]
-result[<span class="dv">2</span>]
-result &lt;-<span class="st"> </span><span class="kw">tapply</span>(val$a,val$b,summary)
-<span class="kw">typeof</span>(result)
-result
-result$a</code></pre></div>
-</div>
-</div>
-</div>
 <div id="introduction-a-la-programmation" class="section level1">
 <h1><span class="header-section-number">9</span> Introduction à la programmation</h1>
-<div id="instructions" class="section level2">
-<h2><span class="header-section-number">9.1</span> Instructions</h2>
+<div id="instructions-de-base" class="section level2">
+<h2><span class="header-section-number">9.1</span> Instructions de base</h2>
 <div id="if" class="section level3">
 <h3><span class="header-section-number">9.1.1</span> if</h3>
 <p>L’exécution conditionnelle est disponible en utilisant l’instruction if.</p>
@@ -1005,7 +974,7 @@ result$a</code></pre></div>
 if( x &lt;<span class="st"> </span><span class="fl">0.2</span>)
   {
      x &lt;-<span class="st"> </span>x +<span class="st"> </span><span class="dv">1</span>
-     <span class="kw">cat</span>(<span class="st">&quot;increment that number!</span><span class="ch">\n</span><span class="st">&quot;</span>)
+     <span class="kw">print</span>(<span class="st">&quot;increment that number!</span><span class="ch">\n</span><span class="st">&quot;</span>)
   }
 x</code></pre></div>
 <p>L’instruction else peut être utilisée pour spécifier une autre option. Dans l’exemple ci-dessous, notez que l’instruction else doit être sur la même ligne que l’accolade de fin pour le bloc if précédent.</p>
@@ -1013,11 +982,11 @@ x</code></pre></div>
 if ( x &lt;<span class="st"> </span><span class="fl">0.2</span>)
  {
     x &lt;-<span class="st"> </span>x +<span class="st"> </span><span class="dv">1</span>
-    <span class="kw">cat</span>(<span class="st">&quot;increment that number!</span><span class="ch">\n</span><span class="st">&quot;</span>)
+    <span class="kw">print</span>(<span class="st">&quot;increment that number!</span><span class="ch">\n</span><span class="st">&quot;</span>)
  } else
  {
     x &lt;-<span class="st"> </span>x -<span class="st"> </span><span class="dv">1</span>
-    <span class="kw">cat</span>(<span class="st">&quot;nah, make it smaller.</span><span class="ch">\n</span><span class="st">&quot;</span>);
+    <span class="kw">print</span>(<span class="st">&quot;nah, make it smaller.</span><span class="ch">\n</span><span class="st">&quot;</span>);
  }
 x</code></pre></div>
 <p>Enfin, les instructions if peuvent être enchaînées.</p>
@@ -1051,19 +1020,7 @@ for(loop in x)
 {
     <span class="kw">cat</span>(<span class="st">&quot;value of loop: &quot;</span>,loop,<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>);
 }</code></pre></div>
-<p>break est utilisé pour arrêter l’execution de la boucle.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">5</span>)
-x
-for(lupe in x)
- {
-     if (lupe &gt;<span class="st"> </span><span class="fl">2.0</span>)
-         next
-
-     if( (lupe&lt;<span class="fl">0.6</span>) &amp;&amp;<span class="st"> </span>(lupe &gt;<span class="st"> </span><span class="fl">0.5</span>))
-        break
-
-    <span class="kw">cat</span>(<span class="st">&quot;The value of lupe is &quot;</span>,lupe,<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>);
- }</code></pre></div>
+<p>Vous verrez plus loin une autre manière de faire des itérations avec les fonctions apply qui seront alors à priviligier.</p>
 </div>
 <div id="while" class="section level3">
 <h3><span class="header-section-number">9.1.3</span> while</h3>
@@ -1077,21 +1034,26 @@ while(x &lt;<span class="st"> </span><span class="dv">4</span>)
     lupe &lt;-<span class="st"> </span>lupe +<span class="st"> </span><span class="dv">1</span>
  }</code></pre></div>
 </div>
-<div id="repeter-les-instructions" class="section level3">
-<h3><span class="header-section-number">9.1.4</span> répéter les instructions</h3>
-<p>La boucle de répétition est similaire à la boucle while. La différence est que la boucle est réalisée au moins une fois. while ne lancera la boucle que si la condition est vraie la première fois qu’elle est évaluée. Une autre différence est que vous devez spécifier explicitement quand arrêter la boucle en utilisant la commande break .</p>
-<p>C’est-à-dire que vous devez exécuter l’instruction break pour sortir de la boucle.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">repeat
-{
-    x &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">1</span>)
-    if(x &lt;<span class="st"> </span>-<span class="fl">2.0</span>) break
-}
-x</code></pre></div>
-</div>
 </div>
 <div id="fonctions" class="section level2">
 <h2><span class="header-section-number">9.2</span> Fonctions</h2>
+<div id="fonctions-simples" class="section level3">
+<h3><span class="header-section-number">9.2.1</span> Fonctions simples</h3>
 <p>Pour définir une fonction, vous l’affectez à un nom, et la fonction mot-clé est utilisée pour indiquer le début de la fonction et sa liste d’arguments. La dernière ligne de la fonction est ce qui est retourné. Ainsi, dans l’exemple ci-dessus, la moyenne des nombres est renvoyée.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">somme &lt;-<span class="st"> </span>function(a,b)
+{ 
+  <span class="kw">return</span>(a+b)
+  }
+
+<span class="kw">somme</span>(<span class="dv">1</span>,<span class="dv">5</span>)</code></pre></div>
+<p>La valeur retournée par la fonction est celle contenue de return ou la derniere valeur de la fonction.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">somme &lt;-<span class="st"> </span>function(a,b)
+{
+  a+b
+}
+
+<span class="kw">somme</span>(<span class="dv">1</span>,<span class="dv">5</span>)</code></pre></div>
+<p>Vous pouvez aussi appeler d’autres fonctions dans vos fonctions:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">newDef &lt;-<span class="st"> </span>function(a,b)
  {
      x =<span class="st"> </span><span class="kw">runif</span>(<span class="dv">10</span>,a,b)
@@ -1107,28 +1069,131 @@ function(a,b)
 }
 x &lt;-<span class="st"> </span><span class="kw">newDef</span>(<span class="dv">0</span>,<span class="dv">1</span>)
 x</code></pre></div>
+</div>
+<div id="arguments-des-fonctions" class="section level3">
+<h3><span class="header-section-number">9.2.2</span> Arguments des fonctions</h3>
 <p>Les arguments sont transmis dans l’ordre: R essaiera de faire correspondre les arguments nommés et de faire correspondre le reste de gauche à droite. Ils peuvent être spécifiés explicitement, cependant.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">newDef</span>(<span class="dt">b=</span><span class="dv">10</span>,<span class="dt">a=</span><span class="dv">1</span>)
 <span class="kw">newDef</span>(<span class="dv">10</span>,<span class="dv">1</span>)</code></pre></div>
 <pre><code>## Warning in runif(10, a, b): production de NAs</code></pre>
 <p>Une autre tâche courante consiste à avoir une fonction qui renvoie plusieurs éléments. Cela peut être accompli en renvoyant une liste d’éléments. Les objets dans une liste peuvent être accédés en utilisant la même notation $ utilisée pour les trames de données.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">c =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>)
-sample &lt;-<span class="st"> </span>function(a,b)
+petites_stats &lt;-<span class="st"> </span>function(x)
 {
-  value =<span class="st"> </span>switch(a,<span class="st">&quot;median&quot;</span>=<span class="kw">median</span>(b),<span class="st">&quot;mean&quot;</span>=<span class="kw">mean</span>(b),<span class="st">&quot;variance&quot;</span>=<span class="kw">var</span>(b))
-  largeVals =<span class="st"> </span><span class="kw">length</span>(c[c&gt;<span class="dv">1</span>])
-  <span class="kw">list</span>(<span class="dt">stat=</span>value,<span class="dt">number=</span>largeVals)
+  m =<span class="st"> </span><span class="kw">mean</span>(x)
+  min =<span class="st"> </span><span class="kw">min</span>(x)
+  max =<span class="st"> </span><span class="kw">max</span>(x)
+  len =<span class="st"> </span><span class="kw">length</span>(x)
+  <span class="kw">return</span>(<span class="kw">list</span>(<span class="dt">min=</span>min,<span class="dt">max=</span>max,<span class="dt">len=</span>len,<span class="dt">mean=</span>mean))
 }
-result &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="st">&quot;median&quot;</span>,c)
+result &lt;-<span class="st"> </span><span class="kw">petites_stats</span>(c)
 result
-result$stat
-result$number</code></pre></div>
+result$min
+result$mean</code></pre></div>
 <p>Un autre problème potentiel peut survenir lors de l’utilisation d’une fonction dans R. Si une variable précédemment indéfinie apparaît, R regardera la liste des arguments de la fonction. Ensuite, il regardera dans l’espace de travail actuel. Si vous ne faites pas attention, R trouvera la valeur à un endroit où vous ne l’attendez pas, et votre fonction retournera une valeur qui n’est pas correcte. Soyez très prudent sur les noms des variables, en particulier lorsque vous utilisez des fonctions.</p>
 </div>
+<div id="petits-exercices" class="section level3">
+<h3><span class="header-section-number">9.2.3</span> Petits exercices:</h3>
+<blockquote>
+<p>Faire une fonction “paire” qui prend un nombre x, et renvoie TRUE ou FALSE si ce nombre est pair.</p>
+</blockquote>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">paire</span>(<span class="dv">2</span>)
+<span class="kw">paire</span>(<span class="dv">5</span>)
+<span class="kw">paire</span>(<span class="fl">2.3</span>)</code></pre></div>
+<blockquote>
+<p>Faire une fonction “somme_carre”&quot; qui prend 2 nombres x et y, et renvoie la somme des carrés de ces 2 nombres.</p>
+</blockquote>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">somme_carre</span>(<span class="dv">2</span>,<span class="dv">563</span>)
+<span class="kw">somme_carre</span>(<span class="dv">7</span>,<span class="dv">95</span>)
+<span class="kw">somme_carre</span>(-<span class="dv">2</span>, <span class="dv">4</span>)</code></pre></div>
+<blockquote>
+<p>Faire une fonction qui trace un histogramme, l’enregistre en pdf, en mettant la couleur et le titre en option.</p>
+</blockquote>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x=<span class="kw">runif</span>(<span class="dv">1000</span>)</code></pre></div>
+<blockquote>
+<p>Faire une fonction “filtre_positif” qui prend un vecteur de nombres, et renvoie les valeurs positives.</p>
+</blockquote>
+</div>
+</div>
+<div id="la-famille-des-fonctions-apply-comment-faire-une-boucle-en-r" class="section level2">
+<h2><span class="header-section-number">9.3</span> la famille des fonctions apply (comment faire une boucle en R)</h2>
+<p>Les différentes versions des commandes apply permettent de prendre une fonction et d’exécuter une opération sur chaque partie des données. Il existe une grande variété de ces commandes, mais nous n’en examinons que deux. Le premier ensemble, lapply et sapply, est utilisé pour appliquer une fonction à chaque élément d’une liste. Le deuxième, tapply, est utilisé pour appliquer une fonction sur chaque ensemble divisé par un ensemble donné de facteurs.</p>
+<div id="operations-sur-les-listes-et-les-vecteurs" class="section level3">
+<h3><span class="header-section-number">9.3.1</span> Opérations sur les listes et les vecteurs</h3>
+<p>Tout d’abord, la commande lapply est utilisée pour prendre une liste d’éléments et effectuer une fonction sur chaque membre de la liste. Autrement dit, la liste comprend un certain nombre d’objets différents. Vous voulez effectuer une opération sur chaque objet de la liste. Vous pouvez utiliser lappply pour indiquer à R de parcourir chaque élément de la liste et d’effectuer l’action souhaitée sur chaque élément.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">lapply</span>(<span class="kw">list</span>(<span class="dv">9</span>,<span class="dv">16</span>,<span class="dv">24</span>), sqrt)
+<span class="kw">lapply</span>(<span class="kw">list</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), function(x){x*x})</code></pre></div>
+<blockquote>
+<p>Faire une fonction qui renvoie la somme des carrée d’une liste de nombres</p>
+</blockquote>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">somme_carre_list &lt;-<span class="st"> </span>function( ... ) {
+  ...
+}
+
+<span class="kw">somme_carre_list</span>(<span class="kw">list</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>))</code></pre></div>
+<p>Dans l’exemple suivant, une liste est créée avec trois éléments. Le premier est un ensemble de nombres générés aléatoirement avec une distribution normale. Le second est un ensemble de nombres générés aléatoirement avec une distribution exponentielle. Le dernier est un ensemble de facteurs. Un résumé est ensuite effectué sur chaque élément de la liste.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">bibi=</span><span class="kw">rnorm</span>(<span class="dv">200</span>,<span class="dt">mean=</span><span class="dv">1</span>,<span class="dt">sd=</span><span class="dv">10</span>),
+            <span class="dt">bobo=</span><span class="kw">rexp</span>(<span class="dv">300</span>,<span class="fl">10.0</span>),
+            <span class="dt">babar=</span><span class="kw">as.factor</span>(<span class="kw">c</span>(<span class="st">&quot;a&quot;</span>,<span class="st">&quot;b&quot;</span>,<span class="st">&quot;b&quot;</span>,<span class="st">&quot;b&quot;</span>,<span class="st">&quot;c&quot;</span>,<span class="st">&quot;c&quot;</span>)))
+<span class="kw">lapply</span>(x,summary)</code></pre></div>
+<p>La commande lapply retourne une liste. Les entrées de la liste portent le même nom que les entrées de la liste qui lui est transmise en entrée. Les valeurs de chaque entrée sont les résultats de l’application de la fonction. La fonction sapply est similaire, mais la différence est qu’elle essaie de transformer le résultat en un vecteur ou une matrice si possible. Si cela n’a pas de sens, alors il retourne une liste comme la commande lapply .</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">a=</span><span class="kw">rnorm</span>(<span class="dv">8</span>,<span class="dt">mean=</span><span class="dv">1</span>,<span class="dt">sd=</span><span class="dv">10</span>),<span class="dt">b=</span><span class="kw">rexp</span>(<span class="dv">10</span>,<span class="fl">10.0</span>))
+x
+val &lt;-<span class="st"> </span><span class="kw">lapply</span>(x,mean)
+<span class="kw">typeof</span>(val)
+val
+val$a
+val$b
+other &lt;-<span class="st"> </span><span class="kw">sapply</span>(x,mean)
+<span class="kw">typeof</span>(other)
+other
+other[<span class="dv">1</span>]
+other[<span class="dv">2</span>]</code></pre></div>
+</div>
+<div id="operations-groupees-par-modalites-dun-facteur" class="section level3">
+<h3><span class="header-section-number">9.3.2</span> Opérations groupées par modalités d’un facteur</h3>
+<p>La fonction tapply prend une liste de données, généralement un vecteur, un facteur, et une fonction. Il appliquera ensuite la fonction à chaque sous-ensemble de données correspondant à chaque modalité du facteur.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">val &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">a=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">10</span>,<span class="dv">20</span>,<span class="dv">5</span>,<span class="dv">50</span>),
+                    <span class="dt">b=</span><span class="kw">as.factor</span>(<span class="kw">c</span>(<span class="st">&quot;a&quot;</span>,<span class="st">&quot;a&quot;</span>,<span class="st">&quot;b&quot;</span>,<span class="st">&quot;b&quot;</span>,<span class="st">&quot;a&quot;</span>,<span class="st">&quot;b&quot;</span>)))
+val
+result &lt;-<span class="st"> </span><span class="kw">tapply</span>(val$a,val$b,mean)
+<span class="kw">typeof</span>(result)
+result
+result[<span class="dv">1</span>]
+result[<span class="dv">2</span>]
+result &lt;-<span class="st"> </span><span class="kw">tapply</span>(val$a,val$b,summary)
+<span class="kw">typeof</span>(result)
+result
+result$a</code></pre></div>
+</div>
+<div id="operations-sur-un-tableau" class="section level3">
+<h3><span class="header-section-number">9.3.3</span> Opérations sur un tableau</h3>
+<p>La fonction apply prend un tableau, et une fonction. …</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">val &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">a=</span><span class="kw">runif</span>(<span class="dv">10</span>,<span class="dv">1</span>,<span class="dv">10</span>),
+                    <span class="dt">b=</span><span class="kw">runif</span>(<span class="dv">10</span>,<span class="dv">1</span>,<span class="dv">10</span>),
+                  <span class="dt">c=</span><span class="kw">runif</span>(<span class="dv">10</span>,<span class="dv">1</span>,<span class="dv">10</span>))
+val
+
+val$mean =<span class="st"> </span><span class="kw">apply</span>(val,<span class="dv">1</span>,mean)
+
+val
+
+val[<span class="st">&quot;total&quot;</span>,] =<span class="st"> </span><span class="kw">apply</span>(val,<span class="dv">2</span>,sum)
+val</code></pre></div>
+<blockquote>
+<p>Faire la meme chose sur val2</p>
+</blockquote>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">val2 &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">name=</span>LETTERS[<span class="dv">1</span>:<span class="dv">10</span>],
+                  <span class="dt">a=</span><span class="kw">runif</span>(<span class="dv">10</span>,<span class="dv">1</span>,<span class="dv">10</span>),
+                    <span class="dt">b=</span><span class="kw">runif</span>(<span class="dv">10</span>,<span class="dv">1</span>,<span class="dv">10</span>),
+                  <span class="dt">c=</span><span class="kw">runif</span>(<span class="dv">10</span>,<span class="dv">1</span>,<span class="dv">10</span>))
+val2</code></pre></div>
+</div>
+</div>
 <div id="executer-un-fichier" class="section level2">
-<h2><span class="header-section-number">9.3</span> Exécuter un fichier</h2>
+<h2><span class="header-section-number">9.4</span> Exécuter un fichier</h2>
 <div id="executer-les-commandes-dans-un-fichier" class="section level3">
-<h3><span class="header-section-number">9.3.1</span> Exécuter les commandes dans un fichier</h3>
+<h3><span class="header-section-number">9.4.1</span> Exécuter les commandes dans un fichier</h3>
 <p>Un ensemble de commandes R peut être enregistré dans un fichier, puis exécuté comme si vous l’aviez tapé depuis la ligne de commande. La commande source est utilisée pour lire le fichier et exécuter les commandes dans la même séquence que celle donnée dans le fichier.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">source</span>(<span class="st">'file.R'</span>)</code></pre></div>
 <p>Si vous générez simplement le fichier, les commandes ne sont pas imprimées et les résultats des commandes ne sont pas imprimés. Cela peut être remédié en utilisant les options echo , print.eval et verbose.</p>
@@ -1188,11 +1253,80 @@ mux =<span class="st"> </span><span class="kw">mean</span>(x)
 <p>Faire une fonction pour calculer cet indice puis calculez-le pour chacune des populations.</p>
 </blockquote>
 <blockquote>
+<p>Avez vous bien utilisé la famille apply, et la fonction “table”? Sinon, corrigez les lignes suivantes pour le faire</p>
+</blockquote>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">calc_shannon &lt;-<span class="st"> </span>function(x) {
+  p =<span class="st"> </span><span class="kw">length</span>(x)
+  p=p[p&gt;<span class="dv">0</span>]
+  s =<span class="st"> </span>p
+  <span class="kw">return</span>(s)
+}
+
+shannon_l =<span class="st"> </span><span class="kw">tapply</span>(x, x, calc_shannon)</code></pre></div>
+<blockquote>
 <p>Représenter l’indice de shannon en fonction du sex ratio. Ajouter sur le graphe une droite de tendance. Que pouvez vous conclure ?</p>
 </blockquote>
 <blockquote>
 <p>Faire de-même en calculant l’indice de shannon par sexe. Que pouvez vous conclure ?</p>
 </blockquote>
+</div>
+<div id="petits-exercices-et-precisions-pour-terminer" class="section level1">
+<h1><span class="header-section-number">11</span> Petits exercices et précisions pour terminer</h1>
+<div id="retour-sur-les-fonctions" class="section level2">
+<h2><span class="header-section-number">11.1</span> Retour sur les fonctions</h2>
+<div id="une-nouvelle-fonction-est-creee-par-une-construction-de-la-forme" class="section level3">
+<h3><span class="header-section-number">11.1.1</span> Une nouvelle fonction est créée par une construction de la forme :</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fun.name &lt;-<span class="st"> </span>function(arglist)
+{
+expr
+}</code></pre></div>
+<p>avec : - fun.name : le nom d’un objet où est stockéee la fonction. - arglist : une liste d’arguments formels. Elle peut être vide (dans ce cas la fonction n’a pas d’arguments), avoir quelques noms formels séparés par des virgules, avoir des arguments de la forme nom = valeur pour donner une valeur par défaut à l’argument. - expr : typiquement un bloc d’expressions. Dans la fonction il peut y avoir un appel à return(val) qui arrête la fonction et renvoie la valeur val. Si rien n’est précisé la fonction renvoie la valeur de la dernière expression du bloc.</p>
+</div>
+<div id="largument-special-point-point-point" class="section level3">
+<h3><span class="header-section-number">11.1.2</span> L’argument spécial point-point-point</h3>
+<p>L’argument point-point-point permet à une fonction d’accepter un nombre quelconque d’arguments. L’argument point-point-point (…) indique que la fonction accepte n’importe quoi d’autre comme argument. Ce qu’il adviendra de ces arguments est déterminé par la fonction. En général ils sont transmis à d’autres fonctions. Par exemple, une fonction graphique de haut niveau transmettra l’argument point-point-point à des fonctions graphiques de bas niveau pour traitement.</p>
+<p>Supposons que nous voulions d ́efinir une fonction qui dessine un nuage de points et y ajoute une droite de r ́egression :</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">f &lt;-<span class="st"> </span>function(x, y, ...) {
+<span class="kw">plot.default</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y, ...)
+<span class="kw">abline</span>(<span class="dt">coef =</span> <span class="kw">lm</span>(y~x)$coef)
+}
+<span class="kw">f</span>(<span class="dv">1</span>:<span class="dv">10</span>,<span class="dv">1</span>:<span class="dv">10</span>)</code></pre></div>
+<p>Comme nous avons transmis l’argument point-point-point à plot.default(), tout ce que plot.default() sait faire, notre fonction f() sait le faire également.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">f</span>(<span class="dv">1</span>:<span class="dv">10</span>, <span class="dv">1</span>:<span class="dv">10</span>, <span class="dt">main =</span> <span class="st">&quot;Titre de ce graphique&quot;</span>, <span class="dt">pch =</span> <span class="dv">19</span>, <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>,
+<span class="dt">las =</span> <span class="dv">1</span>, <span class="dt">panel.first =</span> <span class="kw">grid</span>(<span class="dt">col =</span> <span class="st">&quot;pink&quot;</span>, <span class="dt">lty =</span> <span class="st">&quot;solid&quot;</span>))</code></pre></div>
+</div>
+<div id="illustration-de-la-neutralisation-de-laffichage-automatique-dans-les-fonctions" class="section level3">
+<h3><span class="header-section-number">11.1.3</span> Illustration de la neutralisation de l’affichage automatique dans les fonctions:</h3>
+<p>Si l’on souhaite afficher des choses dans une fonction (bien pratique pour débugguer) alors utiliser la fonction print.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">f1 &lt;-<span class="st"> </span>function(<span class="dt">x =</span> pi) { x ; <span class="dv">0</span>}
+<span class="kw">f1</span>()
+[<span class="dv">1</span>] <span class="dv">0</span>
+f2 &lt;-<span class="st"> </span>function(<span class="dt">x =</span> pi) { <span class="kw">print</span>(x) ; <span class="dv">0</span>}
+<span class="kw">f2</span>()</code></pre></div>
+</div>
+<div id="determination-de-la-valeur-dune-variable-dans-une-fonction" class="section level3">
+<h3><span class="header-section-number">11.1.4</span> Détermination de la valeur d’une variable dans une fonction</h3>
+<p>Quand une expression fait appel à une variable, comment la valeur de cette variable est elle déterminée ?</p>
+<p>Si une variable n’est pas trouvée à l’intérieur de la fonction, elle est recherchée en dehors de la fonction. Tout ce que l’on a à retenir est que : une variable définie à l’exterieur de la fonction est accessible aussi dans la fonction. Si deux variables avec le même nom sont définies à l’intérieur et à l’exterieur de la fonction, c’est la variable locale qui sera utilisée. Une erreur aura lieu si aucune variable avec le nom demandé n’est trouvée.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mavariable &lt;-<span class="st"> </span><span class="dv">1</span>
+mafonction1 &lt;-<span class="st"> </span>function() {
+mavariable &lt;-<span class="st"> </span><span class="dv">5</span>
+<span class="kw">print</span>(mavariable)
+}
+<span class="kw">mafonction1</span>()
+mavariable
+mafonction2 &lt;-<span class="st"> </span>function() {
+<span class="kw">print</span>(mavariable)
+}
+<span class="kw">mafonction2</span>()</code></pre></div>
+</div>
+<div id="exercice" class="section level3">
+<h3><span class="header-section-number">11.1.5</span> exercice</h3>
+<blockquote>
+<p>Créer une séquence d’ADN aléatoire “S” de 1000 nucléotides. Combien de fois est présent chaque nucléotide?</p>
+</blockquote>
+</div>
+</div>
 </div>
 
 
