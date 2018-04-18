@@ -1614,9 +1614,11 @@ expr
 ``` 
 
 avec :
-- fun.name : le nom d’un objet où est stockéee la fonction.
-- arglist : une liste d’arguments formels. Elle peut être vide (dans ce cas la fonction n'a pas d’arguments), avoir quelques noms formels séparés par des virgules, avoir des arguments de la forme nom = valeur pour donner une valeur par défaut à l'argument.
-- expr : typiquement un bloc d’expressions.
+
+* fun.name : le nom d’un objet où est stockéee la fonction.
+* arglist : une liste d’arguments formels. Elle peut être vide (dans ce cas la fonction n'a pas d’arguments), avoir quelques noms formels séparés par des virgules, avoir des arguments de la forme nom = valeur pour donner une valeur par défaut à l'argument.
+* expr : typiquement un bloc d’expressions.
+
 Dans la fonction il peut y avoir un appel à return(val) qui arrête
 la fonction et renvoie la valeur val. Si rien n’est précisé la fonction
 renvoie la valeur de la dernière expression du bloc.
