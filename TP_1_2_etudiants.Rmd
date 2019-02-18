@@ -1753,7 +1753,7 @@ Divisons le graphique en projetant les points de chaque colonie dans une facette
 
 
 ```{r, eval=FALSE} 
-p + geom_point()+facet_grid(.~ `Colony Label`)
+#   a vous
 ```
 
 Le graphique ci-dessus présente un problème fréquent : l’axe horizontal du graphique est illisible. Grâce à l’argument scale_x_continuous, on va pouvoir clarifier cet axe en n’y faisant figurer que certaines valeurs :
@@ -1772,24 +1772,16 @@ p + geom_point() +
   scale_x_continuous(breaks = c(0, 10000, 40000), labels=c("0","1e4","4e4"))
 ```
 
-On souhaite encore procéder à une dernière modification, en rajoutant une régression locale à travers les points de chaque facette. Pas que ça ait grand sens, sur 3 concentrations, mais bon. Au passage, si on modifie l'objet p, on a moins de lignes à copier-coller.
+On souhaite encore procéder à une dernière modification, en rajoutant une régression locale à travers les points de chaque facette. Pas que ça ait grand sens, sur 3 concentrations, mais bon. Au passage, si on modifie l'objet p, on a moins de lignes à copier-coller. Utiliser geom_smooth
 
 ```{r, eval=FALSE} 
- p <- p + geom_point() +
-  facet_grid(. ~ `Colony Label`) +
-  scale_x_continuous(breaks = c(0, 10000, 40000), labels=c("0","1e4","4e4"))
-
-p + geom_smooth(method = "loess", se = FALSE,
-                size = 1, color = "black")
+#a vous
 ```                
     
 Si on veut des axes in french    
                 
 ```{r, eval=FALSE} 
- p +
- geom_smooth(method = "loess", se = FALSE,
-                size = 1, color = "black") + 
-  labs(x= "Traitement (nb spores)",y = "Poids des abeilles (g)\n")
+ #a vous
 ```                
 
 
@@ -1811,11 +1803,7 @@ labs(x= "Traitement (nb spores)",y = "Poids des abeilles (g)\n")+
 Pourquoi pas un boxplot, soyons fous. Attention pour les boxplots il faut donner un factor en x. Mais sinon on a basculé très facilement de la visualisation sous forme de niveaux de traitements à une visualisation par boxplots. Ces basculements sont très faciles à envisager dès que l’on maîtrise les principaux éléments de ggplot2. Ca tombe bien : plus qu'un dernier exercice, et vous attaquez le TP ggplot2.
 
 ```{r, eval=FALSE} 
-ggplot(data = df1, aes(y = `Bee weight (g)`, x = factor(`Treatment (# spores)`)))+ geom_boxplot() +
-facet_grid(. ~ `Colony Label`) +
-scale_x_discrete(labels = c("0","+","++"))+
-labs(x= "Traitement (nb spores)",y = "Poids des abeilles (g)\n")
-
+# a vous
 ```   
 
 
