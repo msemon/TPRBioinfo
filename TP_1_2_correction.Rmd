@@ -27,7 +27,8 @@ knitr::opts_chunk$set(echo = TRUE, results="hide", fig.keep = "none")
 ```
 
 
-Le but de ces séances est d’apprendre à utiliser R dans des cas concrets, à produire un rapport reproductible, et à représenter des données avec R de manière optimale. Vous aborderez également l’analyse de données.
+Le but de ces séances est d’apprendre à utiliser R dans des cas concrets, à produire un rapport reproductible, et à représenter des données avec R de manière optimale. Vous aborderez également l’analyse
+de données.
 
 R est déja installé sur les ordinateurs des salles de TP. Pour l’installer sur votre ordinateur personnel, voir
 la page du CRAN http://cran.r-project.org/bin/. R est installé par défaut avec des fonctions de la
@@ -1613,11 +1614,9 @@ expr
 ``` 
 
 avec :
-
-* fun.name : le nom d’un objet où est stockéee la fonction.
-* arglist : une liste d’arguments formels. Elle peut être vide (dans ce cas la fonction n'a pas d’arguments), avoir quelques noms formels séparés par des virgules, avoir des arguments de la forme nom = valeur pour donner une valeur par défaut à l'argument.
-* expr : typiquement un bloc d’expressions.
-
+- fun.name : le nom d’un objet où est stockéee la fonction.
+- arglist : une liste d’arguments formels. Elle peut être vide (dans ce cas la fonction n'a pas d’arguments), avoir quelques noms formels séparés par des virgules, avoir des arguments de la forme nom = valeur pour donner une valeur par défaut à l'argument.
+- expr : typiquement un bloc d’expressions.
 Dans la fonction il peut y avoir un appel à return(val) qui arrête
 la fonction et renvoie la valeur val. Si rien n’est précisé la fonction
 renvoie la valeur de la dernière expression du bloc.
