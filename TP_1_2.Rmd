@@ -1,6 +1,6 @@
 ---
 title: "Tutoriel initiation à R"
-author: "Carine & Marie"
+author: "Carine Rey, Magalie Naville & Marie Sémon"
 
 date: "Dernière mise à jour: `r format(Sys.Date(), format = '%d %B %Y')`" 
 output:
@@ -26,23 +26,314 @@ output:
 knitr::opts_chunk$set(echo = TRUE, results="hide", fig.keep = "none")
 ```
 
-
 Le but de ces séances est d’apprendre à utiliser R dans des cas concrets, à produire un rapport reproductible, et à représenter des données avec R de manière optimale. Vous aborderez également l’analyse de données.
 
-R est déja installé sur les ordinateurs des salles de TP. Pour l’installer sur votre ordinateur personnel, voir
-la page du CRAN http://cran.r-project.org/bin/. R est installé par défaut avec des fonctions de la
-library base. Vous devrez également installer RStudio pour faire les rapports de TP. https://www.rstudio.com/products/rstudio/download/
+Il y aura 3 séances de 4h de TP consacrées à R :
 
-Le tutoriel est largement inspiré du site suivant, dans lequel vous pourrez également trouver (en anglais) des exemples d'application des tests statistiques du type de ce que vous avez pratiqué en biostatistiques. http://www.cyclismo.org/tutorial/R/
+ * 13 mars (après-midi)
+ * 24 avril (après-midi)
+ * 26 avril (matin)
+
+Ce document servira pour les 3 séances. Il a été largement inspiré du site suivant, dans lequel vous pourrez également trouver (en anglais) des exemples d'application des tests statistiques du type de ce que vous avez pratiqué en biostatistiques. http://www.cyclismo.org/tutorial/R/
+Ainsi que de ce tutoriel http://larmarange.github.io/analyse-R/.
+
+Vous progresserez à votre rythme et pour ceux qui iront le plus vite un autre document les attendront.
+
+# Objectif du TP
+
+A la fin de ces 3 séances de TP, vous devrez être capable de maitriser tous les points énumérez en ci-dessous:
+
+* Savoir utiliser Rstudio
+    * Savoir se déplacer dans l'arborescence de son ordinateur
+    * Maitriser le concept de dossier de travail
+
+* Faire une analyse reproductible en utilissant un fichier Rmarkdown (.Rmd)
+    * Connaitre les bases de la syntaxe Markdown (md)
+    * rédiger un fichier .Rmd
+    * compiler un fichier .Rmd
+
+* Importer des données provenant d'un fichier dans un tableau (data.frame)
+    * .csv, .tsv (Fichier texte, qui contient un tableau dont les colonnes sont espacées par des virgules ou des tabulations)
+    * .xlsx (Fichier excel)
+
+* Savoir explorer un tableau ou data.frame
+    * Connaitre le nombre de lignes, de colonnes
+    * Recupér des statistiques récapitulatives, moyenne, minimum, maximum, d'une ligne/colonne
+
+
+* Manipuler les tableaux
+    * Selectionner une partie d'un tableau en fonction de critères
+         * sur une autre colonne
+         * sur une liste
+    * Faire des opérations simples
+         * Fusionner des tableaux
+         * Rajouter une ligne ou une colonne qui contient le résultat d'un calcul (ex, somme ou moyenne d'une ligne/colonne)
+    
+ 
+* Maitriser les bases du language R:
+    * Connaitre les différentes structures (Vecteur, tableau, marice, ...) et classes (Nombre, chaine de caractère, facteur, ...)
+    * Savoir installer et charger des extensions (library)
+    * Savoir écrire une fonction
+    * Savoir maitriser les fonctions de la famille "apply"
+    * Savoir utiliser des instructions (condition if, boucle for et while, ...)
+    * Faire des graphiques
+  
+
+    
+    
+
+    
+> Pas de panique,  les étudiants des années précedentes y sont arrivés ! De plus cette liste poura faciliter vos révisions et vous aider à identifier les points à travailler.
+
+    
+
+#  Rstudio et le RMarkdown
+
+
+## Instalation de R et Rstudio 
+
+Pour commencer le Tp, vous avez besoin d'un ordinateur avec R et Rstudio d'opérationnel.
+
+R et Rstudio sont déja installés sur les ordinateurs des salles de TP. Pour l’installer sur votre ordinateur personnel, voir
+la page du CRAN http://cran.r-project.org/bin/.
+
+Vous devrez également installer RStudio https://www.rstudio.com/products/rstudio/download/
+
+## Le Rmarkdown c'est quoi ?!!
+
+L'extension `rmarkdown` permet de générer des documents de manière dynamique en mélangeant texte mis en forme et résultats produits par du code R. Les documents générés peuvent être au format HTML, PDF, Word, et bien d'autres. C'est donc un outil très pratique pour l'exportation, la communication et la diffusion de résultats d'analyse.
+
+Il permet de mettre dans un même document du code R et du texte formaté sans trop se soucier de la forme.
+Par exemple, ce document est lui même un fichier .Rmd. 
+
+Basiquement un fichier .Rmd est un fichier texte avec des balise pour indiquer si le texte est un titre, du texte simple ou du code.
+Ensuite en compilant ce fichier, vous pourrez obtenir un fichier html, pdf ou word avec le texte mis en forme, le code R et le résulat du code R.
+
+De nombreux turoriels très complets sont disponibles sur internet par exemple :
+ 
+ * https://juba.github.io/tidyverse/13-rmarkdown.html (version originale et conplète dont est extraite cette partie)
+ * https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf (un résumé en anglais)
+
+
+Voici un exemple de document R Markdown minimal :
+
+
+```{r echo = FALSE, comment = ""}
+cat(htmltools::includeText("data/resources/rmarkdown/minimal_sample.Rmd"))
+```
+
+Ce document peut être "compilé" sous différents formats. Lors de cette étape, le texte est mis en forme, les blocs de code sont exécutés, leur résultat ajouté au document, et le tout est transformé dans un des différents formats possibles.
+
+Voici le rendu du document précédent au format `HTML` :
+
+![](data/resources/screenshots/rmd_minimal_html.png)
+
+Le rendu du même document au format `PDF` :
+
+![](data/resources/screenshots/rmd_minimal_pdf.png)
+
+Et le rendu au format `docx` :
+
+![](data/resources/screenshots/rmd_minimal_word.png)
+
+Les avantages de ce système sont nombreux :
+
+- le code et ses résultats ne sont pas séparés des commentaires qui leur sont associés
+- le document final est reproductible
+- le document peut être très facilement régénéré et mis à jour, par exemple si les données source ont été modifiées.
+
+### Créer un nouveau document `.Rmd`
+
+Un document R Markdown est un simple fichier texte enregistré avec l'extension `.Rmd`.
+
+Sous RStudio, on peut créer un nouveau document en allant dans le menu *File* puis en choisissant *New file* puis *R Markdown...*. La boîte de dialogue suivante s'affiche :
+
+![](data/resources/screenshots/rstudio_new_rmarkdown.png)
+
+On peut indiquer le titre, l'auteur du document ainsi que le format de sortie par défaut (il est possible de modifier facilement ces éléments par la suite). Plutôt qu'un document classique, on peut aussi choisir de créer une présentation sous forme de slides (entrée *Presentation*) ou de créer un document à partir d'un modèle (Entrée *From Template*).
+
+Un fichier comportant un contenu d'exemple s'affiche alors. Vous pouvez l'enregistrer où vous le souhaitez avec une extension `.Rmd`.
+
+
+### Éléments d'un document R Markdown
+
+Un document R Markdown est donc un fichier texte qui ressemble à quelque chose comme ça :
+
+```{r echo = FALSE, comment = ""}
+cat(htmltools::includeText("data/resources/rmarkdown/sample_Rmd.Rmd"))
+```
+
+On va décomposer les différents éléments constitutifs de ce document.
+
+#### En-tête (préambule)
+
+La première partie du document est son *en-tête*. Il se situe en tout début de document, et est délimité par trois tirets (`---`) avant et après :
+
+    ---
+    title: "Titre"
+    author: "Prénom Nom"
+    date: "10 avril 2017"
+    output: html_document
+    ---
+
+Cet en-tête contient les métadonnées du document, comme son titre, son auteur, sa date, plus tout un tas d'options possibles qui vont permettre de configurer ou personnaliser l'ensemble du document et son rendu. Ici, par exemple, la ligne `output: html_document` indique que le document généré doit être au format HTML.
+
+
+#### Texte du document
+
+Le corps du document est constitué de texte qui suit la syntaxe *Markdown*. Un fichier Markdown est un fichier texte contenant un balisage léger qui permet de définir des niveaux de titres ou de mettre en forme le texte. Par exemple, le texte suivant :
+
+    Ceci est du texte avec *de l'italique* et **du gras**.
+    
+    On peut définir des listes à puces :
+    
+    - premier élément
+    - deuxième élément
+    
+Génèrera le texte mis en forme suivant :    
+    
+Ceci est du texte avec de l'*italique* et du **gras**.
+
+On peut définir des listes à puces :
+ 
+- premier élément
+- deuxième élément
+On voit que des mots placés entre des astérisques sont mis en italique, des lignes qui commencent par un tiret sont transformés en liste à puce, etc.
+
+On peut définir des titres de différents niveaux en faisant débuter une ligne par un ou plusieurs `#` :
+
+```
+# Titre de niveau 1
+## Titre de niveau 2
+### Titre de niveau 3
+```
+
+Quand des titres ont été définis, si vous cliquez sur l'icône *Show document outline* totalement à droite de la barre d'outils associée au fichier R Markdown, une table des matières générée automatiquement à partir des titres s'affiche et vous permet de naviguer facilement dans le document :
+
+![](data/resources/screenshots/rstudio_rmd_toc.png)
+
+
+
+La syntaxe Markdown permet d'autres mises en forme, comme la possibilité d'insérer des liens ou des images. Par exemple, le code suivant :
+
+    [Exemple de lien](https://example.com)
+
+Donnera le lien suivant :
+
+[Exemple de lien](https://example.com)
+
+Dans RStudio, le menu *Help* puis *Markdown quick reference* donne un aperçu plus complet de la syntaxe.
+
+#### Blocs de code R
+
+En plus du texte libre au format Markdown, un document R Markdown contient, comme son nom l'indique, du code R. Celui-ci est inclus dans des blocs (*chunks*) délimités par la syntaxe suivante :
+
+
+```{r echo = FALSE, comment = ""}
+cat(htmltools::includeText("data/resources/rmarkdown/code_chunk.Rmd"))
+```
+
+Comme cette suite de caractères n'est pas très simple à saisir, vous pouvez utiliser le menu *Insert* de RStudio et choisir *R*, ou utiliser le raccourci clavier `Ctrl+Alt+i`.
+
+![Menu d'insertion d'un bloc de code](data/resources/screenshots/rstudio_insert_chunk.png)
+
+Dans RStudio les blocs de code R sont en général affichés avec une couleur de fond légèrement différente pour les distinguer du reste du document.
+
+Quand votre curseur se trouve dans un bloc, vous pouvez saisir le code R que vous souhaitez, l'exécuter, utiliser l'autocomplétion, exactement comme si vous vous trouviez dans un script R. Vous pouvez également exécuter l'ensemble du code contenu dans un bloc à l'aide du raccourci clavier `Ctrl+Maj+Entrée`.
+
+Dans RStudio, par défaut, les résultats d'un bloc de code (texte, tableau ou graphique) s'affichent directement *dans* la fenêtre d'édition du document, permettant de les visualiser facilement et de les conserver le temps de la session.
+
+Lorsque le document est "compilé" au format HTML, PDF ou docx, chaque bloc est exécuté tour à tour, et le résultat inclus dans le document final, qu'il s'agisse de texte, d'un tableau ou d'un graphique. Les blocs sont liés entre eux, dans le sens où les données importées ou calculées dans un bloc sont accessibles aux blocs suivants. On peut donc aussi voir un document R Markdown comme un script R dans lequel on aurait intercalé du texte libre au format Markdown.
+
+> À noter qu'avant chaque compilation, une nouvelle session R est lancée, ne contenant aucun objet. Les premiers blocs de code d'un document sont donc souvent utilisés pour importer des données, exécuter des recodages, etc.
+
+
+
+#### Compiler un document (*Knit*)
+
+On peut à tout moment compiler, ou plutôt "tricoter" (*Knit*), un document R Markdown pour obtenir et visualiser le document généré. Pour cela, il suffit de cliquer sur le bouton *Knit* et de choisir le format de sortie voulu :
+
+![Menu *Knit*](data/resources/screenshots/rstudio_knit_menu.png)
+
+Vous pouvez aussi utiliser le raccourci `Ctrl+Maj+K` pour compiler le document dans le dernier format utilisé.
+
+> Pour la génération du format PDF, vous devez avoir une installation fonctionnelle de `LaTeX` sur votre système. Si ça n'est pas le cas, l'extension `tinytex` de Yihui Xie vise à faciliter l'installation d'une distribution `LaTeX` minimale quel que soit le système d'exploitation de votre machine. Pour l'utiliser il vous faut d'abord installer l'extension avec `install.packages('tinytex')`, puis lancer la commande suivante dans la console (prévoir un téléchargement d'environ 200Mo) : `tinytex::install_tinytex()` Plus d'informations sur [le site de tinytex](https://yihui.name/tinytex/).
+
+Un onglet *R Markdown* s'ouvre dans la même zone que l'onglet *Console* et indique la progression de la compilation, ainsi que les messages d'erreur éventuels. Si tout se passe bien, Le document devrait s'afficher soit dans une fenêtre *Viewer* de RStudio (pour la sortie HTML), soit dans le logiciel par défaut de votre ordinateur.
+
+### Personnaliser le document généré
+
+Pour personalisé vos document vous pouvez aller lire la sute de ce tutoriel sur la page de son auteur: https://juba.github.io/tidyverse/13-rmarkdown.html
+
+
+# C'est partie
+
+Pour continuer le TP, vous allez avoir besoin de télécharger ce document afin de le compléter.
+
+https://github.com/msemon/TPRBioinfo/archive/master.zip
+
+Ce dossier contient:
+
+ * un fichier `Tp_R_L3Bioinfo.Rmd`, ce document que l'on pourra appeler fichier maitre
+ * un dossier `data` qui contient tous les fichiers utilisés par ce document maitre.
+
+Vous pouvez ouvrir le fichier `Tp_R_L3Bioinfo.Rmd` dans Rstudio et retrouver ce paragraphe et commencer les choses sérieuses !
+
+Vérifier que le fichier compile bien (en appuyant sur le bouton `Knit`) si ce n'est pas le cas appeler un professeur.
+
+Puis à chaque fois que vous ferez une modification (ou quelques unes) je vous conseille de compiler pour être sûre que tout fonctionne. 
+
+> C'est vraiment partie cette fois ci, vous allez faire du R. Continuez de lire ce document pas à pas, n'hésitez pas à executer le code, modifiez le pour être sûre d'avoir bien compris, prenez le temps de faire les exercices et si vous avez des questions ou que vous bloquez, n'hésitez pas à appeler un professeur.
 
 # Importer des données
 
-En premier lieu, nous allons importer des données dans une session R. Il y a plusieurs façons de lire des données dans une session R, mais nous nous concentrons sur deux seulement pour rester simple.
+## Premier contact
 
-##  Affectation simple
+Nous allons commencez par tapez notre première commande en R pour executez de simples opérations arithmétiques.
 
-La façon la plus simple de stocker des nombres est d'utiliser la commande c (pour «combiner»). Un vecteur de nombres est stocké sous un nom donné, et le nom est utilisé pour faire référence aux données. Le vecteur est spécifié avec la commande c, et l'affectation est spécifié avec le symbole "<-". 
-Les nombres dans la commande c sont séparés par des virgules. A titre d'exemple, nous pouvons créer une nouvelle variable, appelée "bubba" qui contiendra les numéros 3, 5, 7 et 9:
+Pour commencer executer ce chunk avec la petite flèche verte
+
+```{r}
+1 + 2
+```
+
+Puis créer de nouveaux chunks avec différentes opérations:
+  - soustraction
+  - multiplication
+  - division
+
+Faire des opérations arithmétiques, c’est bien, mais sans doute pas totalement suffisant. Notamment, on aimerait pouvoir réutiliser le résultat d’une opération sans avoir à le resaisir ou à le copier/coller.
+
+Comme tout langage de programmation, R permet de faire cela en utilisant des objets. Prenons tout de suite un exemple :
+
+```{r}
+x <- 2
+```
+
+Que signifie cette commande ? L’opérateur `<-` est appelé opérateur d’assignation. Il prend une valeur quelconque à droite et la place dans l’objet indiqué à gauche. La commande pourrait donc se lire mettre la valeur 2 dans l’objet nommé `x`.
+
+Il existe trois opérateurs d’assignation sous R. Ainsi les trois écritures suivantes sont équivalentes :
+
+```{r}
+x <- 2
+x = 2
+2 -> x
+```
+
+Cependant, pour une meilleure lecture du code, il est conseillé de n’utiliser que `<-`. Ainsi, l’objet créé est systématiquement affiché à gauche. De plus, le symbole = sert également pour écrire des conditions ou à l’intérieur de fonctions. Il est donc préférable de ne pas l’utiliser pour assigner une valeur (afin d’éviter les confusions).
+
+On va ensuite pouvoir réutiliser cet objet dans d’autres calculs ou simplement afficher son contenu :
+
+```{r}
+x + 3
+```
+
+##  Importer des valeurs manuellement
+
+Nous avons vu comment affecter un nombre à une variable mais si l'on veut stocker plusieurs valeurs la manière la plus simple est d'utiliser la commande `c` (pour «combiner»).
+
+Les nombres dans la commande `c` sont séparés par des virgules. A titre d'exemple, nous pouvons créer une nouvelle variable, appelée "bubba" qui contiendra les numéros 3, 5, 7 et 9:
+
 
 ```{r}
 bubba <- c(3,5,7,9)
@@ -65,7 +356,7 @@ bubba[0]
 Notez que la première entrée correspond au numéro 1 et que le zéro peut être utilisé pour indiquer comment l'ordinateur traitera les données. Vous pouvez stocker des chaînes de caractère à l'aide de guillemets simples et doubles, et vous pouvez stocker des nombres réels.
 
 
-##  Lecture de fichiers
+## Importation de valeurs à partir d'un fichier
 
 Il est rare d'avoir juste quelques points de données. Il est beaucoup plus commun d'avoir beaucoup de données avec des relations compliquées. Ici, nous allons examiner comment lire un jeu de données à partir d'un fichier, mais nous devons d'abord discuter du format d'un fichier de données.
 
@@ -74,9 +365,8 @@ Nous supposons que le fichier de données est au format appelé "comma separated
 La commande pour lire un fichier de données est read.csv. Nous devons donner à la commande au moins un argument (le nom du fichier), mais nous allons donner deux arguments optionnels supplémentaires. Le premier argument indique si la première ligne contient les noms des colonnes. Le deuxième argument indique qu'il y a une virgule entre chaque numéro de chaque ligne. La commande suivante va lire dans les données et l'assigner à une variable appelée "heisenberg". Lorsque vous utilisez la commande read.csv, R utilise un type spécifique de variable appelé "data frame". Toutes les données sont stockées sous la forme de colonnes séparées. 
 
 ```{r}
-heisenberg <- read.csv(file="simple.csv",head=TRUE,sep=",")
+heisenberg <- read.csv(file="data/seance1/simple.csv",head=TRUE,sep=",")
 heisenberg
-summary(heisenberg)
 ```
 
 Pour obtenir plus d'informations sur les différentes options disponibles, vous pouvez utiliser la commande help:
@@ -85,16 +375,51 @@ Pour obtenir plus d'informations sur les différentes options disponibles, vous 
 ?read.csv
 ```
 
-Si R ne trouve pas le fichier que vous essayez de lire, il se peut qu'il recherche dans le mauvais dossier / répertoire. Si vous utilisez l'interface graphique, vous pouvez modifier le répertoire de travail. Si vous n'êtes pas sûrs des fichiers qui se trouvent dans le répertoire de travail actuel, vous pouvez utiliser la commande dir() pour lister les fichiers et la commande getwd() pour déterminer le répertoire de travail actuel:
+Si R ne trouve pas le fichier que vous essayez de lire, il se peut qu'il recherche dans le mauvais dossier/répertoire.
 
-```{r}
-dir()
+Par exemple si vous executer ce code:
+
+```{r, eval=FALSE}
+heisenberg <- read.csv(file="simple.csv",head=TRUE,sep=",")
+heisenberg
+```
+Vous aller obtenir l'erreur:
+
+"impossible d'ouvrir le fichier 'simple.csv' : Aucun fichier ou dossier de ce type"
+
+En effet ce fichier est dans le dossier "seance1" lui même dans le dossier "data". Il faut donc lui donner le chemin complet entre le dossier de tarvail et le fichier cible, donc ici "data/seance1/simple.csv".
+
+Pour connaitre le dossier de traveil il faut executer la commande `getwd()`
+
+```{r, echo=FALSE}
 getwd()
 ```
 
-Si vous n'utilisez pas l'interface graphique, alors on peut changer de répertoire de travail avec setwd(), en indiquant le nouveau répertoire entre guillemets dans la parenthèse.
+Par default le dossier de travail d'un fichier .Rmd est celui qui contient le fichier. Par contre, le dossier de travail de la console est la base de votre arborescence de fichier. Exécuter directement la commande `getwd()` directement dans la console. Vous devriez avoir un résulat différent.
+C'est normal mais c'est une subtilité qu'il faut connaître.
 
-La variable "heisenberg" contient les trois colonnes de données. Chaque colonne reçoit un nom basé sur l'en-tête (la première ligne du fichier). Vous pouvez maintenant accéder à chaque colonne en utilisant un "$":
+Dans Rstudio, vous pouvez modifier le répertoire de travail en utilisant la commande `setwd()` ou bien dans le petit panel en bas a droite, vous pouvez choisir un dossier puis selectionner "More" et "Set as Working Directory".
+
+Si vous n'êtes pas sûrs des fichiers qui se trouvent dans le répertoire de travail actuel, vous pouvez utiliser la commande `dir()` pour lister les fichiers du répertoire de travail actuel:
+
+```{r}
+dir()
+```
+
+
+Après cette petite apparté sur le dossier de travail, nous revenons à notre table et notre variable "heisenberg".
+
+Pour connaitre les noms des colonnes de notre tableau, on peut utiliser la commande colnames ou head() pour afficher les début dut tableau.
+
+```{r}
+colnames(heisenberg)
+```
+
+```{r}
+head(heisenberg)
+```
+
+La variable "heisenberg" contient donc un tableau avec trois colonnes. Chaque colonne reçoit un nom basé sur l'en-tête (la première ligne du fichier). Vous pouvez maintenant accéder à chaque colonne en utilisant un "$":
 
 ```{r}
 heisenberg$trial
@@ -102,18 +427,35 @@ heisenberg$mass
 heisenberg$velocity
 ```
 
-Si vous n'êtes pas sûr des colonnes contenues dans la variable, vous pouvez utiliser la commande names:
+et buis même les stocker dans d'autres variables
 
 ```{r}
-names(heisenberg)
+a<-heisenberg$trial
+b<-heisenberg$mass
+c<-heisenberg$velocity
 ```
 
 
-Nous allons étudier un autre exemple tout au long de ce tutoriel. Le fichier de données a été créé par un groupe à Oak Ridge National Laboratory. Les données d'origine sont données dans une feuille de calcul Excel, et le fichier CSV a été créé en supprimant l'ensemble supérieur de lignes et en l'enregistrant comme un fichier "csv". Ceci est une option pour enregistrer dans Excel. Vous devrez enregistrer le fichier sur votre ordinateur.
 
-La feuille de calcul d'origine se trouve à l'adresse http://cdiac.ornl.gov/ftp/ndp061a/trees91.wk1. Une description du fichier de données se trouve à http://cdiac.ornl.gov/ftp/ndp061a/ndp061a.txt.
+> une autre manière d'importer les données d'un fichier, est d'utiliser l'interface graphique de Rstudio, File > Import Dataset > From Csv et de récupérer les lignes de commandes dans la section "code preview"
+
+
+## Exercice
+
+Nous allons étudier un autre exemple dans la suite de ce tutoriel. Le fichier de données a été créé par un groupe à Oak Ridge National Laboratory. Les données d'origine sont données dans une feuille de calcul Excel. 
+
+La feuille de calcul d'origine se trouve à l'adresse http://cdiac.ornl.gov/ftp/ndp061a/trees91.wk1 (ou dans data_pour_exercices)
+Une description du fichier de données se trouve à http://cdiac.ornl.gov/ftp/ndp061a/ndp061a.txt.
+
+Ouvrir ce fichier et regarder comment est ce qu'il est construit.
+
+Dans R, il est facile d'importer un tableau au format `csv` ou excel mais il faut que le tableau soit composé de l'ensemble des lignes, or dans ce tableau il y a des lignes d'entête qui vont gêner l'importation des données.
+
+Supprimer ces lignes, enregister le tableau sous format `csv` via votre tableur (excel ou libreoffice)
+
 
 Les données contiennent des estimations de la biomasse de pin ponderosa dans une étude réalisée par Dale W. Johnson, J. Timothy Ball et Roger F. Walker (Université du Nevada). La table contient 54 lignes, et chaque ligne représente une observation. Chaque observation comprend des mesures et des marqueurs pour 28 mesures différentes d'un arbre donné. Par exemple, le premier chiffre de chaque rangée est un nombre, 1, 2, 3 ou 4, qui indique un niveau différent d'exposition au dioxyde de carbone. Le sixième nombre dans chaque rangée est une estimation de la biomasse des tiges d'un arbre. Notez que la toute première ligne du fichier est une liste d'étiquettes utilisées pour les différentes colonnes de données.
+
 
 Les données peuvent être lues dans une variable appelée "tree" en utilisant la commande read.csv. Allez-y!
 
@@ -124,9 +466,12 @@ Les données peuvent être lues dans une variable appelée "tree" en utilisant l
 
 ```
 
-Cela créera une nouvelle variable appelée "tree". Si vous tapez "tree" à l'invite et appuyez sur Entrée, tous les éléments stockés dans la variable seront imprimés. Essayez!
 
+Cela créera une nouvelle variable appelée "tree". Si vous tapez "tree"  dans la console et que vous appuyez sur Entrée, tous les éléments stockés dans la variable seront affichés. Essayez!
 
+```{r, eval=FALSE}
+tree
+```
 
 
 # Types de données de base 
@@ -237,7 +582,7 @@ R peut aussi stocker des données de type "facteur". Souvent, une expérience co
 Nous allons les données dans la dataframe "tree". Plusieurs variables du fichier sont des facteurs: 
 
 ```{r}
-tree <- read.csv(file="trees91.csv",header=TRUE,sep=",");
+tree <- read.csv(file="data_pour_exercices/trees91.csv",header=TRUE,sep=",");
 names(tree)
 typeof(tree$CHBR)
 summary(tree)
@@ -276,7 +621,7 @@ fac=as.factor(c(as.character(fac),"D"))
 On peut aussi interdire à R de faire les conversions automatiques:
 
 ```{r}
-tree <- read.csv(file="trees91.csv",header=TRUE,sep=",",stringsAsFactors=F);
+tree <- read.csv(file="data_pour_exercices/trees91.csv",header=TRUE,sep=",",stringsAsFactors=F);
 names(tree)
 typeof(tree$CHBR)
 ```
@@ -357,7 +702,7 @@ ncol(bubba)
 quand utilise read.csv, on créé un data.frame
 
 ```{r}
-tree <- read.csv(file="trees91.csv",header=TRUE,sep=",",stringsAsFactors=F);
+tree <- read.csv(file="data_pour_exercices/trees91.csv",header=TRUE,sep=",",stringsAsFactors=F);
 is.data.frame(tree)
 ```
 
@@ -461,6 +806,16 @@ sexsmoke
 La commande matrix crée une matrice deux par deux. 
 L'option "byrow=T" indique que les numéros sont d'abord remplis dans les lignes et que ncols = 2 indique qu'il y a deux colonnes.
 
+
+Si vous avez besoin de transformer votre table en tableau il existe solutions en fonction du type de résultats que vous souhaitez:
+
+```{r}
+as.data.frame(sexsmoke)
+``` 
+
+```{r}
+as.data.frame.matrix(sexsmoke)
+``` 
 
 # Opérations de base et descriptions numériques
 
@@ -796,7 +1151,7 @@ boxplot(w1$vals,horizontal=TRUE,at=15.5,add=TRUE,axes=FALSE)
 Pour la deuxième partie sur les boxplots, nous allons travailler sur l'objet "tree", qui provient du fichier trees91.csv. Nous devons spécifier quelles colonnes sont des facteurs:
 
 ```{r}
-tree <- read.csv(file="trees91.csv",sep=",",head=TRUE)
+tree <- read.csv(file="data_pour_exercices/trees91.csv",sep=",",head=TRUE)
 tree$C <- factor(tree$C)
 tree$N <- factor(tree$N)
 ``` 
@@ -1541,7 +1896,7 @@ La selection sexuelle est l'un des principaux processus inpliqués dans l'emerge
 
 Ici vous allez tester si l'intensité de la selection sexuelle, estimée à partir du sex ratio, prédit la diversité des morphes chez \textit{Podarcis muralis}.
 
-![Podarcis muralis](morphs.jpg){ width=50% }
+![Podarcis muralis](data/image/morphs.jpg){ width=50% }
 
 
 > Importer le jeu de données contenu dans "lezard.xlsx" et afficher les 5 premières lignes.
@@ -1711,7 +2066,7 @@ mafonction2()
 Nosema ceranae est un champignon microscopique, qui provoque une maladie répandue chez abeilles.
 Ce microchampignon n'existe hors des cellules de son hôte que sous la forme de spores métaboliquement inactives. Ces spores, infectieuses, permettent la transmission de maladies entre individus. 
 
-![Nosema ceranae](Nosema1.jpg){ width=30% }	
+![Nosema ceranae](data/image/Nosema1.jpg){ width=30% }	
 
 Daren Eiri et ses collaborateurs (PLOS One, 2015; doi:10.1371/journal.pone.0126330) ont exposé des larves d'abeille de trois jours à une dose unique de spores de \textit{Nosema ceranae} de 40 000 (40 K), 10 000 (10 K), zéro ou 40 K autoclavée.
 Ils ont ensuite compté le nombre de spores chez les larves d'abeilles de 8 jours, et chez les adultes, ainsi que mesuré la durée de vie des abeilles.
@@ -1824,7 +2179,7 @@ labs(x= "Traitement (nb spores)",y = "Poids des abeilles (g)\n")
 
 Reproduire la Figure 3 de l'article Eiri et al. 
 
-![Figure 3 de Eiri et al](fig3.png){ width=50% }
+![Figure 3 de Eiri et al](data/image/fig3.png){ width=50% }
 
 
 Pour cela il est possible de procéder par étapes:
