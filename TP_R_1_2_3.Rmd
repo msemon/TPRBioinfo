@@ -83,8 +83,6 @@ A la fin de ces 3 séances de TP, vous devrez être capable de maitriser tous le
     
 > Pas de panique,  les étudiants des années précedentes y sont arrivés ! De plus cette liste poura faciliter vos révisions et vous aider à identifier les points à travailler.
 
-    
-
 #  Rstudio et le RMarkdown
 
 
@@ -2867,7 +2865,7 @@ shannon_l = tapply(x, x, calc_shannon)
 
 
 
-# Application sur un troisième jeu de données (Les abeilles)
+# Application sur un troisième jeu de données (Les abeilles) et initiation à ggplot2
 
 Nosema ceranae est un champignon microscopique, qui provoque une maladie répandue chez abeilles.
 Ce microchampignon n'existe hors des cellules de son hôte que sous la forme de spores métaboliquement inactives. Ces spores, infectieuses, permettent la transmission de maladies entre individus. 
@@ -2893,8 +2891,6 @@ Chacune des lignes représente une abeille étudiée. L'identifiant de la coloni
 
 > Faire une fonction qui représente, pour une colonie donnée, la distribution du poids en fonction du traitement.
 
-
-## Les graphiques avec ggplot2
 
 > Démarrage de ggplot2 en douceur
 
@@ -3003,16 +2999,16 @@ Pour cela il est possible de procéder par étapes:
 * Enregistrer votre figure au format pdf
 
 
-## Où trouver de l'aide plus tard ?
+# Où trouver de l'aide plus tard ?
 
 Lors de ce TP vous pouvez posez toutes les questions que vous voulez aux professeurs mais comment faire plus tard ?
 
-### Aide en ligne
+## Aide en ligne
 **R** dispose d'une aide en ligne très complète, mais dont l'usage n'est pas forcément très simple. D'une
 part car elle est intégralement en anglais, d'autre part car son organisation prend un certain temps à être
 maîtrisée.
 
-#### Aide sur une fonction
+### Aide sur une fonction
 
 La fonction la plus utile est sans doute `help` (ou son équivalent `?`) qui permet d'afficher la page d'aide liée à une ou 
 plusieurs fonctions. Celle-ci permet de lister les arguments de la fonction, d'avoir des informations détaillées 
@@ -3030,11 +3026,11 @@ ou bien
 help("mean")
 ```
 
-### Ressources sur le Web
+## Ressources sur le Web
 
 De nombreuses ressources existent en ligne, mais la plupart sont en anglais, il faudra donc formuler vos requête en anglais.
 
-#### Moteur de recherche
+### Moteur de recherche
 
 Le fait que le logiciel s'appelle **R** ne facilite malheureusement pas les recherches sur le Web... La
 solution à ce problème a été trouvée grâce à la constitution d'un moteur de recherche *ad hoc* à partir de
@@ -3044,7 +3040,7 @@ Les requêtes saisies dans **Rseek** sont exécutées dans des corpus prédéfin
 documents et manuels, les listes de discussion ou le code source du programme.
 
 
-#### Antisèches (cheatsheet)
+### Antisèches (cheatsheet)
 
 On peut trouver un peu partout sur internet des antisèches (*cheatsheets* en anglais) qui sont 
 en général un fichier **PDF** résumant les principales fonctions d'une extension ou
@@ -3058,13 +3054,13 @@ nous intéresse.
 Certaines sont également disponibles directement dans **RStudio**, dans le menu `Help > Cheatsheets`.
 
 
-#### Aide en ligne
+### Aide en ligne
 
 Le site **R documentation** propose un accès clair et rapide à la documentation de **R** et des extensions
 hébergées sur le **CRAN** (ainsi que certaines extensions hébergées sur **GitHub**). Il permet notamment de 
 rechercher et naviguer facilement entre les pages des différentes fonctions : www.rdocumentation.org.
 
-#### Ressources officielles
+### Ressources officielles
 
 La documentation officielle de **R** est accessible en ligne depuis le site du projet : www.r-project.org.
 Les liens de l'entrée *Documentation* du menu de gauche vous permettent d'accéder à différentes ressources.
@@ -3079,7 +3075,7 @@ nécessite quand même un minimum d'aisance en informatique et en statistiques :
 *R Data Import/Export* explique notamment comment importer des données depuis d'autres logiciels :<br />
 <http://cran.r-project.org/doc/manuals/R-data.html>.
 
-#### Ouvrages, blogs, MOOCs...
+### Ouvrages, blogs, MOOCs...
 
 Parmi les ressources en français, on peut citer notamment [R et espace](https://framabook.org/r-et-espace/), manuel d’initiation à la programmation avec R appliqué à l’analyse de l’information géographique, librement téléchargeable en ligne. 
 
@@ -3110,7 +3106,7 @@ On peut aussi citer :
 Et enfin, une liste de ressources francophones : <https://github.com/frrrenchies/frrrenchies/>.
 
 
-#### Ressources francophones
+### Ressources francophones
 
 Il existe des ressources en français sur l'utilisation de **R**, mais peu sont réellement destinées aux
 débutants, elles nécessitent en général des bases à la fois en informatique et en statistique.
@@ -3127,7 +3123,7 @@ mais on trouvera des documents plus introductifs ici :<br /><http://pbil.univ-ly
 
 
 
-#### StackOverflow
+### StackOverflow
 
 Le site **StackOverflow** (qui fait partie de la famille des sites **StackExchange**) comprend une section
 (anglophone) dédiée à **R** qui permet de poser des questions et en général d'obtenir des réponses assez
