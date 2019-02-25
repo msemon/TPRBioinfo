@@ -710,7 +710,7 @@ length(c())
 - `letters`: les 26 lettres de l'alphabet en minuscules
 - `month.name` : les noms des 12 mois de l'année en anglais
 - `month.abb` : la version abrégée des 12 mois en anglais
-- `pi` : la constante mathématique &pi;
+- `pi` : la constante mathématique pi;
 
 ```{r}
 LETTERS
@@ -2579,19 +2579,14 @@ trace_histo(x, file="histo.pdf",titre="Super titre",couleur="red")
 
 #### L’argument spécial point-point-point
 
-L'argument point-point-point permet à une fonction
-d'accepter un nombre quelconque d’arguments.
-L'argument point-point-point (...) indique que la fonction
-accepte n'importe quoi d’autre comme argument. Ce qu’il
-adviendra de ces arguments est déterminé par la fonction. En
-général ils sont transmis à d'autres fonctions. Par exemple,
-une fonction graphique de haut niveau transmettra l’argument
-point-point-point à des fonctions graphiques de bas niveau
-pour traitement.
+L'argument point-point-point permet à une fonction d'accepter un nombre quelconque d’arguments.
+L'argument point-point-point (...) indique que la fonction accepte n'importe quoi d’autre comme argument.
+Ce qu’il adviendra de ces arguments est déterminé par la fonction.
+En général ils sont transmis à d'autres fonctions.
+Par exemple, une fonction graphique de haut niveau transmettra l’argument point-point-point à des fonctions graphiques de bas niveau pour traitement.
 
+Supposons que nous voulions définir une fonction qui dessine un nuage de points et y ajoute une droite de régression :
 
-Supposons que nous voulions d ́efinir une fonction qui dessine un
-nuage de points et y ajoute une droite de r ́egression :
 ```{r, eval=FALSE} 
 f <- function(x, y, ...) {
 plot.default(x = x, y = y, ...)
@@ -2600,9 +2595,7 @@ abline(coef = lm(y~x)$coef)
 f(1:10,1:10)
 ```
 
-Comme nous avons transmis l’argument point-point-point à
-plot.default(), tout ce que plot.default() sait faire, notre
-fonction f() sait le faire également.
+Comme nous avons transmis l’argument point-point-point à plot.default(), tout ce que plot.default() sait faire, notre fonction f() sait le faire également.
 
 ```{r, eval=FALSE} 
 f(1:10, 1:10, main = "Titre de ce graphique", pch = 19, col = "blue",
@@ -2624,18 +2617,12 @@ f2()
 #### Détermination de la valeur d'une variable dans une fonction
 
 
-Quand une expression fait appel à une variable, comment la
-valeur de cette variable est elle déterminée ?
+Quand une expression fait appel à une variable, comment la valeur de cette variable est elle déterminée ?
 
-Si une variable n’est pas trouvée à l’intérieur de la fonction,
-elle est recherchée en dehors de la fonction. Tout ce que l’on a à retenir est
-que :
-une variable définie à l'exterieur de la fonction est accessible
-aussi dans la fonction. Si deux variables avec le même nom
-sont définies à l'intérieur et à l'exterieur de la fonction, c’est la
-variable locale qui sera utilisée.
-Une erreur aura lieu si aucune variable avec le nom demandé
-n’est trouvée.
+Si une variable n’est pas trouvée à l’intérieur de la fonction, elle est recherchée en dehors de la fonction. Tout ce que l’on a à retenir est que :
+une variable définie à l'exterieur de la fonction est accessible aussi dans la fonction.
+Si deux variables avec le même nom sont définies à l'intérieur et à l'exterieur de la fonction, c’est la variable locale qui sera utilisée.
+Une erreur aura lieu si aucune variable avec le nom demandé n’est trouvée.
 
 ```{r, eval=FALSE} 
 mavariable <- 1

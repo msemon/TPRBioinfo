@@ -718,7 +718,7 @@ x
 <li><code>letters</code>: les 26 lettres de l’alphabet en minuscules</li>
 <li><code>month.name</code> : les noms des 12 mois de l’année en anglais</li>
 <li><code>month.abb</code> : la version abrégée des 12 mois en anglais</li>
-<li><code>pi</code> : la constante mathématique π</li>
+<li><code>pi</code> : la constante mathématique pi;</li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">LETTERS
 letters
@@ -988,9 +988,21 @@ b &lt;-<span class="st"> </span><span class="kw">c</span>(-<span class="dv">1</s
 </div>
 <div id="operation-sur-les-vecteurs-de-chaines-de-caracteres" class="section level4">
 <h4><span class="header-section-number">5.1.10.2</span> Opération sur les vecteurs de chaines de caractères</h4>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a =<span class="st"> </span><span class="dv">1</span>:<span class="dv">10</span>
-<span class="kw">sort</span>(a)
-<span class="kw">sort</span>(a,<span class="dt">decreasing =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<p>Voici quelques opérations utiles que l’on peut réaliser sur des vecteurs de chaines de caractères.</p>
+<p>Concaténer des chaines de caractères:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a =<span class="st"> &quot;Bonjour&quot;</span>
+b =<span class="st"> &quot;toi&quot;</span>
+<span class="kw">paste</span>(a,b)
+<span class="kw">paste0</span>(a,b)
+
+a =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;mot1&quot;</span>,<span class="st">&quot;mot2&quot;</span>,<span class="st">&quot;mot3&quot;</span>,<span class="st">&quot;mot4&quot;</span>)
+
+<span class="kw">paste0</span>(<span class="st">&quot;prefix_&quot;</span>,a,<span class="st">&quot;_suffix&quot;</span>)
+
+<span class="kw">paste0</span>(a,a,<span class="dv">1</span>)</code></pre></div>
+<p>Remplacer un pattern dans des chaines de caractères:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;mot1&quot;</span>,<span class="st">&quot;mot2&quot;</span>,<span class="st">&quot;mot3&quot;</span>,<span class="st">&quot;mot4&quot;</span>)
+<span class="kw">gsub</span>(<span class="st">&quot;mot&quot;</span>,<span class="st">&quot;word&quot;</span>,a)</code></pre></div>
 </div>
 </div>
 <div id="en-resume" class="section level3">
@@ -1400,6 +1412,7 @@ new_factor</code></pre></div>
 <div id="vecteurs" class="section level3">
 <h3><span class="header-section-number">5.6.1</span> Vecteurs</h3>
 <p>TODO: Faire des exercices de bases sur les vecteurs en proposant d’aller chercher des noms de fonction sur internet tel que cumsum</p>
+<p>Faire un exercice pour couper une colonne string en 2 colonne string pour utiliser strsplit</p>
 </div>
 <div id="tableaux-de-donnees" class="section level3">
 <h3><span class="header-section-number">5.6.2</span> Tableaux de données</h3>
@@ -1898,7 +1911,7 @@ result$mean</code></pre></div>
 <div id="largument-special-point-point-point" class="section level4">
 <h4><span class="header-section-number">9.2.4.1</span> L’argument spécial point-point-point</h4>
 <p>L’argument point-point-point permet à une fonction d’accepter un nombre quelconque d’arguments. L’argument point-point-point (…) indique que la fonction accepte n’importe quoi d’autre comme argument. Ce qu’il adviendra de ces arguments est déterminé par la fonction. En général ils sont transmis à d’autres fonctions. Par exemple, une fonction graphique de haut niveau transmettra l’argument point-point-point à des fonctions graphiques de bas niveau pour traitement.</p>
-<p>Supposons que nous voulions d ́efinir une fonction qui dessine un nuage de points et y ajoute une droite de r ́egression :</p>
+<p>Supposons que nous voulions définir une fonction qui dessine un nuage de points et y ajoute une droite de régression :</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">f &lt;-<span class="st"> </span>function(x, y, ...) {
 <span class="kw">plot.default</span>(<span class="dt">x =</span> x, <span class="dt">y =</span> y, ...)
 <span class="kw">abline</span>(<span class="dt">coef =</span> <span class="kw">lm</span>(y~x)$coef)
