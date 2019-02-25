@@ -1129,12 +1129,28 @@ sort(a,decreasing = TRUE)
 
 #### Opération sur les vecteurs de chaines de caractères
 
+Voici quelques opérations utiles que l'on peut réaliser sur des vecteurs de chaines de caractères.
 
+Concaténer des chaines de caractères:
+```{r}
+a = "Bonjour"
+b = "toi"
+paste(a,b)
+paste0(a,b)
+
+a = c("mot1","mot2","mot3","mot4")
+
+paste0("prefix_",a,"_suffix")
+
+paste0(a,a,1)
+``` 
+
+
+Remplacer un pattern dans des chaines de caractères:
 
 ```{r}
-a = 1:10
-sort(a)
-sort(a,decreasing = TRUE)
+a = c("mot1","mot2","mot3","mot4")
+gsub("mot","word",a)
 ``` 
 
 
@@ -1804,6 +1820,10 @@ typeof(tree$CHBR)
 ### Vecteurs
 
 TODO: Faire des exercices de bases sur les vecteurs en proposant d'aller chercher des noms de fonction sur internet tel que cumsum
+
+
+Faire un exercice pour couper une colonne string en 2 colonne string pour utiliser  strsplit
+
 
 
 ### Tableaux de données
