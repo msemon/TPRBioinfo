@@ -1,6 +1,6 @@
 ---
-title: "Tutoriel initiation à R"
-author: "Carine Rey, Magalie Naville & Marie Sémon"
+title: "Tutoriel d'initiation à R"
+author: "Carine Rey, Magali Naville & Marie Sémon"
 
 date: "Dernière mise à jour: `r format(Sys.Date(), format = '%d %B %Y')`" 
 output:
@@ -86,7 +86,7 @@ A la fin de ces 3 séances de TP, vous devrez être capable de maitriser tous le
 #  Rstudio et le RMarkdown
 
 
-## Instalation de R et Rstudio 
+## Installation de R et Rstudio 
 
 Pour commencer le Tp, vous avez besoin d'un ordinateur avec R et Rstudio d'opérationnel.
 
@@ -95,7 +95,7 @@ la page du CRAN http://cran.r-project.org/bin/.
 
 Vous devrez également installer RStudio https://www.rstudio.com/products/rstudio/download/
 
-## Le Rmarkdown c'est quoi ?!!
+## Le RMarkdown c'est quoi ?!!
 
 L'extension `rmarkdown` permet de générer des documents de manière dynamique en mélangeant texte mis en forme et résultats produits par du code R. Les documents générés peuvent être au format HTML, PDF, Word, et bien d'autres. C'est donc un outil très pratique pour l'exportation, la communication et la diffusion de résultats d'analyse.
 
@@ -262,7 +262,7 @@ Un onglet *R Markdown* s'ouvre dans la même zone que l'onglet *Console* et indi
 Pour personalisé vos document vous pouvez aller lire la sute de ce tutoriel sur la page de son auteur: https://juba.github.io/tidyverse/13-rmarkdown.html
 
 
-# C'est partie
+# C'est parti
 
 Pour continuer le TP, vous allez avoir besoin de télécharger ce document afin de le compléter.
 
@@ -365,7 +365,7 @@ bubba[1:3]
 bubba[c(1,3,4)]
 ```
 
-## Importation de valeurs à partir d'un fichier
+## Importer des valeurs à partir d'un fichier
 
 Il est rare d'avoir juste quelques points de données. Il est beaucoup plus commun d'avoir beaucoup de données avec des relations compliquées. Ici, nous allons examiner comment lire un jeu de données à partir d'un fichier, mais nous devons d'abord discuter du format d'un fichier de données.
 
