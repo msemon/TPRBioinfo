@@ -36,43 +36,43 @@ Il y aura 3 séances de 4h de TP consacrées à R :
 
 Ce document servira pour les 3 séances.
 
-Il a été largement inspiré du site suivant, dans lequel vous pourrez également trouver (en anglais) des exemples d'application des tests statistiques du type de ce que vous avez pratiqué en biostatistiques. http://www.cyclismo.org/tutorial/R/ , ainsi que de ce tutoriel en français http://larmarange.github.io/analyse-R/.
+Il a été largement inspiré du site suivant (dans lequel vous pourrez également trouver (en anglais) des exemples d'application des tests statistiques du type de ceux que vous avez pratiqués en biostatistiques) : http://www.cyclismo.org/tutorial/R/, ainsi que de ce tutoriel en français : http://larmarange.github.io/analyse-R/.
 
-Vous progresserez à votre rythme et pour ceux qui iront le plus vite un autre document les attendront.
+Vous progresserez à votre rythme ; un autre document attendra ceux qui iront le plus vite !
 
-# Objectif du TP
+# Objectifs du TP
 
-A la fin de ces 3 séances de TP, vous devrez être capable de maitriser tous les points énumérez ci-dessous:
+A la fin de ces 3 séances de TP, vous devrez être capable de maîtriser tous les points énumérés ci-dessous :
 
 
-* Faire une analyse reproductible en utilissant un fichier Rmarkdown (.Rmd)
+* Faire une analyse reproductible en utilisant un fichier Rmarkdown (.Rmd)
     * Connaitre les bases de la syntaxe Markdown (md)
-    * rédiger un fichier .Rmd
-    * compiler un fichier .Rmd
+    * Rédiger un fichier .Rmd
+    * Compiler un fichier .Rmd
 
 * Savoir utiliser Rstudio
     * Savoir se déplacer dans l'arborescence de son ordinateur
     * Maitriser le concept de dossier de travail
 
 * Importer des données provenant d'un fichier dans un tableau (data.frame)
-    * .csv, .tsv (Fichier texte, qui contient un tableau dont les colonnes sont espacées par des virgules ou des tabulations)
-    * .xlsx (Fichier excel)
+    * .csv, .tsv (fichier texte, qui contient un tableau dont les colonnes sont espacées par des virgules ou des tabulations)
+    * .xlsx (fichier Excel)
 
 * Savoir explorer un tableau ou data.frame
     * Connaitre le nombre de lignes, de colonnes
-    * Recupér des statistiques récapitulatives, moyenne, minimum, maximum, d'une ligne/colonne
+    * Recupérer des statistiques récapitulatives : moyenne, minimum, maximum d'une ligne/colonne
 
 * Manipuler les tableaux
-    * Selectionner une partie d'un tableau en fonction de critères
-         * sur une autre colonne
+    * Sélectionner une partie d'un tableau en fonction de critères
+         * sur une colonne
          * sur une liste
     * Faire des opérations simples
          * Fusionner des tableaux
-         * Rajouter une ligne ou une colonne qui contient le résultat d'un calcul (ex, somme ou moyenne d'une ligne/colonne)
+         * Rajouter une ligne ou une colonne qui contient le résultat d'un calcul (ex : somme ou moyenne d'une ligne/colonne)
     
  
-* Maitriser les bases du language R:
-    * Connaitre et savoir utiliser les différents types de bases (nombre entier, chaine de caractères, facteur, vecteur, tableau, matrice, ...)
+* Maitriser les bases du language R :
+    * Connaitre et savoir utiliser les différents types de base (nombre entier, chaine de caractères, facteur, vecteur, tableau, matrice, ...)
     * Savoir installer et charger des extensions (library)
     * Savoir écrire une fonction
     * Savoir maitriser les fonctions de la famille "apply"
@@ -81,7 +81,7 @@ A la fin de ces 3 séances de TP, vous devrez être capable de maitriser tous le
   
 
     
-> Pas de panique,  les étudiants des années précedentes y sont arrivés ! De plus cette liste poura faciliter vos révisions et vous aider à identifier les points à travailler.
+> Pas de panique,  les étudiants des années précedentes y sont arrivés ! De plus cette liste pourra faciliter vos révisions et vous aider à identifier les points à travailler.
 
 #  Rstudio et le RMarkdown
 
