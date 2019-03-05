@@ -88,7 +88,7 @@ A la fin de ces 3 séances de TP, vous devrez être capable de maîtriser tous l
 
 ## Installation de R et Rstudio 
 
-Pour commencer le Tp, vous avez besoin d'un ordinateur avec R et Rstudio d'opérationnel.
+Pour commencer le TP, vous avez besoin d'un ordinateur avec R et Rstudio d'opérationnel.
 
 R et Rstudio sont déja installés sur les ordinateurs des salles de TP. Pour l’installer sur votre ordinateur personnel, voir
 la page du CRAN http://cran.r-project.org/bin/.
