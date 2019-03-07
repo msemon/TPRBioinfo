@@ -1188,7 +1188,7 @@ gsub("mot","word",a)
 
 ## Les listes (list)
 
-Par nature, les vecteurs ne peuvent contenir que des valeurs de même type (numériques, textuels ou logique). Or, on peut avoir besoin de représenter des objets plus complexes composés d'éléments disparates. C'est ce que permettent les "listes".
+Par nature, les vecteurs ne peuvent contenir que des valeurs de même type (numérique, textuel ou logique). Or on peut avoir besoin de représenter des objets plus complexes composés d'éléments disparates. C'est ce que permettent les "listes".
 
 ### Propriétés et création
 
@@ -1199,13 +1199,13 @@ l1 <- list(1:5, "abc")
 l1
 ```
 
-Une liste est un ensemble d'objets, quels qu'ils soient, chaque élément d'une liste pouvant avoir ses propres dimensions. Dans notre exemple précédent, nous avons créée une liste `l1` composée de deux élements : un vecteur d'entiers de longeur 5 et un vecteur textuel de longueur 1. La longueur d'une liste correspond aux nombres d'éléments qu'elle contient et s'obtient avec `length` :
+Une liste est un ensemble d'objets, quels qu'ils soient, chaque élément d'une liste pouvant avoir ses propres dimensions. Dans notre exemple précédent, nous avons créé une liste `l1` composée de deux élements : un vecteur d'entiers de longeur 5 et un vecteur textuel de longueur 1. La longueur d'une liste correspond aux nombres d'éléments qu'elle contient et s'obtient avec `length` :
 
 ```{r}
 length(l1)
 ```
 
-Comme les vecteurs, une liste peut être nommées et les noms des éléments d'une liste accessibles avec `names` :
+Comme les vecteurs, une liste peut être nommée et les noms des éléments d'une liste sont accessibles avec la fonction `names` :
 
 ```{r}
 l2 <- list(minuscules = letters, majuscules = LETTERS, mois = month.name) 
@@ -1241,6 +1241,13 @@ str(l)
 ```
 
 On peut noter en passant qu'une liste peut tout à fait n'être que partiellement nommée.
+
+Créez une liste "titi" contenant (avec des noms) votre prénom, la couleur de vos chaussettes, et le diamètre de votre cheville gauche. Créez la liste "grominet" contenant un vecteur contenant lui-même votre jour et votre année de naissance, et votre signe astrologique chinois. Combiner ces deux listes qui contiennent ces infos fondamentales.
+
+```{r}
+
+```
+
 
 ### Indexation
 
@@ -1286,7 +1293,7 @@ Nous pouvons aussi tester l'indexation par nom.
 l[["mois"]]
 ```
 
-Mais il faut avouer que cette écriture avec doubles crochets et guillemets est un peu lourde. Heureusement, un nouvel acteur entre en scène : le symbole dollar (`$`). C'est un raccourci des doubles crochets pour l'indexation par nom. Que l'on utilise ainsi :
+Mais il faut avouer que cette écriture avec doubles crochets et guillemets est un peu lourde. Heureusement, un nouvel acteur entre en scène : le symbole dollar (`$`). C'est un raccourci des doubles crochets pour l'indexation par nom. On l'utilise ainsi :
 
 ```{r}
 l$mois
@@ -1313,7 +1320,7 @@ l
 **Les Listes**
 
 - Les listes sont des objets unidimensionnels pouvant contenir tout type d'objet, y compris d'autres listes.
-- Elles ont une longueur que l'obtient avec `length`.
+- Elles ont une longueur que l'on obtient avec la fonction `length`.
 - On créé une liste avec `list`{data-pkg="base"} et on peut fusionner des listes avec `append`.
 - Tout comme les vecteurs, les listes peuvent être nommées et les noms des éléments s'obtiennent avec `names`.
 - Les crochets simples (`[]`) permettent de sélectionner les éléments d'une liste, en utilisant l'indexation par position, l'indexation par nom ou l'indexation par condition. Cela renvoie toujours une autre liste.
@@ -1324,11 +1331,11 @@ l
 
 ## Les tableaux de données (data frame)
 
-Il y a un type d'objets que nous avons déjà vu précedement, il s'agit du tableau de données ou data frame en anglais.
+Etudions maintenant un type d'objet que nous avons déjà vu précedemment : le tableau de données, ou data frame en anglais.
 
 ### Propriétés et création
 
-Dans **R**, les tableaux de données sont tout simplement des listes avec quelques propriétés spéficiques :
+Dans **R**, les tableaux de données sont tout simplement des listes avec quelques propriétés spécifiques :
 
 - les tableaux de données ne peuvent contenir que des vecteurs ;
 - tous les vecteurs d'un tableau de données ont la même longueur ;
@@ -1348,7 +1355,7 @@ df
 str(df)
 ```
 
-La fonction `data.frame` a un gros défaut : si on ne désactive pas l'option `stringsAsFactors` elle transforme les chaînes de caractères, ici la variable "sexe" en facteurs (un type de vecteur que nous aborderons plus en détail dans une prochaine partie).
+La fonction `data.frame` a un gros défaut : si on ne désactive pas l'option `stringsAsFactors` elle transforme les chaînes de caractères, ici la variable "sexe", en facteurs (un type de vecteur que nous aborderons plus en détail dans une prochaine partie).
 
 ```{r}
 df <- data.frame(
@@ -1361,7 +1368,7 @@ df
 str(df)
 ```
 
-Un tableau de données étant une liste, la fonction `length` renverra le nombre d'éléments de la liste, donc dans le cas présent le nombre de variables et `names` leurs noms :
+Un tableau de données étant une liste, la fonction `length` renverra le nombre d'éléments de la liste, donc dans le cas présent le nombre de variables, et `names` leurs noms :
 
 ```{r}
 length(df)
@@ -1384,7 +1391,7 @@ df
 ```
 
 
-Quand utilise read.csv, on créé un data.frame
+Quand on utilise la fonction `read.csv`, on crée un data.frame :
 
 ```{r}
 tree <- read.csv(file="data/exemples/trees91.csv",header=TRUE,sep=",",stringsAsFactors=F);
@@ -1393,7 +1400,7 @@ is.data.frame(tree)
 
 ### Indexation
 
-Les tableaux de données étant des listes, nous pouvons donc utiliser les crochets simples (`[]`), les crochets doubles (`[[]]`) et le symbole dollar (`$`) pour extraire des parties de notre tableau, de la même manière que pour n'importe quelle liste.
+Les tableaux de données étant des listes, nous pouvons donc utiliser les crochets simples (`[]`), les crochets doubles (`[[]]`) et le symbole dollar (`$`) pour extraire des parties du tableau, de la même manière que pour n'importe quelle liste.
 
 ```{r}
 df[1]
@@ -1401,7 +1408,7 @@ df[[1]]
 df$sexe
 ```
 
-Cependant, un tableau de données étant un objet bidimensionnel, il est également possible d'extraire des données sur deux dimensions, à savoir un premier critère portant sur les lignes et un second portant sur les colonnes. Pour cela, nous utiliserons les crochets simples (`[]`) en séparant nos deux critères par une virgule (`,`).
+Cependant, un tableau de données étant un objet bidimensionnel, il est également possible d'extraire des données sur deux dimensions, à savoir un premier critère portant sur les lignes et un second portant sur les colonnes. Pour cela, nous utiliserons les crochets simples (`[]`) en séparant les deux critères par une virgule (`,`).
 
 Un premier exemple :
 
@@ -1417,6 +1424,11 @@ df["Michael", "age"]
 df[c(F, F, T, F), c(c(F, T, F))]
 df[3, "age"]
 df["Michael", 2]
+```
+
+Affichez l'âge de Anna.
+```{r}
+
 ```
 
 Il est également possible de ne préciser qu'un seul critère. Par exemple, si je souhaite les deux premières observations, ou les variables "sexe" et "blond" :
@@ -1449,13 +1461,13 @@ str(df[[2]])
 
 `df[[2]]` quant à lui renvoie le contenu de cette variable, soit un vecteur numérique de longeur quatre.
 
-Reste `df[, 2]` qui signifie renvoie toutes les observations pour la seconde colonne. Or l'indexation bidimensionnelle a un fonctionnement un peu particulier : par défaut cela renvoie un tableau de données mais s'il n'y a qu'une seule variable dans l'extraction, c'est un vecteur qui est renvoyé.
+Reste `df[, 2]` qui renvoie toutes les observations pour la seconde colonne. Or l'indexation bidimensionnelle a un fonctionnement un peu particulier : par défaut cela renvoie un tableau de données mais s'il n'y a qu'une seule variable dans l'extraction, c'est un vecteur qui est renvoyé.
 
 Pour plus de détails, on pourra consulter l'entrée d'aide de `.data.frame`.
 
 ### Afficher les données
 
-Prenons un tableau de données un peu plus conséquent, en l'occurence un jeu de données disponible dans **R** et correspondant à des caractéristiques de voitures
+Prenons un tableau de données un peu plus conséquent, en l'occurrence un jeu de données disponible dans **R** et correspondant à des caractéristiques de voitures.
 Il contient 32 modèles et 11 variables.
 
 ```{r}
@@ -1464,7 +1476,7 @@ d <- mtcars
 d
 ```
 
-Si l'on demande à afficher l'objet `d` dans la console (résultat non reproduit ici), **R** va afficher l'ensemble du contenu de `d` à l'écran ce qui, sur un tableau de plus grande taille, ne sera pas très lisible.
+Si l'on demande l'affichage de l'objet `d` dans la console (résultat non reproduit ici), **R** va afficher l'ensemble du contenu de `d` à l'écran ce qui, sur un tableau de plus grande taille, ne sera pas très lisible.
 Pour une exploration visuelle, le plus simple est souvent d'utiliser la visionneuse intégrée à **RStudio** et que l'on peut appeller avec la fonction `View`.
 
 ```{r, eval=FALSE}
@@ -1479,7 +1491,7 @@ head(d)
 tail(d, 2)
 ```
 
-La méthode `summary` qui fonctionne sur tout type d'objet permet d'avoir quelques statistiques de base sur les différentes variables de notre tableau, les statistiques affichées dépendant du type de variable.
+La méthode `summary` qui fonctionne sur tout type d'objet permet d'avoir quelques statistiques de base sur les différentes variables du tableau, les statistiques affichées dépendant du type de variable.
 
 ```{r}
 summary(d)
@@ -1501,7 +1513,7 @@ library("questionr")
 describe(d)
 ```
 
-Comme on le voit sur cet exemple, `describe` nous affiche le type des variables, les premières valeurs de chacune, le nombre de valeurs manquantes, le nombre de valeurs différentes (uniques) ainsi que quelques autres informations suivant le type de variables.
+Comme on le voit sur cet exemple, `describe` affiche le type des variables, les premières valeurs de chacune, le nombre de valeurs manquantes, le nombre de valeurs différentes (uniques) ainsi que quelques autres informations suivant le type de variable.
 
 Il est possible de restreindre l'affichage à seulement quelques variables en indiquant le nom de ces dernières.
 
@@ -1517,11 +1529,11 @@ library(questionr)
 describe(d$carb)
 ```
 
-### Opération sur les tableaux de données
+### Opérations sur les tableaux de données
 
 Nous examinons ici certaines tâches courantes qui se présentent lors du traitement des données. Ces tâches vont de l'assemblage de différents ensembles de données aux façons d'appliquer des fonctions à différentes parties des ensembles de données. Les fonctions sont couramment utilisées dans une grande variété de circonstances pour un certain nombre de raisons différentes. 
 
-Lorsque vous avez plus d'un ensemble de données, vous pouvez les combiner. Vous pouvez regrouper différents ensembles de données en les combinant par ligne (rbind) ou par colonnes (cbind). Le premier exemple montre cela avec deux dataframes. Les arguments des fonctions peuvent prendre n'importe quel nombre d'objets. Nous n'en utilisons que deux ici pour simplifier la démonstration. Il est important de noter que lorsque vous regroupez des tables par lignes, les noms des objets dans les tables doivent être identiques.
+Lorsque vous avez plus d'un ensemble de données, vous pouvez les combiner. Vous pouvez regrouper différents ensembles de données en les combinant par lignes (rbind) ou par colonnes (cbind). Le premier exemple montre cela avec deux dataframes. Les arguments des fonctions peuvent prendre n'importe quel nombre d'objets. Nous n'en utilisons que deux ici pour simplifier la démonstration. Il est important de noter que lorsque vous regroupez des tables par lignes, les noms des objets dans les tables doivent être identiques.
 
 ```{r}
 a <- data.frame(one=c( 0, 1, 2),two=c("a","a","b"))
@@ -1569,8 +1581,10 @@ w=merge(a,b,by.x="two",by.y="two",all.x=T,all.y=T)
 w
 ```
 
+
+Pourquoi la ligne suivante produit-elle une erreur ?
 ```{r,eval=FALSE}
-rbind(a,b) # Pourquoi est ce que cette ligne produit une erreur ?
+rbind(a,b) 
 ```
 
 
@@ -1589,15 +1603,13 @@ rbind(a,b) # Pourquoi est ce que cette ligne produit une erreur ?
 - Il est possible d'utiliser des coordonnées bidimensionnelles avec les crochets simples (`[]`) en indiquant un critère sur les lignes puis un critère sur les colonnes, séparés par une virgule (`,`).
 
 
-
-
 ## Les matrices (matrix)
 
 ### Présentation et création
 
-Les "matrices" sont vecteurs sont multi dimensionnels  dont toutes les valeurs sont d'un seul et même type.
+Les "matrices" sont des vecteurs multi-dimensionnels dont toutes les valeurs sont d'un seul et même type.
 
-Une matrice contient différentes colonnes de même type , c'est a dire que des nombres ou que des chaines de caratcères
+Une matrice contient différentes colonnes de même type, c'est-à-dire que des nombres ou que des chaines de caractères.
 
 ```{r}
 A = matrix( 
@@ -1625,7 +1637,7 @@ Et la colonne n entière par  A[,n]:
 A[, 3] 
 ```
 
-On peut transposer, et même déconstruire une matrice. Attention il faut enregistrer le résultat dans un autre objet pour pouvoir le réutiliser
+On peut transposer, et même déconstruire une matrice. Attention il faut enregistrer le résultat dans un autre objet pour pouvoir le réutiliser.
 
 ```{r}
 t(A)
@@ -1633,7 +1645,7 @@ c(A)
 B=c(A)
 ```
 
-### Une matrice bien utile, les tables de contingence (table)
+### Une matrice bien utile : les tables de contingence (table)
 
 #### Tables de contingence à une dimension
 
@@ -1647,7 +1659,7 @@ results
 
 #### Tables de contingence à deux dimensions
 
-Dans l'exemple ci-dessous, nous avons deux questions. Dans la première question, les réponses sont étiquetées «Jamais», «Parfois» ou «Toujours». Dans la deuxième question, les réponses sont intitulées «Oui», «Non» ou «Peut-être». L'ensemble des vecteurs "a" et "b", contiennent la réponse pour chaque question. Le troisième élément de "a" est la façon dont la troisième personne a répondu à la première question, et le troisième élément de "b" est la façon dont la troisième personne a répondu à la deuxième question.
+Dans l'exemple ci-dessous, nous avons deux questions. Dans la première question, les réponses sont étiquetées «Jamais», «Parfois» ou «Toujours». Dans la deuxième question, les réponses sont intitulées «Oui», «Non» ou «Peut-être». L'ensemble des vecteurs "a" et "b" contient les réponses aux deux questions. Le troisième élément de "a" est la façon dont la troisième personne a répondu à la première question, et le troisième élément de "b" est la façon dont la troisième personne a répondu à la deuxième question.
 
 ```{r}
 a <- c("Sometimes","Sometimes","Never","Always","Always","Sometimes","Sometimes","Never")
@@ -1657,15 +1669,15 @@ results
 ``` 
 
 
-La commande table nous permet de faire un calcul très rapide, et nous pouvons immédiatement voir que deux personnes qui ont dit "Peut-être" à la première question ont aussi dit "Parfois" à la deuxième question.
+La commande "table"" nous permet de faire un calcul très rapide, et nous pouvons immédiatement voir que deux personnes qui ont dit "Peut-être" à la première question ont aussi dit "Parfois" à la deuxième question.
 
 
 #### Conversion vers un data frame
 La commande matrix crée une matrice deux par deux. 
 
-L'option "byrow=T" indique que les numéros sont d'abord remplis dans les lignes et que ncols = 2 indique qu'il y a deux colonnes.
+L'option "byrow=T" indique que les numéros sont d'abord ajoutés dans les lignes, et ncols = 2 indique qu'il y a deux colonnes.
 
-Si vous avez besoin de transformer votre table en tableau il existe solutions en fonction du type de résultats que vous souhaitez:
+Si vous avez besoin de transformer votre table en tableau il existe différentes solutions en fonction du type de résultats que vous souhaitez :
 
 ```{r}
 as.data.frame(results)
@@ -1680,7 +1692,7 @@ as.data.frame.matrix(results)
 
 ### Présentation et création
 
-Pour comprendre ce qu'est un facteur, rien de mieux qu'un exemple:
+Pour comprendre ce qu'est un facteur, rien de mieux qu'un exemple :
 
 
 Supposons que l’on ait demandé à 10 personnes choisies au hasard dans la rue leur âge.
@@ -1692,7 +1704,7 @@ Voici la série de mesures recueillies, arrondies à l’entier le plus proche, 
 |- |	- |	- |	- |	- |	- | -	|	-| 	- 	|- |	-|
 |sexe |	F |	F |	M |	F |	M |	M |	M |	F |	M |	F|
 
-Dans l’exemple suivant, on crée une variable appelée age (il n’est pas recommandé d’utiliser des accents ou signes diacritiques) à laquelle on associe la liste des nombres présentés dans le tableau précédent.
+Dans l’exemple suivant, on crée une variable appelée age (il n’est pas recommandé d’utiliser des accents ou autres signes diacritiques) à laquelle on associe la liste des nombres présentés dans le tableau précédent.
 
 ```{r}
 age <- c(18, 27, 34, 18, 24, NA, 30, 28, 19, 19)
@@ -1737,13 +1749,13 @@ opinion
 nlevels(opinion)
 ```
 
-Il est possible d’indiquer à R que les niveaux de la variable qualitative sont ordonnées (on parle parfois de variable ordinale, contrairement aux variables nominales dont les modalités ne sont pas ordonnées, comme la couleur des yeux par exemple).
+Il est possible d’indiquer à R que les niveaux de la variable qualitative sont ordonnés (on parle parfois de variable ordinale, contrairement aux variables nominales dont les modalités ne sont pas ordonnées, comme la couleur des yeux par exemple).
 
 ```{r}
 factor(opinion, ordered=TRUE)
 ```
 
-La variable sexe manipulée précédemment pourrait tout aussi bien être convertie en facteur :
+La variable sexe manipulée précédemment pourrait tout aussi bien être convertie en facteurs :
 
 ```{r}
 sexe <- factor(sexe)
@@ -1753,16 +1765,16 @@ levels(sexe)
 
 On notera que le premier niveau est F. Si l’on souhaite que celui-ci soit M, il suffit d’utiliser la commande relevel() et d’indiquer la catégorie de référence en option.
 
-Les facteurs sous R. Les niveaux des facteurs sont déterminés à partir des valeurs uniques identifiées dans une variable. L’ordre des niveaux d’un facteur suit l’ordre lexicographique : nombres, lettres en minuscules/majuscules. Par exemple, factor(c("1", "oui", "Oui", "Non", "non", "3")). R supprime automatiquement les valeurs manquantes de la liste des niveaux, sauf si l’on indique l’option exclude=NULL ; dans ce cas, les valeurs manquantes figureront comme un niveau à part.
+Les niveaux des facteurs sont déterminés à partir des valeurs uniques identifiées dans une variable. L’ordre des niveaux d’un facteur suit l’ordre lexicographique : nombres, lettres en minuscules/majuscules. Par exemple, factor(c("1", "oui", "Oui", "Non", "non", "3")). R supprime automatiquement les valeurs manquantes de la liste des niveaux, sauf si l’on indique l’option exclude=NULL ; dans ce cas, les valeurs manquantes figureront comme un niveau à part.
 
 ```{r}
-sexe <- relevel(sexe, ref="M")
+sexe <- relevel(sexe, ref="h")
 levels(sexe)
 ```
 
 Souvent, une expérience en biologie comprend différents niveaux d'une variable explicative (modalités).
 
-Par exemple, si l'on reprend le jeu de données précedent `tree`. La 3e colonne (CHBR) contient les différentes localisations des parcelles. Il s'agit donc d'un vecteur contenant des modalités définies.
+Par exemple, si l'on reprend le jeu de données précédent `tree`, la 3e colonne (CHBR) contient les différentes localisations des parcelles. Il s'agit donc d'un vecteur contenant des modalités définies.
 
 ```{r}
 tree <- read.csv(file="data/exemples/trees91.csv",header=TRUE,sep=",");
@@ -1778,11 +1790,11 @@ summary(tree$CHBR)
 summary(tree$LFBM)
 ```
 
-Lorsque vous utilisez "summary" sur un facteur, il n'imprime pas le résumé en cinq points habituel, mais les modalités et leurs fréquences correspondantes.
+Lorsque vous utilisez "summary" sur un facteur, il n'imprime pas le résumé en cinq points habituel, mais les différentes modalités et leur fréquence.
 
 Dans cet ensemble de données, plusieurs colonnes sont des facteurs, mais les chercheurs ont utilisé des nombres pour indiquer les différents niveaux. Par exemple, la première colonne, intitulée "C", est un facteur. Chaque arbre a été cultivé dans un environnement avec l'un des quatre niveaux possibles de dioxyde de carbone. Les chercheurs ont  qualifié ces quatre environnements en 1, 2, 3 et 4. Malheureusement, R ne peut pas déterminer tout seul qu'il s'agit de facteurs.
 
-C'est un problème courant et il existe un moyen de dire à R de traiter la colonne "C" comme un ensemble de facteurs. Vous spécifiez qu'une variable est un facteur à l'aide de la commande factor. Dans l'exemple suivant, nous convertissons la colonne C en un facteur:
+C'est un problème courant et il existe un moyen de préciser à R de traiter la colonne "C" comme un ensemble de facteurs, grâce à la commande "factor". Dans l'exemple suivant, nous convertissons la colonne C en un facteur:
 
 ```{r}
 tree$C
@@ -1794,7 +1806,7 @@ summary(tree$C)
 head(tree)
 ```
 
-Une fois qu'un vecteur est converti en facteur, alors R le traite différemment. Un ensemble de facteurs a un ensemble discret de valeurs possibles, et il n'est pas logique d'essayer de trouver des moyennes ou d'autres descriptions numériques. Une chose importante est le nombre de fois que chaque facteur apparaît, appelé "fréquences", qui est imprimé en utilisant la commande de résumé.
+Une fois qu'un vecteur est converti en facteur, alors R le traite différemment. Un ensemble de facteurs a un ensemble discret de valeurs possibles, et il n'est pas logique d'essayer de trouver des moyennes ou d'autres descriptions numériques. Une chose importante est le nombre de fois que chaque facteur apparaît, appelé "fréquence", qui est imprimé en utilisant la commande de résumé.
 
 
 Pour rajouter un élément dans un facteur, c'est **très** compliqué. Le mieux est de repasser par un vecteur puis de le retransformer en factor.
@@ -1808,7 +1820,7 @@ new_factor = factor(c(as.character(fac),"D"))
 new_factor
 ```
 
-Pour un facteur de nombres, c'est encore plus compliqué, il fautpasser par des chaines de caractères.
+Pour un facteur de nombres, c'est encore plus compliqué, il faut passer par des chaines de caractères.
 
 ```{r}
 fac=factor(c(1,10,2,3,4,2,1,5,1))
@@ -1835,13 +1847,44 @@ typeof(tree$CHBR)
 
 ## Pratiquons, pratiquons
 
+NB Certains exercices (notés avec un *) nécessitent l'utilisation de fonctions qui n'ont pas été présentées dans ce tutoriel. A vous de les rechercher sur internet !
+
 ### Vecteurs
 
-TODO: Faire des exercices de bases sur les vecteurs en proposant d'aller chercher des noms de fonction sur internet tel que cumsum
+- Créez un vecteur contenant les chiffres 1 à 6. Affichez la classe de ce vecteur.
+```{r}
 
+```
 
-Faire un exercice pour couper une colonne string en 2 colonne string pour utiliser  strsplit
+- Créez un vecteur contenant les noms de quelques uns de vos camarades. Affichez la longueur de ce vecteur. Affichez les 2 premiers camarades du vecteur. Affichez le 2ème et le 3ème. Classez le vecteur par ordre alphabétique, puis par ordre alphabétique décroissant.
+```{r}
 
+```
+
+- En utilisant les fonctions rep() et seq(), créez le vecteur 'a','a',1,2,3,4,5,7,9,11.
+```{r}
+
+```
+
+- Supprimez les valeurs manquantes du vecteur c(1,2,NA,4).
+```{r}
+
+```
+
+- * Créez un vecteur de 50 valeurs choisies aléatoirement et avec remise entre 1 et 100.
+```{r}
+
+```
+
+- * Calculez la somme cumulative des valeurs du vecteur précédent.
+```{r}
+
+```
+
+- * Créez la chaîne de caractère 'Les chaussettes de l'archiduchesse sont elles seches ou archi-seches'. Séparez-la en différentes sous-chaînes délimitées par le caractère 'e'. Lisez distinctement le résultat à votre voisin.
+```{r}
+
+```
 
 
 ### Tableaux de données
