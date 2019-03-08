@@ -1768,7 +1768,8 @@ On notera que le premier niveau est F. Si l’on souhaite que celui-ci soit M, i
 Les niveaux des facteurs sont déterminés à partir des valeurs uniques identifiées dans une variable. L’ordre des niveaux d’un facteur suit l’ordre lexicographique : nombres, lettres en minuscules/majuscules. Par exemple, factor(c("1", "oui", "Oui", "Non", "non", "3")). R supprime automatiquement les valeurs manquantes de la liste des niveaux, sauf si l’on indique l’option exclude=NULL ; dans ce cas, les valeurs manquantes figureront comme un niveau à part.
 
 ```{r}
-sexe <- relevel(sexe, ref="h")
+sexe
+sexe <- relevel(sexe, ref="M")
 levels(sexe)
 ```
 
@@ -2245,8 +2246,8 @@ mosaicplot(table(numberWhite,numberChipped),main="sixth plot")
 Il y a des moments où vous ne voulez pas tracer des points spécifiques mais souhaitez tracer une densité. Cela peut être fait en utilisant la commande smoothScatter .
 
 ```{r}
-numberWhite <- rhyper(30,4,5,3)
-numberChipped <- rhyper(30,2,7,3)
+numberWhite <- rhyper(50,4,5,3)
+numberChipped <- rhyper(50,2,7,3)
 smoothScatter(numberWhite,numberChipped,
              xlab="White Marbles",ylab="Chipped Marbles",main="Drawing Marbles")
 ```
@@ -2303,7 +2304,7 @@ numberChipped <- rhyper ( 30 , 2 , 7 , 3 )
 La commande plot tentera de produire les graphiques appropriés en fonction du type de données. Les données définies ci-dessus, cependant, sont des données numériques. La commande as.factor est utilisée pour convertir les données en facteurs et garantit que R les traite comme des données discrètes.
 
 ```{r}
-numberWhite <- rhyper(30,4,5,3)
+numberWhite <- rhyper(50,4,5,3)
 numberWhite <- as.factor(numberWhite)
 plot(numberWhite)
 ```
@@ -2312,7 +2313,7 @@ Dans ce cas, R produira un barplot. La commande barplot peut également être ut
 
 
 ```{r}
-numberWhite <- rhyper(30,4,5,3)
+numberWhite <- rhyper(50,4,5,3)
 totals <- table(numberWhite)
 totals
 barplot(totals,main="Number Draws",ylab="Frequency",xlab="Draws")
@@ -2322,8 +2323,9 @@ barplot(totals,main="Number Draws",ylab="Frequency",xlab="Draws")
 Dans l'exemple précédent, la commande barplot est utilisée pour définir le titre du tracé et les libellés des axes. Les étiquettes sur les graduations pour l'axe horizontal sont générées automatiquement à l'aide des étiquettes de la table. Vous pouvez modifier les étiquettes en définissant les noms de ligne de la table.
 
 ```{r}
-numberWhite <- rhyper(30,4,5,3)
+numberWhite <- rhyper(50,4,5,3)
 totals <- table(numberWhite)
+print(totals)
 rownames(totals) <- c("none","one","two","three")
 barplot(totals,main="Number Draws",ylab="Frequency",xlab="Draws")
 ```
