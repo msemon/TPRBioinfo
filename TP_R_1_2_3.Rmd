@@ -291,7 +291,7 @@ Pour commencer, exécutez ce chunk avec la petite flèche verte dans Rstudio :
 1 + 2
 ```
 
-Puis créer de nouveaux chunks avec différentes opérations:
+> Puis créer de nouveaux chunks avec différentes opérations:
 - soustraction : 259-57
 - multiplication : 48*9
 - division : 239/5
@@ -322,7 +322,7 @@ On va ensuite pouvoir réutiliser cet objet dans d’autres calculs ou simplemen
 x + 3
 ```
 
-Dans un chunk, créez une variable "y" à laquelle vous assignerez le produit de 18 par 230.
+> Dans un chunk, créez une variable "y" à laquelle vous assignerez le produit de 18 par 230.
 
 Si vous voulez obtenir une liste des variables que vous avez définies dans une session particulière, vous pouvez les lister toutes en utilisant la commande ls :
 
@@ -364,7 +364,7 @@ bubba[1:3]
 bubba[c(1,3,4)]
 ```
 
-Créez une variable 'petitourson' dans laquelle vous mettrez les valeurs 45.05, "youpie", et les chiffres 3 à 9. Affichez les valeurs de cette variable associées aux indices 2, 5 et 7.
+> Créez une variable 'petitourson' dans laquelle vous mettrez les valeurs 45.05, "youpie", et les chiffres 3 à 9. Affichez les valeurs de cette variable associées aux indices 2, 5 et 7.
 
 ## Importer des valeurs à partir d'un fichier
 
@@ -652,7 +652,7 @@ On peut aussi lui indiquer plusieurs valeurs qui seront alors répétées en bou
 rep(c("a", "b"), 3)
 ```
 
-Créez un vecteur contenant la chaîne de caractère 'I love you' suivie de 3 fois la chaîne 'yeah', de la manière la plus élégante possible.
+> Créez un vecteur contenant la chaîne de caractère 'I love you' suivie de 3 fois la chaîne 'yeah', de la manière la plus élégante possible.
 
 ```{r}
 
@@ -671,7 +671,7 @@ seq(100, 10, by = -10)
 seq(1.23, 5.67, by = 0.33) 
 ```
 
-Créez un vecteur contenant une suite de valeurs de 50 à -50 avec un pas de -2.
+> Créez un vecteur contenant une suite de valeurs de 50 à -50 avec un pas de -2.
 
 ```{r}
 
@@ -835,7 +835,7 @@ Si l'on indique une position au-delà de la longueur du vecteur, **R** renverra 
 taille[23:25]
 ```
 
-Affichez toutes les valeurs d'indice pair contenues dans le vecteur "taille", de la manière la plus élégante possible.
+> Affichez toutes les valeurs d'indice pair contenues dans le vecteur "taille", de la manière la plus élégante possible.
 
 ```{r}
 
@@ -990,7 +990,7 @@ Les éléments pour lesquels la taille n'est pas connue ont été transformés e
 poids[taille > 1.8 & !is.na(taille)]
 ```
 
-Affichez les noms des personnes de sexe masculin et de poids inférieur ou égal à 82 kgs.
+> Affichez les noms des personnes de sexe masculin et de poids inférieur ou égal à 82 kgs.
 
 ```{r}
 
@@ -1139,7 +1139,7 @@ sort(a)
 sort(a,decreasing = TRUE)
 ``` 
 
-Créez un vecteur "minus" comprenant les entiers impairs de 5 à 25. Créez un vecteur "cortex" de la même longueur que "minus" et comprenant une répétition de la valeur "-4". Créez un vecteur "hop" égal à racine(minus)-cortex³. Affichez le résumé de ce vecteur. Triez ses valeurs de manière décroissante.
+> Créez un vecteur "minus" comprenant les entiers impairs de 5 à 25. Créez un vecteur "cortex" de la même longueur que "minus" et comprenant une répétition de la valeur "-4". Créez un vecteur "hop" égal à racine(minus)-cortex³. Affichez le résumé de ce vecteur. Triez ses valeurs de manière décroissante.
 
 ```{r}
 
@@ -1242,7 +1242,7 @@ str(l)
 
 On peut noter en passant qu'une liste peut tout à fait n'être que partiellement nommée.
 
-Créez une liste "titi" contenant (avec des noms) votre prénom, la couleur de vos chaussettes, et le diamètre de votre cheville gauche. Créez la liste "grominet" contenant un vecteur contenant lui-même votre jour et votre année de naissance, et votre signe astrologique chinois. Combiner ces deux listes qui contiennent ces infos fondamentales.
+> Créez une liste "titi" contenant (avec des noms) votre prénom, la couleur de vos chaussettes, et le diamètre de votre cheville gauche. Créez la liste "rominet" contenant un vecteur contenant lui-même votre jour et votre année de naissance, et votre signe astrologique chinois. Combiner ces deux listes qui contiennent ces infos fondamentales.
 
 ```{r}
 
@@ -1426,7 +1426,8 @@ df[3, "age"]
 df["Michael", 2]
 ```
 
-Affichez l'âge de Anna.
+> Affichez l'âge de Anna.
+
 ```{r}
 
 ```
@@ -1851,37 +1852,44 @@ NB Certains exercices (notés avec un *) nécessitent l'utilisation de fonctions
 
 ### Vecteurs
 
-- Créez un vecteur contenant les chiffres 1 à 6. Affichez la classe de ce vecteur.
+> Créez un vecteur contenant les chiffres 1 à 6. Affichez la classe de ce vecteur.
+
 ```{r}
 
 ```
 
-- Créez un vecteur contenant les noms de quelques uns de vos camarades. Affichez la longueur de ce vecteur. Affichez les 2 premiers camarades du vecteur. Affichez le 2ème et le 3ème. Classez le vecteur par ordre alphabétique, puis par ordre alphabétique décroissant.
+> Créez un vecteur contenant les noms de quelques uns de vos camarades. Affichez la longueur de ce vecteur. Affichez les 2 premiers camarades du vecteur. Affichez le 2ème et le 3ème. Classez le vecteur par ordre alphabétique, puis par ordre alphabétique décroissant.
+
 ```{r}
 
 ```
 
-- En utilisant les fonctions rep() et seq(), créez le vecteur 'a','a',1,2,3,4,5,7,9,11.
+> En utilisant les fonctions rep() et seq(), créez le vecteur 'a','a',1,2,3,4,5,7,9,11.
+
 ```{r}
 
 ```
 
-- Supprimez les valeurs manquantes du vecteur c(1,2,NA,4).
+> Supprimez les valeurs manquantes du vecteur c(1,2,NA,4).
+
 ```{r}
 
 ```
 
-- * Créez un vecteur de 50 valeurs choisies aléatoirement et avec remise entre 1 et 100.
+> * Créez un vecteur de 50 valeurs choisies aléatoirement et avec remise entre 1 et 100.
+
 ```{r}
 
 ```
 
-- * Calculez la somme cumulative des valeurs du vecteur précédent.
+> * Calculez la somme cumulative des valeurs du vecteur précédent.
+
 ```{r}
 
 ```
 
-- * Créez la chaîne de caractère 'Les chaussettes de l'archiduchesse sont elles seches ou archi-seches'. Séparez-la en différentes sous-chaînes délimitées par le caractère 'e'. Lisez distinctement le résultat à votre voisin.
+> * Créez la chaîne de caractère 'Les chaussettes de l'archiduchesse sont elles seches ou archi-seches'. Séparez-la en différentes sous-chaînes délimitées par le caractère 'e'. Lisez distinctement le résultat à votre voisin.
+
 ```{r}
 
 ```
@@ -1889,48 +1897,55 @@ NB Certains exercices (notés avec un *) nécessitent l'utilisation de fonctions
 
 ### Tableaux de données
 
-- Nous allons ici utiliser un jeu de données disponible sur R, 'iris'. Affichez la classe de ce jeu de données. Affichez le résumé du tableau de données. Affichez les 6 premières lignes du tableau. Affichez le tableau dans Rstudio. Affichez les noms des lignes, puis les noms des colonnes. Affichez le nombre de lignes et de colonnes.
+> Nous allons ici utiliser un jeu de données disponible sur R, 'iris'. Affichez la classe de ce jeu de données. Affichez le résumé du tableau de données. Affichez les 6 premières lignes du tableau. Affichez le tableau dans Rstudio. Affichez les noms des lignes, puis les noms des colonnes. Affichez le nombre de lignes et de colonnes.
+
 ```{r}
 
 ```
 
-- Affichez la 8ème ligne du tableau, puis la valeur de la 12ème ligne et 3ème colonne.
+> Affichez la 8ème ligne du tableau, puis la valeur de la 12ème ligne et 3ème colonne.
+
 ```{r}
 
 ```
 
-- Affichez les longeurs des pétales pour les lignes 10 à 15.
+> Affichez les longeurs des pétales pour les lignes 10 à 15.
+
 ```{r}
 
 ```
 
-- Affichez les longeur et largeur des sépales pour la ligne 38.
+> Affichez les longeur et largeur des sépales pour la ligne 38.
+
 ```{r}
 
 ```
 
-- Affichez les numéros de ligne pour lesquelles la largeur des pétales est supérieure à 1.8.
+> Affichez les numéros de ligne pour lesquelles la largeur des pétales est supérieure à 1.8.
+
 ```{r}
 
 ```
 
-- Affichez les espèces pour lesquelles la longueur des sépales est supérieure à 5 et inférieure à 6.
+> Affichez les espèces pour lesquelles la longueur des sépales est supérieure à 5 et inférieure à 6.
+
 ```{r}
 
 ```
 
-- Créez une table de contingence des largeurs de sépales et espèces.
+> Créez une table de contingence des largeurs de sépales et espèces.
+
 ```{r}
 
 ```
 
 # Graphiques de base
 
-Ceci est une introduction aux graphiques de base
+Ceci est une introduction aux graphiques de base.
 
 ## Histogramme
 
-Pour tracer un histogramme des données, lire le fichier w1.dat dans objet et utiliser la commande "hist" sur la colonne "vals"
+Pour tracer un histogramme des données, lire le fichier w1.dat dans un objet et utiliser la commande "hist" sur la colonne "vals".
 
 ```{r}
 w1 <- read.csv(file="data/exemples/w1.csv",sep=",",head=TRUE)
@@ -1938,7 +1953,7 @@ hist(w1$vals)
 hist(w1$vals,main="Distribution of w1",xlab="w1")
 ``` 
 
-Comme vous pouvez le voir, R calculera automatiquement les intervalles à utiliser. Il y a beaucoup d'options pour déterminer comment couper les intervalles. Si vous souhaitez en savoir plus sur les options, consultez la page d'aide:
+Comme vous pouvez le voir, R calcule automatiquement les intervalles à utiliser. Il y a beaucoup d'options pour déterminer comment couper les intervalles. Si vous souhaitez en savoir plus sur les options, consultez la page d'aide :
 
 ```{r}
 help(hist)
@@ -1947,7 +1962,7 @@ hist(w1$vals,breaks=4)
 hist(w1$vals,breaks=6)
 ``` 
 
-Attention, lorsque vous utilisez l'option breaks=x (avec x un nombre), x sera une suggestion et R essayera de faire au mieux. Si vous voulez imposer un nombre vous devez imposer vous meme les bordures.
+Attention, lorsque vous utilisez l'option breaks=x (avec x un nombre), x sera une suggestion et R essayera de faire au mieux. Si vous voulez imposer un nombre vous devez définir vous même les bordures.
  
 ```{r}
 hist(w1$vals,breaks=c(0,0.25,0.5,0.75,1,1.25,1.5,1.75,2))
@@ -1964,7 +1979,7 @@ hist(w1$vals,breaks=12,xlim=c(-1,2))
 hist(w1$vals,breaks=12,xlim=c(0,2))
 ``` 
 
-Vous devez toujours annoter vos graphiques et il existe plusieurs façons d'ajouter des titres et des libellés. Une façon est dans la commande hist elle-même:
+Vous devez toujours annoter vos graphiques et il existe plusieurs façons d'ajouter des titres et des libellés. Une façon est d'utiliser les options de la commande hist elle-même:
 
 ```{r}
 hist(w1$vals,
@@ -1972,7 +1987,7 @@ hist(w1$vals,
        xlab='BioMass of Leaves')
 ``` 
 
-vous pouvez utiliser la commande title:
+Vous pouvez également utiliser la commande title :
 
 ```{r}
 hist(w1$vals,
@@ -1981,7 +1996,7 @@ hist(w1$vals,
 title('Leaf BioMass in High CO2 Environment',xlab='BioMass of Leaves')
 ``` 
 
-Notez que cela ajoute simplement le titre et les étiquettes et écrira au-dessus de tous les titres ou étiquettes que vous avez déjà.
+Notez que cela ajoute simplement le titre et les étiquettes et écrira au-dessus de tous les titres ou étiquettes que vous avez déjà affichés.
 
 Il n'est pas rare d'ajouter d'autres types de graphiques à un histogramme. Par exemple, l'une des options consiste à l'ajouter à un tracé qui a déjà été dessiné. Par exemple, vous pouvez avoir un histogramme avec un stripchart en haut. L'ajout du graphique peut vous donner une meilleure idée de la densité des données:
 
@@ -1990,18 +2005,24 @@ hist(w1$vals,main='Leaf BioMass in High CO2 Environment',xlab='BioMass of Leaves
 stripchart(w1$vals,add=TRUE,at=15.5)
 ``` 
 
+> A partir de jeu de données "iris", tracez l'histogramme de la largeur des pétales. Indiquez le nom de l'axe des abscisses et ajoutez un titre. Ajouter un stripchart au-dessus de l'histogramme.
+
+```{r}
+
+``` 
+
 
 ## Boxplots 
 
-Une boîte à moustache fournit une représentation graphique de la médiane, des quartiles, du maximum et du minimum d'un ensemble de données. 
+Une boîte à moustaches fournit une représentation graphique de la médiane, des quartiles, du maximum et du minimum d'un ensemble de données. 
 
-Nous utilisons d'abord le jeu de données w1 et regardons le boxplot de la colonne vals:
+Utilisons d'abord le jeu de données w1 et regardons le boxplot de la colonne vals :
 
 ```{r}
 boxplot(w1$vals)
 ``` 
 
-Il s'agit d'un graphique très simple, et le titre et les étiquettes peuvent être spécifiés exactement de la même manière que dans hist:
+Il s'agit d'un graphique très simple, et le titre et les étiquettes peuvent être spécifiés exactement de la même manière que dans hist :
 
 ```{r}
 boxplot(w1$vals,
@@ -2009,10 +2030,10 @@ boxplot(w1$vals,
           ylab='BioMass of Leaves')
 ``` 
 
-Notez que l'orientation par défaut est de tracer le boxplot verticalement. Pour cette raison, nous avons utilisé l'option ylab pour spécifier l'étiquette de l'axe. Il y a un grand nombre d'options pour cette commande. Pour voir plus d'options voir la page d'aide:
+Notez que l'orientation par défaut est de tracer le boxplot verticalement. Pour cette raison, nous avons utilisé l'option ylab pour spécifier l'étiquette de l'axe. Il y a un grand nombre d'options pour cette commande. Pour plus d'options voir la page d'aide :
 
 
-A titre d'exemple, vous pouvez spécifier que le boxplot soit tracé horizontalement:
+A titre d'exemple, vous pouvez demander à ce que le boxplot soit tracé horizontalement :
 
 ```{r}
  boxplot(w1$vals,
@@ -2021,7 +2042,7 @@ A titre d'exemple, vous pouvez spécifier que le boxplot soit tracé horizontale
           horizontal=TRUE)
 ``` 
 
-L'option de tracer la boîte à l'horizontale peut être utilisée pour afficher une boîte à moustaches sur la même image qu'un histogramme. Vous devez spécifier l'option add, spécifier où placer le plot box en utilisant l'option at, et désactiver l'ajout d'axes en utilisant l'option axes: 
+L'option de tracer la boîte à l'horizontale peut être utilisée pour afficher une boîte à moustaches sur la même image qu'un histogramme. Vous devez spécifier l'option add, indiquer où placer le boxplot en utilisant l'option at, et désactiver l'ajout d'axes en utilisant l'option axes : 
 
 ```{r}
 hist(w1$vals,main='Leaf BioMass in High CO2 Environment',xlab='BioMass of Leaves',ylim=c(0,16))
@@ -2029,7 +2050,7 @@ boxplot(w1$vals,horizontal=TRUE,at=15.5,add=TRUE,axes=FALSE)
 ``` 
 
 
-Pour la deuxième partie sur les boxplots, nous allons travailler sur l'objet "tree", qui provient du fichier trees91.csv. Nous devons spécifier quelles colonnes sont des facteurs:
+Pour la deuxième partie sur les boxplots, nous allons travailler sur l'objet "tree", qui provient du fichier trees91.csv. Nous devons spécifier quelles colonnes sont des facteurs :
 
 ```{r}
 tree <- read.csv(file="data/exemples/trees91.csv",sep=",",head=TRUE)
@@ -2046,13 +2067,13 @@ boxplot(tree$STBM,
           ylab='BioMass of Stems')
 ``` 
 
-mais les arbres ont été cultivés dans différents types d'environnements. La commande boxplot peut être utilisée pour tracer une boîte à moustaches distincte pour chaque niveau. 
+Les arbres ont été cultivés dans différents types d'environnements. La commande boxplot peut être utilisée pour tracer une boîte à moustaches distincte pour chaque niveau : 
 
 ```{r}
 boxplot(tree$STBM~tree$C)
 ```
 
-Notez que pour le niveau appelé "2", il y a quatre valeurs aberrantes qui sont représentées par des petits cercles. 
+Notez que pour le niveau appelé "2", il y a quatre valeurs extrêmes qui sont représentées par des petits cercles. 
 
 
 
@@ -2060,19 +2081,19 @@ Notez que pour le niveau appelé "2", il y a quatre valeurs aberrantes qui sont 
 
 Nous examinons la relation entre la biomasse de la tige (STBM) et la biomasse foliaire (LFBM).
 
-La commande pour tracer chaque paire de points en tant que coordonnée x et y-coorindate est "plot:"
+La commande pour tracer chaque paire de points en tant que coordonnées x et y est "plot" :
 
 ```{r}
 plot(tree$STBM,tree$LFBM)
 ```
 
-Il semble qu'il existe une forte association positive entre la biomasse dans les tiges d'un arbre et les feuilles de l'arbre. Cela semble être une relation linéaire. En fait, la corrélation entre ces deux ensembles d'observations est assez élevée: 
+Il semble qu'il existe une forte association positive entre la biomasse dans les tiges d'un arbre et les feuilles de l'arbre. Cela semble être une relation linéaire. En fait, la corrélation entre ces deux ensembles d'observations est assez élevée : 
 
 ```{r}
 cor(tree$STBM,tree$LFBM)
 ```
 
-Pour en revenir à nos moutons, vous devriez toujours annoter vos graphiques. 
+Pour en revenir à nos moutons, vous devez toujours annoter vos graphiques. 
 
 ```{r}
 plot(tree$STBM,tree$LFBM,
@@ -2083,11 +2104,9 @@ plot(tree$STBM,tree$LFBM,
 
 
 
-# Application sur un premier vrai jeu de données (Les chauves-souris)
+# Application sur un premier vrai jeu de données (les chauves-souris)
 
-Le prix Ig Nobel est attribué chaque année dans différentes disciplines ; il est dédié aux chercheurs
-dont les recherches "font rire, puis font réfléchir" (http://www.improbable.com/ig/winners/). Toutes les
-études récompensées sont méthodologiquement correctes, même si leur sujet laisse parfois sourire.
+Le prix Ig Nobel est attribué chaque année dans différentes disciplines ; il est dédié aux chercheurs dont les recherches "font rire, puis font réfléchir" (http://www.improbable.com/ig/winners/). Toutes les études récompensées sont méthodologiquement correctes, même si leur sujet laisse parfois sourire.
 
 Le prix Ig Nobel de biologie a été attribué en 2010 à Libiao Zhang, Min Tan, Guangjian Zhu, Jian-
 ping Ye, Tiyu Hong, Shanyi Zhou, Shuyi Zhang (Chine) et Gareth Jones (Royaume-Uni), qui ont montré
@@ -2105,7 +2124,7 @@ pendant l’accouplement ;
 ```
 
 
-> Quelle commande permet d’obtenir l’affichage des 7 premières lignes du jeu de données?
+> Quelle commande permet d’obtenir l’affichage des 7 premières lignes du jeu de données ?
 
 ```{r}
 ## Ici aussi (etc)
@@ -2119,17 +2138,17 @@ pendant l’accouplement ;
 
 > Quelle commande permet d’obtenir le nom des colonnes de votre table ?
 
-> Quelle commande permet d’obtenir la moyenne des temps de copulation pour toutes les données?
+> Quelle commande permet d’obtenir la moyenne des temps de copulation pour toutes les données ?
 
 > Quelles commandes permettent de créer deux nouveaux tableaux, un pour chaque comportement ?
 
-> Quelle commande permet de selectionner les lignes tel que le temps de copulation soit supérieur à 100?
+> Quelle commande permet de selectionner les lignes telles que le temps de copulation soit supérieur à 100 ?
 
-> Quelle commande permet de selectionner les lignes tel que le temps de copulation soit supérieur à 200 et le temps de léchage inférieur ou égale à 20?
+> Quelle commande permet de selectionner les lignes telles que le temps de copulation soit supérieur à 200 et le temps de léchage inférieur ou égal à 20 ?
 
-> Quelle commande permet de récupérer le temps de copulation dans le cas où le temps de léchage est supérieur à 20?
+> Quelle commande permet de récupérer le temps de copulation dans le cas où le temps de léchage est supérieur à 20 ?
 
-> Quelle commande permet d’obtenir la moyenne des temps de copulation par comportement?
+> Quelle commande permet d’obtenir la moyenne des temps de copulation par comportement ?
 
 > Donner deux commandes permettant de savoir dans combien de cas le comportement de léchage a été observé.
 
@@ -2155,10 +2174,9 @@ PS: l’IgNobel de 2013 était peut-être plus poétique : "Dung beetles use the
 
 # Graphiques intermédiaires
 
-La section est divisée en trois sections. L'objectif de la première section est de représenter graphiquement les données continues. L'objectif de la deuxième section est de représenter graphiquement des données discrètes. La troisième section offre quelques options diverses utiles dans divers contextes.
+Cette section est divisée en trois sections. L'objectif de la première section est de représenter graphiquement des données continues. L'objectif de la deuxième section est de représenter graphiquement des données discrètes. La troisième section offre quelques options diverses utiles dans divers contextes.
 
 ## Données continues
-
 
 Dans les exemples ci-dessous, un ensemble de données est défini en utilisant le générateur de nombres aléatoires normalement distribués de R.
 
@@ -2172,9 +2190,9 @@ cor(x,y)
 
 ### Plusieurs jeux de données sur un graphique
 
-Une tâche courante consiste à tracer plusieurs ensembles de données sur le même graphique. Dans de nombreuses situations, la méthode consiste à créer le plot initial, puis à ajouter des informations supplémentaires. Par exemple, pour tracer des données bivariées, la commande plot est utilisée pour initialiser et créer le tracé. La commande points peut ensuite être utilisée pour ajouter des données supplémentaires au tracé.
+Une tâche courante consiste à tracer plusieurs ensembles de données sur le même graphique. Dans de nombreuses situations, la méthode consiste à créer le plot initial, puis à ajouter des informations supplémentaires. Par exemple, pour tracer des données bivariées, la commande "plot" est utilisée pour initialiser et créer le tracé. La commande "points" peut ensuite être utilisée pour ajouter des données supplémentaires au tracé.
 
-Définissez d'abord un ensemble de nombres aléatoires, puis tracez-les. (Ce même jeu de données est utilisé dans tous les exemples ci-dessous.)
+Définissez d'abord un ensemble de nombres aléatoires, puis tracez-les (ce même jeu de données est utilisé dans tous les exemples ci-dessous).
 
 ```{r}
 x <- rnorm(50,sd=5,mean=20)
@@ -2186,7 +2204,7 @@ y1 <- 2.5*x1 - 1.0 + runif(8,-6,6)
 points(x1,y1,col=2)
 ```
 
-Notez que dans l'exemple précédent, la couleur du second ensemble de points de données est définie à l'aide de l'option col. Vous pouvez essayer différents nombres pour voir quelles couleurs sont disponibles. Notez également que dans l'exemple ci-dessus, les points sont représentés par des cercles. Le symbole utilisé peut être changé en utilisant l'option pch .
+Notez que dans l'exemple précédent, la couleur du second ensemble de points de données est définie à l'aide de l'option "col". Vous pouvez essayer différents nombres pour voir quelles couleurs sont disponibles. Notez également que dans l'exemple ci-dessus, les points sont représentés par des cercles. Le symbole utilisé peut être changé en utilisant l'option "pch".
 
 ```{r}
 x2 <- runif(8,15,25)
@@ -2195,8 +2213,7 @@ plot(x,y,xlab="Independent",ylab="Dependent",main="Random Stuff")
 points(x2,y2,col=3,pch=2)
 ```
 
-
-Une autre option utile consiste à ajouter une légende. Cela peut être fait avec la commande legend. Les options de la commande, dans l'ordre, sont les coordonnées x et y sur le tracé pour placer la légende suivie d'une liste d'étiquettes à utiliser. Il existe un grand nombre d'autres options, utilisez donc help (légende) pour voir plus d'options. Par exemple, une liste de couleurs peut être donnée avec l'option col , et une liste de symboles peut être donnée avec l'option pch .
+Une autre option utile consiste à ajouter une légende. Cela peut être fait avec la commande "legend". Les options de la commande, dans l'ordre, sont les coordonnées x et y sur le tracé pour placer la légende, suivies d'une liste d'étiquettes à utiliser. Il existe un grand nombre d'autres options ; utilisez "help(legend)" pour les voir. Par exemple, une liste de couleurs peut être donnée avec l'option "col", et une liste de symboles peut être donnée avec l'option "pch".
 
 ```{r}
 plot(x,y,xlab="Independent",ylab="Dependent",main="Random Stuff")
@@ -2207,7 +2224,7 @@ legend(14,70,c("Original","one","two"),col=c(1,2,4),pch=c(1,3,5))
 
 ### Barres d'erreur 
 
-Une autre tâche courante consiste à ajouter des barres d'erreur à un ensemble de points de données. Cela peut être accompli en utilisant la commande arrows. La commande arrows prend deux paires de coordonnées, c'est-à-dire deux paires de valeurs x et y . La commande dessine ensuite une ligne entre chaque paire et ajoute une "tête de flèche" avec une longueur et un angle donnés. 
+Une autre tâche courante consiste à ajouter des barres d'erreur à un ensemble de points de données. Cela peut être accompli en utilisant la commande "arrows". La commande arrows prend deux paires de coordonnées, c'est-à-dire deux paires de valeurs x et y. La commande dessine ensuite une ligne entre chaque paire et ajoute une "tête de flèche" avec une longueur et un angle donnés. 
 
 ```{r}
 plot(x,y,xlab="Independent",ylab="Dependent",main="Random Stuff")
@@ -2223,7 +2240,7 @@ Notez que le code d'option est utilisé pour spécifier où les barres sont dess
 
 ### Plusieurs graphiques sur une image
 
-Les graphiques sont disposés dans un tableau où le nombre par défaut de lignes et de colonnes est un (un graphique par page par défaut). Le paramètre mfrow est un vecteur avec deux entrées. La première entrée est le nombre de lignes d'images. La deuxième entrée est le nombre de colonnes. Dans l'exemple ci-dessus, les graphiques ont été disposées en une rangée avec deux graphiques
+Les graphiques sont disposés dans un tableau où le nombre par défaut de lignes et de colonnes est un (un graphique par page par défaut). Le paramètre "mfrow" est un vecteur avec deux entrées. La première entrée est le nombre de lignes d'images. La deuxième entrée est le nombre de colonnes. Dans l'exemple ci-dessous, les graphiques ont été disposées en 2 lignes avec 3 graphiques par ligne.
 
 ```{r}
 par(mfrow=c(2,3))
@@ -2242,7 +2259,7 @@ mosaicplot(table(numberWhite,numberChipped),main="sixth plot")
 
 ### Tracés de densité
 
-Il y a des moments où vous ne voulez pas tracer des points spécifiques mais souhaitez tracer une densité. Cela peut être fait en utilisant la commande smoothScatter .
+Il y a des moments où vous ne voulez pas tracer des points spécifiques mais souhaitez tracer une densité. Cela peut être fait en utilisant la commande "smoothScatter".
 
 ```{r}
 numberWhite <- rhyper(30,4,5,3)
@@ -2254,7 +2271,7 @@ smoothScatter(numberWhite,numberChipped,
 
 ### Colorier des régions
 
-Une région ombrée peut être tracée en utilisant la commande polygone. La commande polygone prend une paire de vecteurs, x et y , et ombre la région délimitée par les paires de coordonnées. Dans l'exemple ci-dessous, un carré bleu est dessiné. Les sommets sont définis à partir de la partie inférieure gauche. Cinq paires de points sont données car le point de départ et le point final sont les mêmes.
+Une région ombrée peut être tracée en utilisant la commande "polygone". La commande polygone prend une paire de vecteurs, x et y , et ombre la région délimitée par les paires de coordonnées. Dans l'exemple ci-dessous, un carré bleu est dessiné. Les sommets sont définis à partir de la partie inférieure gauche. Cinq paires de points sont données car le point de départ et le point final sont les mêmes.
 
 ```{r}
 x = c(-1,1,1,-1,-1)
@@ -2285,11 +2302,10 @@ polygon(c(xReject,xReject[length(xReject)],xReject[1]),
 ```
 
 
-Les axes sont dessinés séparément. Ceci est fait en supprimant d'abord le tracé des axes dans la commande plot , et l'axe horizontal est dessiné séparément. Notez également que la commande expression est utilisée pour tracer un caractère grec et également produire des indices.
+Les axes sont dessinés séparément. Ceci est fait en supprimant d'abord le tracé des axes dans la commande plot , et l'axe horizontal est dessiné séparément. Notez également que la commande "expression" est utilisée pour tracer un caractère grec et également produire des indices.
 
 
 ## Données discrètes
-
 
 Dans les exemples ci-dessous, un ensemble de données est défini à l'aide du générateur de nombres aléatoires hypergéométriques de R.
 
@@ -2300,7 +2316,7 @@ numberChipped <- rhyper ( 30 , 2 , 7 , 3 )
 
 ### Barplot
 
-La commande plot tentera de produire les graphiques appropriés en fonction du type de données. Les données définies ci-dessus, cependant, sont des données numériques. La commande as.factor est utilisée pour convertir les données en facteurs et garantit que R les traite comme des données discrètes.
+La commande plot tentera de produire les graphiques appropriés en fonction du type de données. Les données définies ci-dessus, cependant, sont des données numériques. La commande "as.factor" est utilisée pour convertir les données en facteurs et garantit que R les traite comme des données discrètes.
 
 ```{r}
 numberWhite <- rhyper(30,4,5,3)
@@ -2308,7 +2324,7 @@ numberWhite <- as.factor(numberWhite)
 plot(numberWhite)
 ```
 
-Dans ce cas, R produira un barplot. La commande barplot peut également être utilisée pour créer un barplot. La commande barplot nécessite cependant un vecteur de hauteurs, et vous ne pouvez pas simplement lui donner les données brutes. Ces valeurs peuvent être facilement calculées à l'aide de la commande table.
+Dans ce cas, R produira un barplot. La commande "barplot" peut également être utilisée pour créer un barplot. La commande "barplot" nécessite cependant un vecteur de hauteurs, et vous ne pouvez pas simplement lui donner les données brutes. Ces valeurs peuvent être facilement calculées à l'aide de la commande "table".
 
 
 ```{r}
@@ -2319,7 +2335,7 @@ barplot(totals,main="Number Draws",ylab="Frequency",xlab="Draws")
 ```
 
 
-Dans l'exemple précédent, la commande barplot est utilisée pour définir le titre du tracé et les libellés des axes. Les étiquettes sur les graduations pour l'axe horizontal sont générées automatiquement à l'aide des étiquettes de la table. Vous pouvez modifier les étiquettes en définissant les noms de ligne de la table.
+Dans l'exemple précédent, la commande "barplot" est utilisée pour définir le titre du tracé et les libellés des axes. Les étiquettes sur les graduations pour l'axe horizontal sont générées automatiquement à l'aide des étiquettes de la table. Vous pouvez modifier les étiquettes en définissant les noms de ligne de la table.
 
 ```{r}
 numberWhite <- rhyper(30,4,5,3)
@@ -2373,9 +2389,9 @@ dev.off()
 
 ### Les graphes
 TODO:
-Faire des exercices sur les graphes intermédiaires en utilisans soit des jeux de données a partir de data soit en réutilisant les jeux de données déjà importer (ex: tree).
+Faire des exercices sur les graphes intermédiaires en utilisans soit des jeux de données a partir de data soit en réutilisant les jeux de données déjà importé (ex: tree).
 
-Le but est de leur faire faire des graphes un peu plus compliqué.
+Le but est de leur faire faire des graphes un peu plus compliqués.
 
 
  
