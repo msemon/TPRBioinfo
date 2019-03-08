@@ -2403,6 +2403,7 @@ TODO:
 Faire des exercices sur les graphes intermédiaires en utilisans soit des jeux de données a partir de data soit en réutilisant les jeux de données déjà importé (ex: tree).
 
 Le but est de leur faire faire des graphes un peu plus compliqués.
+dfdd
 
 
  
