@@ -2370,6 +2370,15 @@ dev.off()
 ```
 
 
+Si vous voulez sauvegarder et ranger votre figure dans un dossier, par exemple `figures`, il faut juste ajouter le nom du dossier (déjà existant) au nom du fichier:
+
+```{r, eval=F}
+png(file="figures/hist.png")
+hist(x)
+rug(x,side=1)
+dev.off()
+```
+
 
 ## Pratiquons, pratiquons
 

@@ -1819,6 +1819,11 @@ numberWhite
 <span class="kw">hist</span>(x)
 <span class="kw">rug</span>(x,<span class="dt">side=</span><span class="dv">1</span>)
 <span class="kw">dev.off</span>()</code></pre></div>
+<p>Si vous voulez sauvegarder et ranger votre figure dans un dossier, par exemple <code>figures</code>, il faut juste ajouter le nom du dossier (déjà existant) au nom du fichier:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">png</span>(<span class="dt">file=</span><span class="st">&quot;figures/hist.png&quot;</span>)
+<span class="kw">hist</span>(x)
+<span class="kw">rug</span>(x,<span class="dt">side=</span><span class="dv">1</span>)
+<span class="kw">dev.off</span>()</code></pre></div>
 </div>
 <div id="pratiquons-pratiquons-1" class="section level2">
 <h2><span class="header-section-number">8.4</span> Pratiquons, pratiquons</h2>
