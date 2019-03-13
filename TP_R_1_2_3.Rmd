@@ -510,7 +510,7 @@ remove.packages("readr")
 ## Exercices
 
 Nous allons étudier un autre exemple dans la suite de ce tutoriel. Le fichier de données a été créé par un groupe du Oak Ridge National Laboratory. Les données d'origine sont rassemblées dans une feuille de calcul Excel qui se trouve à l'adresse http://cdiac.ornl.gov/ftp/ndp061a/trees91.wk1 (ou dans data/exemples).
-Une description du fichier de données se trouve à http://cdiac.ornl.gov/ftp/ndp061a/ndp061a.txt.
+Une description du fichier de données se trouve à http://cdiac.ornl.gov/ftp/ndp061a/ndp061a.txt (ou dans data/exemples/trees91_metadata.txt)
 
 Ouvrir ce fichier et regarder comment il est construit.
 
@@ -2398,15 +2398,36 @@ dev.off()
 
 ## Pratiquons, pratiquons
 
-### Les graphes
+> Importer à nouveau le jeu de données `tree` dans "data/exemples/trees91.csv"
 
+```{r, eval=F}
+tree = 
+```
 
+Pour rappel, les données contiennent des estimations de la biomasse de pin ponderosa dans une étude réalisée par Dale W. Johnson, J. Timothy Ball et Roger F. Walker (Université du Nevada). La table contient 54 lignes, et chaque ligne représente une observation. Chaque observation comprend des mesures et des marqueurs pour 28 mesures différentes d'un arbre donné.
+
+Une description du fichier de données se trouve à http://cdiac.ornl.gov/ftp/ndp061a/ndp061a.txt (ou dans data/exemples/trees91_metadata.txt)
+
+Par exemple, le premier chiffre de chaque rangée est un nombre, 1, 2, 3 ou 4, qui indique un niveau différent d'exposition au dioxyde de carbone. Le sixième nombre dans chaque rangée est une estimation de la biomasse des tiges de l'arbre. Notez que la toute première ligne du fichier est une liste d'étiquettes utilisées pour désigner les différentes colonnes de données.
+
+> Sur un même graphique représenter la biomasse des tiges de l'arbre (6e colonne) en fonction de la concentration en Nitrate (N) (9e colonne) dans les tiges en colorant de manière différente les points en fonction de l'exposition au dioxyde de carbone (1e colonne). Ajouter la légende.
 
 ```{r}
+#
+```
 
+> Faire un graphe pour représenter le nombre d'arbres dans chacune des catégories d'exposition au dioxyde de carbone (1e colonne).
+
+```{r}
+#
 ```
 
 
+> Faire un graphe pour représenter la distribution de la biomasse des tiges de l'arbre (6e colonne) en fonction de l'exposition au dioxyde de carbone (1e colonne).
+
+```{r}
+#
+```
 
  
 # Introduction à la programmation
@@ -3107,7 +3128,7 @@ labs(x= "Traitement (nb spores)",y = "Poids des abeilles (g)\n")
 
 > Importer maintenant le jeu de données dans "NosemaS4_Table.xls" et afficher les 5 premières lignes (qui correspondent aux 5 premières abeilles). La première colonne est le traitement, la seconde est la durée de vie de l'abeille.
 
-Reproduire la Figure 3 de l'article Eiri et al. 
+> Reproduire la Figure 3 de l'article Eiri et al. 
 
 ![Figure 3 de Eiri et al](data/image/fig3.png){ width=50% }
 
