@@ -2,7 +2,7 @@
 title: "Tutoriel d'initiation à R"
 author: "Carine Rey, Magali Naville & Marie Sémon"
 
-date: "Dernière mise à jour: 13 mars 2019" 
+date: "Dernière mise à jour: `r format(Sys.Date(), format = '%d %B %Y')`" 
 output:
   #pdf_document:
   #  toc: true
@@ -22,7 +22,9 @@ output:
   
 ---
 
-
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, results="hide", fig.keep = "none", cache = T)
+```
 
 Le but de ces séances est d’apprendre à utiliser R dans des cas concrets, à produire un rapport reproductible, et à représenter des données avec R de manière optimale. Vous aborderez également l’analyse de données.
 
@@ -108,7 +110,9 @@ De nombreux tutoriels très complets sont disponibles sur internet, par exemple 
 Voici un exemple de document R Markdown minimal :
 
 
-
+```{r echo = FALSE, comment = ""}
+cat(htmltools::includeText("data/resources/rmarkdown/minimal_sample.Rmd"))
+```
 
 Ce document peut être "compilé" sous différents formats. Lors de cette étape, le texte est mis en forme, les blocs de code sont exécutés, leur résultat ajouté au document, et le tout est transformé dans l'un des différents formats possibles.
 
@@ -147,7 +151,9 @@ Un fichier comportant un contenu d'exemple s'affiche alors. Vous pouvez l'enregi
 
 Un document R Markdown est donc un fichier texte qui ressemble à quelque chose comme ça :
 
-
+```{r echo = FALSE, comment = ""}
+cat(htmltools::includeText("data/resources/rmarkdown/sample_Rmd.Rmd"))
+```
 
 On va décomposer les différents éléments constitutifs de ce document.
 
@@ -216,7 +222,9 @@ Dans RStudio, le menu *Help* puis *Markdown quick reference* donne un aperçu pl
 En plus du texte libre au format Markdown, un document R Markdown contient, comme son nom l'indique, du code R. Celui-ci est inclus dans des blocs (*chunks*) délimités par la syntaxe suivante :
 
 
-
+```{r echo = FALSE, comment = ""}
+cat(htmltools::includeText("data/resources/rmarkdown/code_chunk.Rmd"))
+```
 
 Comme cette suite de caractères n'est pas très simple à saisir, vous pouvez utiliser le menu *Insert* de RStudio et choisir *R*, ou utiliser le raccourci clavier `Ctrl+Alt+i`.
 
@@ -279,8 +287,7 @@ Nous allons commencer par taper notre première commande en R pour exécuter de 
 
 Pour commencer, exécutez ce chunk avec la petite flèche verte dans Rstudio :
 
-
-```r
+```{r}
 1 + 2
 ```
 
@@ -293,8 +300,7 @@ Faire des opérations arithmétiques, c’est bien, mais sans doute pas totaleme
 
 Comme tout langage de programmation, R permet de faire cela en utilisant des objets. Prenons tout de suite un exemple :
 
-
-```r
+```{r}
 x <- 2
 ```
 
@@ -302,8 +308,7 @@ Que signifie cette commande ? L’opérateur `<-` est appelé opérateur d’ass
 
 Il existe trois opérateurs d’assignation sous R. Ainsi les trois écritures suivantes sont équivalentes :
 
-
-```r
+```{r}
 x <- 2
 x = 2
 2 -> x
@@ -313,8 +318,7 @@ Cependant, pour une meilleure lecture du code, il est conseillé de n’utiliser
 
 On va ensuite pouvoir réutiliser cet objet dans d’autres calculs ou simplement afficher son contenu :
 
-
-```r
+```{r}
 x + 3
 ```
 
@@ -322,8 +326,7 @@ x + 3
 
 Si vous voulez obtenir une liste des variables que vous avez définies dans une session particulière, vous pouvez les lister toutes en utilisant la commande ls :
 
-
-```r
+```{r}
 ls()
 ```
 
@@ -334,22 +337,19 @@ Nous avons vu comment affecter un nombre à une variable, mais si l'on veut stoc
 Les nombres dans la commande `c` sont séparés par des virgules. A titre d'exemple, nous pouvons créer une nouvelle variable, appelée "bubba" qui contiendra les numéros 3, 5, 7 et 9 :
 
 
-
-```r
+```{r}
 bubba <- c(3,5,7,9)
 ```
 
 Lorsque vous entrez cette commande, vous ne devriez voir aucune sortie sauf un ">" indiquant un appel à une nouvelle ligne de commande. La commande a pourtant créé une liste de nombres appelée "bubba". Pour voir quels numéros sont inclus dans bubba, tapez "bubba" et appuyez sur la touche Entrée :
 
-
-```r
+```{r}
 bubba 
 ```
 
 Si vous souhaitez travailler avec l'un des nombres stockés, vous pouvez y accéder en utilisant la variable, puis l'indice correspondant entre crochets : 
 
-
-```r
+```{r}
 bubba[2]
 bubba[1]
 bubba[0]
@@ -359,8 +359,7 @@ Notez que la première entrée correspond à l'indice 1 et que le zéro peut êt
 
 Si vous souhaitez récupérer plusieurs éléments, vous pouvez spécifier plusieurs indices:
 
-
-```r
+```{r}
 bubba[1:3]
 bubba[c(1,3,4)]
 ```
@@ -375,16 +374,14 @@ Nous supposons que le fichier de données est au format appelé "comma separated
 
 La commande pour lire un fichier de données est read.csv. Nous devons donner à la commande au moins un argument (le nom du fichier), mais nous allons donner deux arguments optionnels supplémentaires. Le premier argument indique si la première ligne contient les noms des colonnes. Le deuxième argument indique qu'il y a une virgule entre chaque numéro de chaque ligne. La commande suivante lit les données et les assigne à une variable appelée "heisenberg". Lorsque vous utilisez la commande read.csv, R utilise un type spécifique de variable appelé "data frame". Toutes les données sont stockées sous la forme de colonnes séparées. 
 
-
-```r
+```{r}
 heisenberg <- read.csv(file="data/exemples/simple.csv",head=TRUE,sep=",")
 heisenberg
 ```
 
 Pour obtenir plus d'informations sur les différentes options disponibles, vous pouvez utiliser la commande help :
 
-
-```r
+```{r}
 ?read.csv
 ```
 
@@ -392,8 +389,7 @@ Si R ne trouve pas le fichier que vous essayez de lire, il se peut qu'il recherc
 
 Par exemple si vous exécutez ce code :
 
-
-```r
+```{r, eval=FALSE}
 heisenberg <- read.csv(file="simple.csv",head=TRUE,sep=",")
 heisenberg
 ```
@@ -405,7 +401,9 @@ En effet ce fichier est dans le dossier "exemples", lui-même situé dans le dos
 
 Pour connaitre le dossier de travail, vous pouvez exécuter la commande `getwd()` (pour "get working directory") dans un chunk.
 
-
+```{r, echo=FALSE}
+getwd()
+```
 
 Par défaut, le dossier de travail d'un fichier .Rmd est celui qui contient le fichier. En revanche, le dossier de travail de la console est la base de votre arborescence de fichiers. Exécutez directement la commande `getwd()` dans la console. Vous devriez avoir un résulat différent.
 C'est normal mais c'est une subtilité qu'il faut connaître.
@@ -414,8 +412,7 @@ Dans Rstudio, vous pouvez modifier le répertoire de travail en utilisant la com
 
 Si vous n'êtes pas sûrs des fichiers qui se trouvent dans le répertoire de travail actuel, vous pouvez utiliser la commande `dir()` pour lister ces fichiers :
 
-
-```r
+```{r}
 dir()
 ```
 
@@ -424,20 +421,17 @@ Après ce petit aparté sur le dossier de travail, revenons à notre table et à
 
 Pour connaitre les noms des colonnes du tableau, on peut utiliser, entre autres, la commande colnames() ; on peut utiliser head() pour afficher le début du tableau.
 
-
-```r
+```{r}
 colnames(heisenberg)
 ```
 
-
-```r
+```{r}
 head(heisenberg)
 ```
 
 La variable "heisenberg" contient donc un tableau avec trois colonnes. Chaque colonne reçoit un nom correspondant à l'en-tête (la première ligne du fichier). Vous pouvez maintenant accéder à chaque colonne en utilisant un "$":
 
-
-```r
+```{r}
 heisenberg$trial
 heisenberg$mass
 heisenberg$velocity
@@ -445,8 +439,7 @@ heisenberg$velocity
 
 Vous pouvez aussi les stocker dans d'autres variables :
 
-
-```r
+```{r}
 a<-heisenberg$trial
 b<-heisenberg$mass
 c<-heisenberg$velocity
@@ -475,28 +468,9 @@ La liste de toutes les extensions disponibles sur **CRAN** est disponible ici :
 L'installation d'une extension se fait par la fonction `install.packages`, 
 à laquelle on fournit le nom de l'extension. Par exemple, si on souhaite installer l'extension **readr** :
 
-
-```r
+```{r}
 install.packages("readr", dep=TRUE)
-```
-
-```
-## Installing package into '/home/crey02/R/x86_64-pc-linux-gnu-library/3.4'
-## (as 'lib' is unspecified)
-```
-
-```
-## Warning in install.packages("readr", dep = TRUE): installation of package
-## 'readr' had non-zero exit status
-```
-
-```r
 install.packages("questionr", dep=TRUE)
-```
-
-```
-## Installing package into '/home/crey02/R/x86_64-pc-linux-gnu-library/3.4'
-## (as 'lib' is unspecified)
 ```
 
 L'option `dep=TRUE` indique à **R** de télécharger et d'installer également toutes les extensions dont le fonctionnement de l'extension choisie dépend.
@@ -506,8 +480,7 @@ inférieur droit.
 
 Une fois l'extension installée, elle peut être appelée depuis la console ou un fichier script avec la fonction `library` ou la fonction `require` :
 
-
-```r
+```{r, eval=FALSE}
 library(readr)
 ```
 
@@ -515,8 +488,7 @@ library(readr)
 
 Pour mettre à jour l'ensemble des extensions installées, la fonction `update.packages` suffit :
 
-
-```r
+```{r, eval=FALSE}
 update.packages()
 ```
 
@@ -526,8 +498,7 @@ Sous **RStudio**, on pourra alternativement cliquer sur *Update* dans l'onglet *
 Si on souhaite désinstaller une extension précédemment installée, on peut utiliser la fonction
 `remove.packages` :
 
-
-```r
+```{r, eval=FALSE}
 remove.packages("readr")
 ```
 
@@ -551,17 +522,17 @@ Les données contiennent des estimations de la biomasse de pin ponderosa dans un
 
 Les données peuvent être lues dans une variable appelée "tree" en utilisant la commande read.csv. Allez-y !
 
+```{r}
 
-```r
 #Ajouter ici les commandes pour lire le fichier tree91
 #tree<-
+
 ```
 
 
 Cela crée une nouvelle variable appelée "tree". Si vous tapez "tree"  dans la console et que vous appuyez sur Entrée, tous les éléments stockés dans la variable seront affichés. Essayez !
 
-
-```r
+```{r, eval=FALSE}
 tree
 ```
 
@@ -593,8 +564,7 @@ Dans **R**, il existe quatre types fondamentaux de vecteurs selon le type des é
 
 Pour connaître la nature d'un objet, le plus simple est d'utiliser la fonction `class`. Par exemple :
 
-
-```r
+```{r}
 class(12.5)
 ```
 
@@ -602,15 +572,13 @@ La réponse `"numeric"` nous indique qu'il s'agit d'un nombre réel. Parfois, vo
 
 Essayons avec un nombre entier :
 
-
-```r
+```{r}
 class(3)
 ```
 
 Sous **R**, lorsque l'on tape un nombre sans autre précision, il est considéré par défaut comme un nombre réel. Pour indiquer spécifiquement que l'on veut un nombre entier, il faut rajouter le suffixe `L` :
 
-
-```r
+```{r}
 class(3L)
 ```
 
@@ -618,8 +586,7 @@ Au quotidien, il arrive rarement d'avoir à utiliser ce suffixe, mais il est ton
 
 Pour saisir une chaîne de caractères, on aura recours aux doubles guillemets droits (`"`) :
 
-
-```r
+```{r}
 class("abc")
 ```
 
@@ -627,8 +594,7 @@ Il est également possible d'utiliser des guillemets simples (`'`), dès lors qu
 
 Enfin, les valeurs logiques s'indiquent avec `TRUE` pour vrai et `FALSE` pour faux. Il est aussi possible d'utiliser les raccourcis `T` et `F`. Attention à bien utiliser les majuscules, **R** étant sensible à la casse.
 
-
-```r
+```{r}
 class(TRUE)
 ```
 
@@ -650,8 +616,7 @@ En plus des types de base, il existe de nombreuses autres classes de vecteurs da
 
 Pour créer un vecteur, on utilisera la fonction `c`, la lettre "c" étant un raccourci du mot anglais "combine", cette fonction permettant de combiner des valeurs individuelles dans un vecteur unique. Il suffit de lui passer la liste des valeurs à combiner :
 
-
-```r
+```{r}
 taille <- c(1.88, 1.65, 1.92, 1.76)
 taille
 class(taille)
@@ -665,8 +630,7 @@ class(urbain)
 
 Nous l'avons vu, toutes les valeurs d'un vecteur doivent obligatoirement être du même type. Dès lors, si l'on essaie de combiner des valeurs de différents types, **R** essaiera de les convertir au mieux. Par exemple :
 
-
-```r
+```{r}
 x <- c(2L, 3.14, "a")
 x
 class(x)
@@ -678,29 +642,28 @@ Dans le cas présent, toutes les valeurs ont été converties en chaînes de car
 
 Dans certaines situations, on peut avoir besoin de créer un vecteur d'une certaine longeur mais dont toutes les valeurs sont identiques. Cela se réalise facilement avec `rep` à qui l'on indiquera la valeur à répéter puis le nombre de répétitions :
 
-
-```r
+```{r}
 rep(2, 10)
 ```
 
 On peut aussi lui indiquer plusieurs valeurs qui seront alors répétées en boucle :
 
-
-```r
+```{r}
 rep(c("a", "b"), 3)
 ```
 
 > Créez un vecteur contenant la chaîne de caractère 'I love you' suivie de 3 fois la chaîne 'yeah', de la manière la plus élégante possible.
 
+```{r}
 
+```
 
 
 #### La fonction seq
 
 Dans d'autres situations, on peut avoir besoin de créer un vecteur contenant une suite de valeurs, ce qui se réalise aisément avec `seq` à qui l'on précisera les arguments `from` (point de départ), `to` (point d'arrivée) et `by` (pas). Quelques exemples valent mieux qu'un long discours :
 
-
-```r
+```{r}
 seq(1, 10)
 seq(5, 17, by = 2)
 seq(10, 0)
@@ -710,15 +673,16 @@ seq(1.23, 5.67, by = 0.33)
 
 > Créez un vecteur contenant une suite de valeurs de 50 à -50 avec un pas de -2.
 
+```{r}
 
+```
 
 
 #### L'opérateur ":"
 
 L'opérateur `:` est un raccourci de la fonction `seq` pour créer une suite de nombres entiers. Il s'utilise ainsi :
 
-
-```r
+```{r}
 1:5
 24:32
 55:43
@@ -730,16 +694,14 @@ Nous verrons un peu plus loin que ce raccourci est fort pratique.
 
 Un vecteur dispose donc d'une "longueur" qui correspond aux nombres de valeurs qui le composent. Elle s'obtient avec la fonction `length`:
 
-
-```r
+```{r}
 length(taille)
 length(c("a", "b"))
 ```
 
 Il est possible de créer un vecteur de longeur nulle avec `c()`. Bien évidemment sa longueur est zéro.
 
-
-```r
+```{r}
 length(c())
 ```
 
@@ -753,8 +715,7 @@ length(c())
 - `month.abb` : la version abrégée des 12 mois en anglais ;
 - `pi` : la constante mathématique pi.
 
-
-```r
+```{r}
 LETTERS
 letters
 length(letters)
@@ -769,8 +730,7 @@ length(pi)
 
 Pour combiner des vecteurs, rien de plus simple. Il suffit d'utiliser `c` ! Les valeurs des différents vecteurs seront mises bout à bout pour créer un unique vecteur.
 
-
-```r
+```{r}
 x <- c(2, 1, 3, 4)
 length(x)
 y <- c(9, 1, 2, 6, 3, 0)
@@ -789,8 +749,7 @@ Lorsque l'on travaille avec des données d'enquêtes, il est fréquent que certa
 
 Une valeur manquante s'indique sous **R** avec `NA` (pour _not available_). Cette valeur peut s'appliquer à n'importe quel type de vecteur, qu'il soit numérique, textuel ou logique.
 
-
-```r
+```{r}
 taille <- c(1.88, NA, 1.65, 1.92, 1.76, NA)
 taille
 sexe <- c("h", "f", NA, "h", NA, "f")
@@ -799,23 +758,20 @@ sexe
 
 Les valeurs manquantes sont prises en compte dans le calcul de la longeur du vecteur.
 
-
-```r
+```{r}
 length(taille)
 ```
 
 Il ne faut pas confondre `NA`{data-pkg="base"} avec un autre objet que l'on rencontre sous **R** et appelé `NULL`{data-pkg="base"} qui représente l'"objet  vide". `NULL` ne contient absolument rien du tout. La différence se comprend mieux lorsque que l'on essaie de combiner ces objets :
 
-
-```r
+```{r}
 c(NULL, NULL, NULL)
 length(c(NULL, NULL, NULL))
 ```
 
 On peut combiner `NULL` avec `NULL`, du vide plus du vide renverra toujours du vide dont la dimension est égale à zéro.
 
-
-```r
+```{r}
 c(NA, NA, NA)
 length(c(NA, NA, NA))
 ```
@@ -839,100 +795,89 @@ Commençons par l'"indexation par position". Ce mode le plus simple d'indexation
 
 Reprenons notre vecteur `taille` :
 
-
-```r
+```{r}
 taille
 ```
 
 Si on souhaite le premier élément du vecteur, on peut faire :
 
-
-```r
+```{r}
 taille[1]
 ```
 
 Si on souhaite les trois premiers éléments ou les éléments 2, 5 et 6 :
 
-
-```r
+```{r}
 taille[1:3]
 taille[c(2, 5, 6)]
 ```
 
 Si on veut le dernier élément :
 
-
-```r
+```{r}
 taille[length(taille)]
 ```
 
 Il est tout à fait possible de sélectionner les valeurs dans le désordre :
 
-
-```r
+```{r}
 taille[c(5, 1, 4, 3)]
 ```
 
 Dans le cadre de l'indexation par position, il est également possible de spécifier des nombres négatifs. Auquel cas, cela signifiera <q>toutes les valeurs sauf celles-là</q>. Par exemple :
 
-
-```r
+```{r}
 taille[c(-1, -5)]
 ```
 Si l'on indique une position au-delà de la longueur du vecteur, **R** renverra `NA`. Par exemple :
 
-
-```r
+```{r}
 taille[23:25]
 ```
 
 > Affichez toutes les valeurs d'indice pair contenues dans le vecteur "taille", de la manière la plus élégante possible.
 
+```{r}
 
+```
 
 #### Indexation par nom
 
 Les différentes valeurs d'un vecteur peuvent être nommées. Une première manière de nommer les éléments d'un vecteur est de le faire à sa création :
 
-
-```r
+```{r}
 sexe <- c(Michel = "h", Anne = "f", Dominique = NA, Jean = "h", Claude = NA, Marie = "f")
 ```
 
 Lorsque l'on affiche le vecteur, la présentation change quelque peu.
 
-
-```r
+```{r}
 sexe
 ```
 
 La liste des noms s'obtient avec `names`.
 
-
-```r
+```{r}
 names(sexe)
 ```
 
 Pour ajouter ou modifier les noms d'un vecteur, on doit attribuer un nouveau vecteur de noms :
 
-
-```r
+```{r}
 names(sexe) <- c("Michael", "Anna", "Dom", "John", "Alex", "Mary")
 sexe
 ```
 
 Pour supprimer tous les noms, on peut utiliser la fonction `unname` :
 
-
-```r
+```{r}
 anonyme <- unname(sexe)
 anonyme
 ```
 
 Lorsqu'un vecteur est nommé, il est dès lors possible d'accéder à ses valeurs à partir de leur nom. Il s'agit de l'indexation par nom.
 
-
-```r
+```{r}
 sexe["Anna"]
 sexe[c("Mary", "Michael", "John")]
 ```
@@ -940,8 +885,7 @@ sexe[c("Mary", "Michael", "John")]
 Par contre il n'est pas possible d'utiliser l'opérateur `-` comme pour l'indexation directe. Pour exclure un élément en fonction de son nom, on doit utiliser une autre forme d'indexation,
 l'indexation par condition, expliquée dans la section suivante. On peut ainsi faire...
 
-
-```r
+```{r, results='hide'}
 sexe[names(sexe) != "Dom"]
 ```
 
@@ -951,24 +895,21 @@ sexe[names(sexe) != "Dom"]
 
 L'"indexation par condition" consiste à fournir un vecteur logique indiquant si chaque élément doit être inclu (si `TRUE`) ou exclu (si `FALSE`). Par exemple :
 
-
-```r
+```{r}
 sexe
 sexe[c(TRUE, FALSE, FALSE, TRUE, FALSE, FALSE)]
 ```
 
 Écrire manuellement une telle condition n'est pas très pratique à l'usage. Mais supposons que nous ayons également à notre disposition les deux vecteurs suivants, également de longueur 6.
 
-
-```r
+```{r}
 urbain <- c(TRUE, FALSE, FALSE, FALSE, TRUE, TRUE)
 poids <- c(80, 63, 75, 87, 82, 67)
 ```
 
 Le vecteur `urbain` est un vecteur logique. On peut directement l'utiliser pour avoir le sexe des enquêtés habitant en milieu urbain :
 
-
-```r
+```{r}
 sexe[urbain]
 ```
 
@@ -985,15 +926,13 @@ Opérateur de comparaison  | Signification
 
 Voyons tout de suite un exemple :
 
-
-```r
+```{r}
 poids >= 80
 ```
 
 Que s'est-il passé ? Nous avons fourni à **R** une condition et il nous a renvoyé un vecteur logique avec autant d'éléments qu'il y a d'observations et dont la valeur est `TRUE` si la condition est remplie et `FALSE` dans les autres cas. Nous pouvons alors utiliser ce vecteur logique pour obtenir la taille des participants pesant 80 kilogrammes ou plus :
 
-
-```r
+```{r}
 taille[poids >= 80]
 ```
 
@@ -1008,22 +947,19 @@ Opérateur logique  |  Signification
 
 Comment les utilise-t-on ? Voyons tout de suite un exemple. Supposons que je veuille identifier les personnes pesant 80 kilogrammes ou plus **et** vivant en milieu urbain :
 
-
-```r
+```{r}
 poids >= 80 & urbain
 ```
 
 Les résultats sont différents si je souhaite isoler les personnes pesant 80 kilogrammes ou plus **ou** vivant milieu urbain :
 
-
-```r
+```{r}
 poids >= 80 | urbain
 ```
 
 Une remarque importante : quand l'un des termes d'une condition comporte une "valeur manquante" (`NA`), le résultat de cette condition n'est pas toujours `TRUE` ou `FALSE`, il peut aussi être à son tour une valeur manquante.
 
-
-```r
+```{r}
 taille
 taille > 1.8
 ```
@@ -1032,8 +968,7 @@ On voit que le test `NA > 1.8` ne renvoie ni vrai ni faux, mais `NA`.
 
 Une autre conséquence importante de ce comportement est qu'on ne peut pas utiliser l'opérateur l'expression `== NA` pour tester la présence de valeurs manquantes. On utilisera à la place la fonction *ad hoc* `is.na`:
 
-
-```r
+```{r}
 is.na(taille > 1.8)
 ```
 
@@ -1043,8 +978,7 @@ conséquences sur le résultat d'une indexation par comparaison.
 
 Par exemple si je cherche à connaître le poids des personnes mesurant 1,80 mètre ou plus :
 
-
-```r
+```{r}
 taille
 poids
 poids[taille > 1.8]
@@ -1052,14 +986,15 @@ poids[taille > 1.8]
 
 Les éléments pour lesquels la taille n'est pas connue ont été transformés en `NA`, ce qui n'influera pas le calcul d'une moyenne. Par contre, lorsqu'on utilisera assignation et indexation ensemble, cela peut créer des problèmes. Il est donc préférable lorsque l'on a des valeurs manquantes de les exclure ainsi :
 
-
-```r
+```{r}
 poids[taille > 1.8 & !is.na(taille)]
 ```
 
 > Affichez les noms des personnes de sexe masculin et de poids inférieur ou égal à 82 kgs.
 
+```{r}
 
+```
 
 
 ### Assignation par indexation
@@ -1070,8 +1005,7 @@ Mais l'indexation peut également être placée à gauche de cet opérateur d'"a
 
 Prenons donc un exemple simple :
 
-
-```r
+```{r}
 v <- 1:5
 v
 v[1] <- 3
@@ -1080,23 +1014,20 @@ v
 
 Cette fois, au lieu d'utiliser quelque chose comme `x <- v[1]`, qui aurait placé la valeur du premier élément de `v` dans `x`, on a utilisé `v[1] <- 3`, ce qui a mis à jour le premier élément de `v` avec la valeur 3. Ceci fonctionne également pour les différents types d'indexation évoqués précédemment :
 
-
-```r
+```{r}
 sexe["Alex"] <- "f"
 ```
 
 Enfin, on peut modifier plusieurs éléments d'un seul coup soit en fournissant un vecteur, soit en profitant du mécanisme de <dfn>recyclage</dfn>. Les deux commandes suivantes sont ainsi rigoureusement équivalentes :
 
-
-```r
+```{r}
 sexe[c(1,3,4)] <- c("Homme", "Homme", "Homme")
 sexe[c(1,3,4)] <- "Homme"
 ```
 
 L'assignation par indexation peut aussi être utilisée pour ajouter une ou plusieurs valeurs à un vecteur :
 
-
-```r
+```{r}
 length(sexe)
 sexe[7] <- "f"
 sexe
@@ -1116,65 +1047,54 @@ Il y a une chose à noter, si vous effectuez une opération sur plus d'un vecteu
 Attention, parfois le calcul est effectué tout de même, vérifiez bien la taille de vos éléments dans R !!
 
 
-
-```r
+```{r}
 a <- c(1,2,3,4)
 a
 a + 5
 a - 10
 a*4
 a/5
-```
+``` 
  
 Si vous voulez appliquer une fonction sur chaque élément d'un vecteur :
 
-
-```r
+```{r}
 sqrt(a)
 exp(a)
 log(a)
 exp(log(a))
-```
+``` 
   
 En combinant les opérations et en utilisant des parenthèses, vous pouvez créer des expressions plus compliquées :
 
-
-```r
+```{r}
 c <- (a + sqrt(a))/(exp(2)+1)
 c
-```
+``` 
   
 Notez que vous pouvez faire les mêmes opérations avec des arguments vectoriels. Par exemple pour ajouter les éléments du vecteur a aux éléments du vecteur b, utilisez la commande suivante :
 
-
-```r
+```{r}
 a = c(1,2,3)
 b = c(500,300,200)
 a + b
-```
+``` 
   
 L'opération est effectuée élément par élément. Notez que ceci est vrai pour presque toutes les fonctions de base. Vous pouvez donc rassembler toutes sortes d'expressions compliquées :
 
-
-```r
+```{r}
 a*b
 a/b
 (a+3)/(sqrt(1000-b)*2-1)
-```
+``` 
 
 Attention, lorsque vous effectuez des opérations sur des vecteurs, elles sont effectuées élément par élément. Tous les vecteurs dans une expression doivent donc avoir la même longueur. Si les longueurs des vecteurs diffèrent, vous pouvez recevoir un message d'erreur, ou pire, aucun message d'avertissement et des résultats imprévisibles :
 
-
-```r
+```{r}
 a <- c(1,2,3)
 b <- c(10,11,12,13)
 a+b
-```
-
-```
-## Warning in a + b: la taille d'un objet plus long n'est pas multiple de la
-## taille d'un objet plus court
-```
+``` 
   
 Lorsque vous travaillez dans R et que vous créez de nouveaux vecteurs, il peut être facile de perdre la trace des variables que vous avez définies. Pour obtenir une liste de toutes les variables qui ont été définies, utilisez la commande ls():
 
@@ -1182,19 +1102,17 @@ Lorsque vous travaillez dans R et que vous créez de nouveaux vecteurs, il peut 
 Enfin, gardez à l'esprit que les opérations de base fonctionnent presque toujours élément par élément, mais qu'il y a de rares exceptions à cette règle générale. Par exemple, si vous regardez le minimum de deux vecteurs en utilisant la commande min, vous obtiendrez le minimum de tous les chiffres. 
 
 
-
-```r
+```{r}
 a <- c(1,-2,3,-4)
 b <- c(-1,2,-3,4)
 min(a,b)
 pmin(a,b)
-```
+``` 
 
 Les commandes suivantes peuvent être utilisées pour obtenir la moyenne, la médiane, les quantiles, le minimum, le maximum, la variance, l'écart-type et la somme d'un ensemble de nombres:
 
 
-
-```r
+```{r}
 a=seq(1:500)
 mean(a)
 median(a)
@@ -1204,28 +1122,28 @@ max(a)
 var(a)
 sd(a)
 sum(a)
-```
+``` 
 
 La commande summary affichera les valeurs min, max, mean, median et quantiles.
 Cette commande de résumé est particulièrement agréable parce que si vous lui donnez une dataframe, elle affichera le résumé pour chaque vecteur:
 
-
-```r
+```{r}
 summary(a)
-```
+``` 
 
 Enfin, la commande "sort" peut trier le vecteur donné dans l'ordre croissant ou décroissant:
 
-
-```r
+```{r}
 a = 1:10
 sort(a)
 sort(a,decreasing = TRUE)
-```
+``` 
 
 > Créez un vecteur "minus" comprenant les entiers impairs de 5 à 25. Créez un vecteur "cortex" de la même longueur que "minus" et comprenant une répétition de la valeur "-4". Créez un vecteur "hop" égal à racine(minus)-cortex³. Affichez le résumé de ce vecteur. Triez ses valeurs de manière décroissante.
 
+```{r}
 
+``` 
 
 
 #### Opération sur les vecteurs de chaines de caractères
@@ -1233,8 +1151,7 @@ sort(a,decreasing = TRUE)
 Voici quelques opérations utiles que l'on peut réaliser sur des vecteurs de chaines de caractères.
 
 Concaténer des chaines de caractères :
-
-```r
+```{r}
 a = "Bonjour"
 b = "toi"
 paste(a,b)
@@ -1245,16 +1162,15 @@ a = c("mot1","mot2","mot3","mot4")
 paste0("prefix_",a,"_suffix")
 
 paste0(a,a,1)
-```
+``` 
 
 
 Remplacer un pattern dans des chaines de caractères :
 
-
-```r
+```{r}
 a = c("mot1","mot2","mot3","mot4")
 gsub("mot","word",a)
-```
+``` 
 
 
 ### En résumé
@@ -1278,23 +1194,20 @@ Par nature, les vecteurs ne peuvent contenir que des valeurs de même type (num�
 
 Une liste se créée tout simplement avec la fonction `list` :
 
-
-```r
+```{r}
 l1 <- list(1:5, "abc")
 l1
 ```
 
 Une liste est un ensemble d'objets, quels qu'ils soient, chaque élément d'une liste pouvant avoir ses propres dimensions. Dans notre exemple précédent, nous avons créé une liste `l1` composée de deux élements : un vecteur d'entiers de longeur 5 et un vecteur textuel de longueur 1. La longueur d'une liste correspond aux nombres d'éléments qu'elle contient et s'obtient avec `length` :
 
-
-```r
+```{r}
 length(l1)
 ```
 
 Comme les vecteurs, une liste peut être nommée et les noms des éléments d'une liste sont accessibles avec la fonction `names` :
 
-
-```r
+```{r}
 l2 <- list(minuscules = letters, majuscules = LETTERS, mois = month.name) 
 l2
 length(l2)
@@ -1303,29 +1216,25 @@ names(l2)
 
 Que se passe-t-il maintenant si l'on effectue la commande suivante ?
 
-
-```r
+```{r}
 l <- list(l1, l2)
 ```
 
 À votre avis, quelle est la longueur de cette nouvelle liste `l` ? 5 ?
 
-
-```r
+```{r}
 length(l)
 ```
 
 Et bien non ! Elle est de longeur 2, car nous avons créé une liste composée de deux éléments qui sont eux-mêmes des listes. Cela est plus lisible si l'on fait appel à la fonction `str` qui permet de visualiser la structure d'un objet.
 
-
-```r
+```{r}
 str(l)
 ```
 
 Une liste peut contenir tout type d'objets, y compris d'autres listes. Pour combiner les éléments d'une liste, il faut utiliser la fonction `append` :
 
-
-```r
+```{r}
 l <- append(l1, l2)
 length(l)
 str(l)
@@ -1335,15 +1244,16 @@ On peut noter en passant qu'une liste peut tout à fait n'être que partiellemen
 
 > Créez une liste "titi" contenant (avec des noms) votre prénom, la couleur de vos chaussettes, et le diamètre de votre cheville gauche. Créez la liste "rominet" contenant un vecteur contenant lui-même votre jour et votre année de naissance, et votre signe astrologique chinois. Combiner ces deux listes qui contiennent ces infos fondamentales.
 
+```{r}
 
+```
 
 
 ### Indexation
 
 Les crochets simples (`[]`) fonctionnent comme pour les vecteurs. On peut utiliser à la fois l'"indexation par position", l'"indexation par nom" et l"indexation par condition".
 
-
-```r
+```{r}
 l
 l[c(1,3,4)]
 l[c("majuscules", "minuscules")]
@@ -1352,58 +1262,46 @@ l[c(TRUE, TRUE, FALSE, FALSE, TRUE)]
 
 Même si l'on extrait un seul élément, l'extraction obtenue avec les crochets simples renvoie toujours une liste, ici composée d'un seul élément :
 
-
-```r
+```{r}
 str(l[1])
 ```
 
 Supposons que je souhaite calculer la moyenne des valeurs du premier élément de ma liste. Essayons la commande suivante :
 
-
-```r
+```{r}
 mean(l[1])
-```
-
-```
-## Warning in mean.default(l[1]): argument is not numeric or logical:
-## returning NA
 ```
 
 Nous obtenons un message d'erreur. En effet, **R** ne sait pas calculer une moyenne à partir d'une liste. Ce qu'il lui faut, c'est un vecteur de valeurs numériques. Autrement dit, ce que nous cherchons à obtenir c'est le contenu même du premier élément de notre liste et non une liste à un seul élément.
 
 C'est ici que les doubles crochets (`[[]]`) vont rentrer en jeu. Pour ces derniers, nous pourrons utiliser l'indexation par position ou l'indexation par nom, mais pas l'indexation par condition. De plus, le critère que l'on indiquera doit indiquer *un et un seul* élément de notre liste. Au lieu de renvoyer une liste à un élément, les doubles crochets vont renvoyer l'élément désigné. Vite, un exemple :
 
-
-```r
+```{r}
 str(l[1])
 str(l[[1]])
 ```
 
 Maintenant, nous pouvons calculer notre moyenne :
 
-
-```r
+```{r}
 mean(l[[1]])
 ```
 
 Nous pouvons aussi tester l'indexation par nom.
 
-
-```r
+```{r}
 l[["mois"]]
 ```
 
 Mais il faut avouer que cette écriture avec doubles crochets et guillemets est un peu lourde. Heureusement, un nouvel acteur entre en scène : le symbole dollar (`$`). C'est un raccourci des doubles crochets pour l'indexation par nom. On l'utilise ainsi :
 
-
-```r
+```{r}
 l$mois
 ```
 
 Les écritures `l$mois` et `l[["mois"]]` sont équivalentes. Attention ! Cela ne fonctionne que pour l'indexation par nom.
 
-
-```r
+```{r, eval=FALSE}
 l$1
 ```
 ```
@@ -1412,8 +1310,7 @@ Error: unexpected numeric constant in "l$1"
 
 L'assignation par indexation fonctionne également avec les doubles crochets ou le signe dollar :
 
-
-```r
+```{r}
 l[[2]] <- list(c("un", "vecteur", "textuel"))
 l$mois <- c("Janvier", "Février", "Mars")
 l
@@ -1448,8 +1345,7 @@ Dès lors, un tableau de données correspond aux fichiers de données que l'on a
 
 On peut créer un tableau de données avec la fonction `data.frame` :
 
-
-```r
+```{r}
 df <- data.frame(
   sexe =  c("f", "f", "h", "h"), 
   age = c(52, 31, 29, 35), 
@@ -1461,8 +1357,7 @@ str(df)
 
 La fonction `data.frame` a un gros défaut : si on ne désactive pas l'option `stringsAsFactors` elle transforme les chaînes de caractères, ici la variable "sexe", en facteurs (un type de vecteur que nous aborderons plus en détail dans une prochaine partie).
 
-
-```r
+```{r}
 df <- data.frame(
   sexe =  c("f", "f", "h", "h"), 
   age = c(52, 31, 29, 35), 
@@ -1475,16 +1370,14 @@ str(df)
 
 Un tableau de données étant une liste, la fonction `length` renverra le nombre d'éléments de la liste, donc dans le cas présent le nombre de variables, et `names` leurs noms :
 
-
-```r
+```{r}
 length(df)
 names(df)
 ```
 
 Comme tous les éléments d'un tableau de données ont la même longeur, cet objet peut être vu comme bidimensionnel. Les fonctions `nrow`, `ncol` et `dim` donnent respectivement le nombre de lignes, le nombre de colonnes et les dimensions de notre tableau.
 
-
-```r
+```{r}
 nrow(df)
 ncol(df)
 dim(df)
@@ -1492,8 +1385,7 @@ dim(df)
 
 De plus, tout comme les colonnes ont un nom, il est aussi possible de nommer les lignes avec `row.names`:
 
-
-```r
+```{r}
 row.names(df) <- c("Anna", "Mary-Ann", "Michael", "John")
 df
 ```
@@ -1501,8 +1393,7 @@ df
 
 Quand on utilise la fonction `read.csv`, on crée un data.frame :
 
-
-```r
+```{r}
 tree <- read.csv(file="data/exemples/trees91.csv",header=TRUE,sep=",",stringsAsFactors=F);
 is.data.frame(tree)
 ```
@@ -1511,8 +1402,7 @@ is.data.frame(tree)
 
 Les tableaux de données étant des listes, nous pouvons donc utiliser les crochets simples (`[]`), les crochets doubles (`[[]]`) et le symbole dollar (`$`) pour extraire des parties du tableau, de la même manière que pour n'importe quelle liste.
 
-
-```r
+```{r}
 df[1]
 df[[1]]
 df$sexe
@@ -1522,16 +1412,14 @@ Cependant, un tableau de données étant un objet bidimensionnel, il est égalem
 
 Un premier exemple :
 
-
-```r
+```{r}
 df
 df[3, 2]
 ```
 
 Cette première commande indique que nous souhaitons la troisième ligne de la seconde colonne, autrement dit l'âge de Michael. Le même résultat peut être obtenu avec l'indexation par nom, l'indexation par condition, ou un mélange de tout ça.
 
-
-```r
+```{r}
 df["Michael", "age"]
 df[c(F, F, T, F), c(c(F, T, F))]
 df[3, "age"]
@@ -1540,20 +1428,20 @@ df["Michael", 2]
 
 > Affichez l'âge de Anna.
 
+```{r}
 
+```
 
 Il est également possible de ne préciser qu'un seul critère. Par exemple, si je souhaite les deux premières observations, ou les variables "sexe" et "blond" :
 
-
-```r
+```{r}
 df[1:2,]
 df[,c("sexe", "blond")]
 ```
 
 Il a suffit de laisser un espace vide avant ou après la virgule. ATTENTION ! Il est cependant impératif de laisser la virgule pour indiquer à **R** que l'on souhaite effectuer une indexation à deux dimensions. Si l'on oublie la virgule, cela nous ramène au mode de fonctionnement des listes. Et le résultat n'est pas forcément le même :
 
-
-```r
+```{r}
 df[2, ]
 df[, 2]
 df[2]
@@ -1561,8 +1449,7 @@ df[2]
 
 Au passage, on pourra noter quelques subtilités sur le résultat renvoyé.
 
-
-```r
+```{r}
 str(df[2, ])
 str(df[, 2])
 str(df[2])
@@ -1584,8 +1471,7 @@ Pour plus de détails, on pourra consulter l'entrée d'aide de `.data.frame`.
 Prenons un tableau de données un peu plus conséquent, en l'occurrence un jeu de données disponible dans **R** et correspondant à des caractéristiques de voitures.
 Il contient 32 modèles et 11 variables.
 
-
-```r
+```{r}
 data(mtcars)
 d <- mtcars
 d
@@ -1594,31 +1480,27 @@ d
 Si l'on demande l'affichage de l'objet `d` dans la console (résultat non reproduit ici), **R** va afficher l'ensemble du contenu de `d` à l'écran ce qui, sur un tableau de plus grande taille, ne sera pas très lisible.
 Pour une exploration visuelle, le plus simple est souvent d'utiliser la visionneuse intégrée à **RStudio** et que l'on peut appeller avec la fonction `View`.
 
-
-```r
+```{r, eval=FALSE}
 View(d)
 ```
 
 
 Les fonctions `head` et `tail`, qui marchent également sur les vecteurs, permettent d'afficher seulement les premières (respectivement les dernières) lignes d'un tableau de données :
 
-
-```r
+```{r}
 head(d)
 tail(d, 2)
 ```
 
 La méthode `summary` qui fonctionne sur tout type d'objet permet d'avoir quelques statistiques de base sur les différentes variables du tableau, les statistiques affichées dépendant du type de variable.
 
-
-```r
+```{r}
 summary(d)
 ```
 
 On peut également appliquer `summary` à une variable particulière.
 
-
-```r
+```{r}
 summary(d$mpg)
 summary(d$drat)
 ```
@@ -1627,8 +1509,7 @@ L'extension `questionr` fournit également une fonction bien pratique pour décr
 différentes variables d'un tableau de données. Il s'agit de `describe`{data-pkg="questionr"}.
 Faisons de suite un essai :
 
-
-```r
+```{r, eval=FALSE}
 library("questionr")
 describe(d)
 ```
@@ -1637,16 +1518,14 @@ Comme on le voit sur cet exemple, `describe` affiche le type des variables, les 
 
 Il est possible de restreindre l'affichage à seulement quelques variables en indiquant le nom de ces dernières.
 
-
-```r
+```{r, eval=FALSE}
 library("questionr")
 describe(d, "carb", "qsec")
 ```
 
 On peut également transmettre juste une variable :
 
-
-```r
+```{r}
 library(questionr)
 describe(d$carb)
 ```
@@ -1657,8 +1536,7 @@ Nous examinons ici certaines tâches courantes qui se présentent lors du traite
 
 Lorsque vous avez plus d'un ensemble de données, vous pouvez les combiner. Vous pouvez regrouper différents ensembles de données en les combinant par lignes (rbind) ou par colonnes (cbind). Le premier exemple montre cela avec deux dataframes. Les arguments des fonctions peuvent prendre n'importe quel nombre d'objets. Nous n'en utilisons que deux ici pour simplifier la démonstration. Il est important de noter que lorsque vous regroupez des tables par lignes, les noms des objets dans les tables doivent être identiques.
 
-
-```r
+```{r}
 a <- data.frame(one=c( 0, 1, 2),two=c("a","a","b"))
 b <- data.frame(one=c(10,11,12),two=c("c","c","d"))
 a
@@ -1676,8 +1554,7 @@ w
 
 Les mêmes commandes fonctionnent également avec des vecteurs et des matrices.
 
-
-```r
+```{r}
 A = matrix(c( 1, 2, 3, 4, 5, 6),ncol=3,byrow=TRUE)
 A
 B = matrix(c(10,20,30,40,50,60),ncol=3,byrow=TRUE)
@@ -1692,15 +1569,13 @@ class(W)
 
 Parfois, on veut faire une jointure sur une seule colonne. Dans ce cas, utiliser la fonction "merge". Prenez le temps d'observer son comportement.
 
-
-```r
+```{r}
 a <- data.frame(one=c( 0,1, 2),two=c("a","a","b"))
 b <- data.frame(three=c(10,11,12,4),two=c("c","c","d","a"))
 ```
 
 
-
-```r
+```{r}
 w=merge(a,b,by.x="two",by.y="two")
 w
 w=merge(a,b,by.x="two",by.y="two",all.x=T,all.y=T)
@@ -1709,8 +1584,7 @@ w
 
 
 Pourquoi la ligne suivante produit-elle une erreur ?
-
-```r
+```{r,eval=FALSE}
 rbind(a,b) 
 ```
 
@@ -1738,8 +1612,7 @@ Les "matrices" sont des vecteurs multi-dimensionnels dont toutes les valeurs son
 
 Une matrice contient différentes colonnes de même type, c'est-à-dire que des nombres ou que des chaines de caractères.
 
-
-```r
+```{r}
 A = matrix( 
    c(2, 4, 3, 1, 5, 7), # the data elements 
    nrow=2,              # number of rows 
@@ -1751,27 +1624,23 @@ A                      # print the matrix
 
 Un élément à la ligne m, colonne n de la matrice peut être accédé par :  A[m, n].
 
-
-```r
+```{r}
 A[2, 3] 
 ```
 
 La ligne m entière peut être extraite par A[m, ].
-
-```r
+```{r}
 A[2, ] 
 ```
 
 Et la colonne n entière par  A[,n]:
-
-```r
+```{r}
 A[, 3] 
 ```
 
 On peut transposer, et même déconstruire une matrice. Attention il faut enregistrer le résultat dans un autre objet pour pouvoir le réutiliser.
 
-
-```r
+```{r}
 t(A)
 c(A)
 B=c(A)
@@ -1783,8 +1652,7 @@ B=c(A)
 
 Les tableaux à une dimension ne sont pas l'exemple le plus intéressant, mais c'est un bon point de départ. Une façon de créer une table de contingence utilise la commande "table". 
 
-
-```r
+```{r}
 toto <- c("A","A","B","A","B","B","C","A","C")
 results <- table(toto)
 results
@@ -1794,13 +1662,12 @@ results
 
 Dans l'exemple ci-dessous, nous avons deux questions. Dans la première question, les réponses sont étiquetées «Jamais», «Parfois» ou «Toujours». Dans la deuxième question, les réponses sont intitulées «Oui», «Non» ou «Peut-être». L'ensemble des vecteurs "a" et "b" contient les réponses aux deux questions. Le troisième élément de "a" est la façon dont la troisième personne a répondu à la première question, et le troisième élément de "b" est la façon dont la troisième personne a répondu à la deuxième question.
 
-
-```r
+```{r}
 a <- c("Sometimes","Sometimes","Never","Always","Always","Sometimes","Sometimes","Never")
 b <- c("Maybe","Maybe","Yes","Maybe","Maybe","No","Yes","No")
 results <- table(a,b)
 results
-```
+``` 
 
 
 La commande "table"" nous permet de faire un calcul très rapide, et nous pouvons immédiatement voir que deux personnes qui ont dit "Peut-être" à la première question ont aussi dit "Parfois" à la deuxième question.
@@ -1813,15 +1680,13 @@ L'option "byrow=T" indique que les numéros sont d'abord ajoutés dans les ligne
 
 Si vous avez besoin de transformer votre table en tableau il existe différentes solutions en fonction du type de résultats que vous souhaitez :
 
-
-```r
+```{r}
 as.data.frame(results)
-```
+``` 
 
-
-```r
+```{r}
 as.data.frame.matrix(results)
-```
+``` 
 
 ## Les facteurs ou vecteurs avec modalités définies (factor)
 
@@ -1842,23 +1707,20 @@ Voici la série de mesures recueillies, arrondies à l’entier le plus proche, 
 
 Dans l’exemple suivant, on crée une variable appelée age (il n’est pas recommandé d’utiliser des accents ou autres signes diacritiques) à laquelle on associe la liste des nombres présentés dans le tableau précédent.
 
-
-```r
+```{r}
 age <- c(18, 27, 34, 18, 24, NA, 30, 28, 19, 19)
 sexe <- c("F", "F", "M", "F", "M", "M", "M", "F", "M", "F")
 ```
 
 Supposons qu’une autre variable ait été collectée, à savoir la réponse concernant le degré d’accord des répondants vis-à-vis d’une certaine assertion (par exemple, “quelle est votre opinion concernant les théories selon lesquelles le climat se réchauffe et entraînera à terme de grosses difficultés pour vivre sur Terre”). Les 5 modalités de réponse proposées aux participants suivent le principe d’une échelle de Likert2. Les données ont été recueillies au format numérique, de 1=“Pas du tout d’accord” à 5=“Tout à fait d’accord”. Appelons cette variable `opinion`.
 
-
-```r
+```{r}
 opinion <- c(1, 3, 2, 1, 4, 1, 5, 3, 2, 2)
 ```
 
 La commande factor() permet de faire connaître à R la nature qualitative de cette variable, et d’associer à chaque modalité ou niveau du facteur (levels) des étiquettes textuelles plus informatives. Par défaut, la commande factor() ne fait qu’ajouter des niveaux à une variable, les niveaux retenus correspondant aux valeurs uniques, triées par ordre lexicographique, présentes dans la variable.
 
-
-```r
+```{r}
 factor(opinion)
 ```
 
@@ -1866,27 +1728,23 @@ Il est possible d’associer des étiquettes à chacun de ces niveaux, en respec
 
 
 
-
-```r
+```{r}
 opinion <- factor(opinion, labels=c("Pas du tout d'accord", "Moyennement d'accord", "Sans Opinion", "Assez d'accord", "Tout a fait d'accord"))
 opinion
 ```
 
-
-```r
+```{r}
 nlevels(opinion)
 ```
 
 
 La commande levels() permet de lister les niveaux d’une variable qualitative, ou d’en modifier les valeurs. L’exemple ci-dessous montre comment il est possible d’agréger les deux dernières modalités de la variable.
 
-
-```r
+```{r}
 levels(opinion)
 ```
 
-
-```r
+```{r}
 levels(opinion)[4:5] <- "Assez ou tout a fait d'accord"
 opinion
 nlevels(opinion)
@@ -1894,15 +1752,13 @@ nlevels(opinion)
 
 Il est possible d’indiquer à R que les niveaux de la variable qualitative sont ordonnés (on parle parfois de variable ordinale, contrairement aux variables nominales dont les modalités ne sont pas ordonnées, comme la couleur des yeux par exemple).
 
-
-```r
+```{r}
 factor(opinion, ordered=TRUE)
 ```
 
 La variable sexe manipulée précédemment pourrait tout aussi bien être convertie en facteurs :
 
-
-```r
+```{r}
 sexe <- factor(sexe)
 levels(sexe)
 ```
@@ -1912,8 +1768,7 @@ On notera que le premier niveau est F. Si l’on souhaite que celui-ci soit M, i
 
 Les niveaux des facteurs sont déterminés à partir des valeurs uniques identifiées dans une variable. L’ordre des niveaux d’un facteur suit l’ordre lexicographique : nombres, lettres en minuscules/majuscules. Par exemple, factor(c("1", "oui", "Oui", "Non", "non", "3")). R supprime automatiquement les valeurs manquantes de la liste des niveaux, sauf si l’on indique l’option exclude=NULL ; dans ce cas, les valeurs manquantes figureront comme un niveau à part.
 
-
-```r
+```{r}
 sexe
 sexe <- relevel(sexe, ref="M")
 levels(sexe)
@@ -1923,19 +1778,16 @@ Souvent, une expérience en biologie comprend différents niveaux d'une variable
 
 Par exemple, si l'on reprend le jeu de données précédent `tree`, la 3e colonne (CHBR) contient les différentes localisations des parcelles. Il s'agit donc d'un vecteur contenant des modalités définies.
 
-
-```r
+```{r}
 tree <- read.csv(file="data/exemples/trees91.csv",header=TRUE,sep=",");
 head(tree)
 ```
 
-
-```r
+```{r}
 class(tree$CHBR)
 ```
 
-
-```r
+```{r}
 summary(tree$CHBR)
 summary(tree$LFBM)
 ```
@@ -1946,8 +1798,7 @@ Dans cet ensemble de données, plusieurs colonnes sont des facteurs, mais les ch
 
 C'est un problème courant et il existe un moyen de préciser à R de traiter la colonne "C" comme un ensemble de facteurs, grâce à la commande "factor". Dans l'exemple suivant, nous convertissons la colonne C en un facteur:
 
-
-```r
+```{r}
 tree$C
 summary(tree$C)
 tree$C <- factor(tree$C)
@@ -1962,8 +1813,7 @@ Une fois qu'un vecteur est converti en facteur, alors R le traite différemment.
 
 Pour rajouter un élément dans un facteur, c'est **très** compliqué. Le mieux est de repasser par un vecteur puis de le retransformer en factor.
 
-
-```r
+```{r}
 fac=as.factor(c("A","B","B","C"))
 c(fac,"C")
 c(fac,"D")
@@ -1974,8 +1824,7 @@ new_factor
 
 Pour un facteur de nombres, c'est encore plus compliqué, il faut passer par des chaines de caractères.
 
-
-```r
+```{r}
 fac=factor(c(1,10,2,3,4,2,1,5,1))
 
 fac
@@ -1989,8 +1838,7 @@ new_factor
 
 > Le plus simple, quand on débute avec R, est d'éviter cette structure d'objet en interdisant à R de faire les conversions automatiques lorsque l'on importe des données. Par contre il est important de savoir que ça existe pour ne pas se faire piéger.
 
-
-```r
+```{r}
 tree <- read.csv(file="data/exemples/trees91.csv",header=TRUE,sep=",",stringsAsFactors=F);
 names(tree)
 typeof(tree$CHBR)
@@ -2007,50 +1855,43 @@ NB Certains exercices (notés avec un *) nécessitent l'utilisation de fonctions
 
 > Créez un vecteur contenant les chiffres 1 à 6. Affichez la classe de ce vecteur.
 
-
-```r
+```{r}
 #
 ```
 
 > Créez un vecteur contenant les noms de quelques uns de vos camarades. Affichez la longueur de ce vecteur. Affichez les 2 premiers camarades du vecteur. Affichez le 2ème et le 3ème. Classez le vecteur par ordre alphabétique, puis par ordre alphabétique décroissant.
 
-
-```r
+```{r}
 #
 ```
 
 > En utilisant les fonctions rep() et seq(), créez le vecteur 'a','a',1,2,3,4,5,7,9,11.
 
-
-```r
+```{r}
 #
 ```
 
 > Supprimez les valeurs manquantes du vecteur c(1,2,NA,4).
 
-
-```r
+```{r}
 #
 ```
 
 > * Créez un vecteur de 50 valeurs choisies aléatoirement et avec remise entre 1 et 100.
 
-
-```r
+```{r}
 #
 ```
 
 > * Calculez la somme cumulative des valeurs du vecteur précédent.
 
-
-```r
+```{r}
 #
 ```
 
 > * Créez la chaîne de caractère 'Les chaussettes de l'archiduchesse sont elles seches ou archi-seches'. Séparez-la en différentes sous-chaînes délimitées par le caractère 'e'. Lisez distinctement le résultat à votre voisin.
 
-
-```r
+```{r}
 #
 ```
 
@@ -2059,50 +1900,43 @@ NB Certains exercices (notés avec un *) nécessitent l'utilisation de fonctions
 
 > Nous allons ici utiliser un jeu de données disponible sur R, 'iris'. Affichez la classe de ce jeu de données. Affichez le résumé du tableau de données. Affichez les 6 premières lignes du tableau. Affichez le tableau dans Rstudio. Affichez les noms des lignes, puis les noms des colonnes. Affichez le nombre de lignes et de colonnes.
 
-
-```r
+```{r}
 #
 ```
 
 > Affichez la 8ème ligne du tableau, puis la valeur de la 12ème ligne et 3ème colonne.
 
-
-```r
+```{r}
 #
 ```
 
 > Affichez les longeurs des pétales pour les lignes 10 à 15.
 
-
-```r
+```{r}
 #
 ```
 
 > Affichez les longeur et largeur des sépales pour la ligne 38.
 
-
-```r
+```{r}
 #
 ```
 
 > Affichez les numéros de ligne pour lesquelles la largeur des pétales est supérieure à 1.8.
 
-
-```r
+```{r}
 #
 ```
 
 > Affichez les espèces pour lesquelles la longueur des sépales est supérieure à 5 et inférieure à 6.
 
-
-```r
+```{r}
 #
 ```
 
 > Créez une table de contingence des largeurs de sépales et espèces.
 
-
-```r
+```{r}
 #
 ```
 
@@ -2114,74 +1948,69 @@ Ceci est une introduction aux graphiques de base.
 
 Pour tracer un histogramme des données, lire le fichier w1.dat dans un objet et utiliser la commande "hist" sur la colonne "vals".
 
-
-```r
+```{r}
 w1 <- read.csv(file="data/exemples/w1.csv",sep=",",head=TRUE)
 hist(w1$vals)
 hist(w1$vals,main="Distribution of w1",xlab="w1")
-```
+``` 
 
 Comme vous pouvez le voir, R calcule automatiquement les intervalles à utiliser. Il y a beaucoup d'options pour déterminer comment couper les intervalles. Si vous souhaitez en savoir plus sur les options, consultez la page d'aide :
 
-
-```r
+```{r}
 help(hist)
 hist(w1$vals,breaks=2)
 hist(w1$vals,breaks=4)
 hist(w1$vals,breaks=6)
-```
+``` 
 
 Attention, lorsque vous utilisez l'option breaks=x (avec x un nombre), x sera une suggestion et R essayera de faire au mieux. Si vous voulez imposer un nombre vous devez définir vous même les bordures.
  
-
-```r
+```{r}
 hist(w1$vals,breaks=c(0,0.25,0.5,0.75,1,1.25,1.5,1.75,2))
 b = seq(min(w1$vals),max(w1$vals),length=4+1)
 hist(w1$vals,breaks=b)
-```
+``` 
 
 
 Vous pouvez également faire varier les limites de la zone tracée en utilisant l'option xlim. Cette option prend un vecteur avec deux entrées:
 
-
-```r
+```{r}
 hist(w1$vals,breaks=12,xlim=c(0,10))
 hist(w1$vals,breaks=12,xlim=c(-1,2))
 hist(w1$vals,breaks=12,xlim=c(0,2))
-```
+``` 
 
 Vous devez toujours annoter vos graphiques et il existe plusieurs façons d'ajouter des titres et des libellés. Une façon est d'utiliser les options de la commande hist elle-même:
 
-
-```r
+```{r}
 hist(w1$vals,
        main='Leaf BioMass in High CO2 Environment',
        xlab='BioMass of Leaves')
-```
+``` 
 
 Vous pouvez également utiliser la commande title :
 
-
-```r
+```{r}
 hist(w1$vals,
        main='Leaf BioMass in High CO2 Environment',
        xlab='BioMass of Leaves')
 title('Leaf BioMass in High CO2 Environment',xlab='BioMass of Leaves')
-```
+``` 
 
 Notez que cela ajoute simplement le titre et les étiquettes et écrira au-dessus de tous les titres ou étiquettes que vous avez déjà affichés.
 
 Il n'est pas rare d'ajouter d'autres types de graphiques à un histogramme. Par exemple, l'une des options consiste à l'ajouter à un tracé qui a déjà été dessiné. Par exemple, vous pouvez avoir un histogramme avec un stripchart en haut. L'ajout du graphique peut vous donner une meilleure idée de la densité des données:
 
-
-```r
+```{r}
 hist(w1$vals,main='Leaf BioMass in High CO2 Environment',xlab='BioMass of Leaves',ylim=c(0,16))
 stripchart(w1$vals,add=TRUE,at=15.5)
-```
+``` 
 
 > A partir de jeu de données "iris", tracez l'histogramme de la largeur des pétales. Indiquez le nom de l'axe des abscisses et ajoutez un titre. Ajouter un stripchart au-dessus de l'histogramme.
 
+```{r}
 
+``` 
 
 
 ## Boxplots 
@@ -2190,65 +2019,58 @@ Une boîte à moustaches fournit une représentation graphique de la médiane, d
 
 Utilisons d'abord le jeu de données w1 et regardons le boxplot de la colonne vals :
 
-
-```r
+```{r}
 boxplot(w1$vals)
-```
+``` 
 
 Il s'agit d'un graphique très simple, et le titre et les étiquettes peuvent être spécifiés exactement de la même manière que dans hist :
 
-
-```r
+```{r}
 boxplot(w1$vals,
           main='Leaf BioMass in High CO2 Environment',
           ylab='BioMass of Leaves')
-```
+``` 
 
 Notez que l'orientation par défaut est de tracer le boxplot verticalement. Pour cette raison, nous avons utilisé l'option ylab pour spécifier l'étiquette de l'axe. Il y a un grand nombre d'options pour cette commande. Pour plus d'options voir la page d'aide :
 
 
 A titre d'exemple, vous pouvez demander à ce que le boxplot soit tracé horizontalement :
 
-
-```r
+```{r}
  boxplot(w1$vals,
           main='Leaf BioMass in High CO2 Environment',
           xlab='BioMass of Leaves',
           horizontal=TRUE)
-```
+``` 
 
 L'option de tracer la boîte à l'horizontale peut être utilisée pour afficher une boîte à moustaches sur la même image qu'un histogramme. Vous devez spécifier l'option add, indiquer où placer le boxplot en utilisant l'option at, et désactiver l'ajout d'axes en utilisant l'option axes : 
 
-
-```r
+```{r}
 hist(w1$vals,main='Leaf BioMass in High CO2 Environment',xlab='BioMass of Leaves',ylim=c(0,16))
 boxplot(w1$vals,horizontal=TRUE,at=15.5,add=TRUE,axes=FALSE)
-```
+``` 
 
 
 Pour la deuxième partie sur les boxplots, nous allons travailler sur l'objet "tree", qui provient du fichier trees91.csv. Nous devons spécifier quelles colonnes sont des facteurs :
 
-
-```r
+```{r}
 tree <- read.csv(file="data/exemples/trees91.csv",sep=",",head=TRUE)
 tree$C <- factor(tree$C)
 tree$N <- factor(tree$N)
-```
+``` 
 
 Nous pouvons tracer le boxplot pour la biomasse de la tige:
 
 
-
-```r
+```{r}
 boxplot(tree$STBM,
           main='Stem BioMass in Different CO2 Environments',
           ylab='BioMass of Stems')
-```
+``` 
 
 Les arbres ont été cultivés dans différents types d'environnements. La commande boxplot peut être utilisée pour tracer une boîte à moustaches distincte pour chaque niveau : 
 
-
-```r
+```{r}
 boxplot(tree$STBM~tree$C)
 ```
 
@@ -2262,22 +2084,19 @@ Nous examinons la relation entre la biomasse de la tige (STBM) et la biomasse fo
 
 La commande pour tracer chaque paire de points en tant que coordonnées x et y est "plot" :
 
-
-```r
+```{r}
 plot(tree$STBM,tree$LFBM)
 ```
 
 Il semble qu'il existe une forte association positive entre la biomasse dans les tiges d'un arbre et les feuilles de l'arbre. Cela semble être une relation linéaire. En fait, la corrélation entre ces deux ensembles d'observations est assez élevée : 
 
-
-```r
+```{r}
 cor(tree$STBM,tree$LFBM)
 ```
 
 Pour en revenir à nos moutons, vous devez toujours annoter vos graphiques. 
 
-
-```r
+```{r}
 plot(tree$STBM,tree$LFBM,
        main="Relationship Between Stem and Leaf Biomass",
        xlab="Stem Biomass",
@@ -2301,23 +2120,20 @@ pendant l’accouplement ;
 
 > Récupérer le jeu de données sur le portail des études (chauves-souris-fellatio-data.txt) et l'importer.
 
-
-```r
+```{r}
 ## Ici il faut faire quelque chose !! 
 ```
 
 
 > Quelle commande permet d’obtenir l’affichage des 7 premières lignes du jeu de données ?
 
-
-```r
+```{r}
 ## Ici aussi (etc)
 ```
 
 > Quelle commande permet d’obtenir le nombre de lignes et de colonnes de votre table ?
 
-
-```r
+```{r}
 ## Ici aussi (etc)
 ```
 
@@ -2365,8 +2181,7 @@ Cette section est divisée en trois sections. L'objectif de la première section
 
 Dans les exemples ci-dessous, un ensemble de données est défini en utilisant le générateur de nombres aléatoires normalement distribués de R.
 
-
-```r
+```{r}
 x <- rnorm(100,sd=5,mean=20)
 y <- 2.5*x-1.0+rnorm(10,sd=9,mean=0)
 plot(x,y)
@@ -2380,29 +2195,19 @@ Une tâche courante consiste à tracer plusieurs ensembles de données sur le m�
 
 Définissez d'abord un ensemble de nombres aléatoires, puis tracez-les (ce même jeu de données est utilisé dans tous les exemples ci-dessous).
 
-
-```r
+```{r}
 x <- rnorm(50,sd=5,mean=20)
 y <- 2.5*x - 1.0 + rnorm(10,sd=9,mean=0)
 
 plot(x,y,xlab="Independent",ylab="Dependent",main="Random Stuff")
 x1 <- runif(25,15,25)
 y1 <- 2.5*x1 - 1.0 + runif(8,-6,6)
-```
-
-```
-## Warning in 2.5 * x1 - 1 + runif(8, -6, 6): la taille d'un objet plus long
-## n'est pas multiple de la taille d'un objet plus court
-```
-
-```r
 points(x1,y1,col=2)
 ```
 
 Notez que dans l'exemple précédent, la couleur du second ensemble de points de données est définie à l'aide de l'option "col". Vous pouvez essayer différents nombres pour voir quelles couleurs sont disponibles. Notez également que dans l'exemple ci-dessus, les points sont représentés par des cercles. Le symbole utilisé peut être changé en utilisant l'option "pch".
 
-
-```r
+```{r}
 x2 <- runif(8,15,25)
 y2 <- 2.5*x2 - 1.0 + runif(8,-6,6)
 plot(x,y,xlab="Independent",ylab="Dependent",main="Random Stuff")
@@ -2411,8 +2216,7 @@ points(x2,y2,col=3,pch=2)
 
 Une autre option utile consiste à ajouter une légende. Cela peut être fait avec la commande "legend". Les options de la commande, dans l'ordre, sont les coordonnées x et y sur le tracé pour placer la légende, suivies d'une liste d'étiquettes à utiliser. Il existe un grand nombre d'autres options ; utilisez "help(legend)" pour les voir. Par exemple, une liste de couleurs peut être donnée avec l'option "col", et une liste de symboles peut être donnée avec l'option "pch".
 
-
-```r
+```{r}
 plot(x,y,xlab="Independent",ylab="Dependent",main="Random Stuff")
 points(x1,y1,col=2,pch=3)
 points(x2,y2,col=4,pch=5)
@@ -2423,8 +2227,7 @@ legend(14,70,c("Original","one","two"),col=c(1,2,4),pch=c(1,3,5))
 
 Une autre tâche courante consiste à ajouter des barres d'erreur à un ensemble de points de données. Cela peut être accompli en utilisant la commande "arrows". La commande arrows prend deux paires de coordonnées, c'est-à-dire deux paires de valeurs x et y. La commande dessine ensuite une ligne entre chaque paire et ajoute une "tête de flèche" avec une longueur et un angle donnés. 
 
-
-```r
+```{r}
 plot(x,y,xlab="Independent",ylab="Dependent",main="Random Stuff")
 xHigh <- x
 yHigh <- y + abs(rnorm(10,sd=3.5))
@@ -2440,8 +2243,7 @@ Notez que le code d'option est utilisé pour spécifier où les barres sont dess
 
 Les graphiques sont disposés dans un tableau où le nombre par défaut de lignes et de colonnes est un (un graphique par page par défaut). Le paramètre "mfrow" est un vecteur avec deux entrées. La première entrée est le nombre de lignes d'images. La deuxième entrée est le nombre de colonnes. Dans l'exemple ci-dessous, les graphiques ont été disposées en 2 lignes avec 3 graphiques par ligne.
 
-
-```r
+```{r}
 par(mfrow=c(2,3))
 numberWhite <- rhyper(400,4,5,3)
 numberChipped <- rhyper(400,2,7,3)
@@ -2460,8 +2262,7 @@ mosaicplot(table(numberWhite,numberChipped),main="sixth plot")
 
 Il y a des moments où vous ne voulez pas tracer des points spécifiques mais souhaitez tracer une densité. Cela peut être fait en utilisant la commande "smoothScatter".
 
-
-```r
+```{r}
 numberWhite <- rhyper(50,4,5,3)
 numberChipped <- rhyper(50,2,7,3)
 smoothScatter(numberWhite,numberChipped,
@@ -2473,8 +2274,7 @@ smoothScatter(numberWhite,numberChipped,
 
 Une région ombrée peut être tracée en utilisant la commande "polygone". La commande polygone prend une paire de vecteurs, x et y , et ombre la région délimitée par les paires de coordonnées. Dans l'exemple ci-dessous, un carré bleu est dessiné. Les sommets sont définis à partir de la partie inférieure gauche. Cinq paires de points sont données car le point de départ et le point final sont les mêmes.
 
-
-```r
+```{r}
 x = c(-1,1,1,-1,-1)
 y = c(-1,-1,1,1,-1)
 plot(x,y)
@@ -2483,8 +2283,7 @@ polygon(x,y,col='blue')
 
 Un exemple plus compliqué est donné ci-dessous. Dans cet exemple, la région de rejet pour un test d'hypothèse du côté droit est tracée, et elle est ombrée en rouge. 
 
-
-```r
+```{r}
 stdDev <- 0.75;
 x <- seq(-5,5,by=0.01)
 y <- dnorm(x,sd=stdDev)
@@ -2511,8 +2310,7 @@ Les axes sont dessinés séparément. Ceci est fait en supprimant d'abord le tra
 
 Dans les exemples ci-dessous, un ensemble de données est défini à l'aide du générateur de nombres aléatoires hypergéométriques de R.
 
-
-```r
+```{r}
 numberWhite <- rhyper ( 30 , 4 , 5 , 3 )
 numberChipped <- rhyper ( 30 , 2 , 7 , 3 )
 ```
@@ -2521,9 +2319,8 @@ numberChipped <- rhyper ( 30 , 2 , 7 , 3 )
 
 La commande plot tentera de produire les graphiques appropriés en fonction du type de données. Les données définies ci-dessus, cependant, sont des données numériques. La commande "as.factor" est utilisée pour convertir les données en facteurs et garantit que R les traite comme des données discrètes.
 
-
-```r
-numberWhite <- rhyper(50,4,5,3)
+```{r}
+numberWhite <- rhyper(100,4,5,3)
 numberWhite <- as.factor(numberWhite)
 plot(numberWhite)
 ```
@@ -2531,9 +2328,8 @@ plot(numberWhite)
 Dans ce cas, R produira un barplot. La commande "barplot" peut également être utilisée pour créer un barplot. La commande "barplot" nécessite cependant un vecteur de hauteurs, et vous ne pouvez pas simplement lui donner les données brutes. Ces valeurs peuvent être facilement calculées à l'aide de la commande "table".
 
 
-
-```r
-numberWhite <- rhyper(50,4,5,3)
+```{r}
+numberWhite <- rhyper(100,4,5,3)
 totals <- table(numberWhite)
 totals
 barplot(totals,main="Number Draws",ylab="Frequency",xlab="Draws")
@@ -2542,9 +2338,8 @@ barplot(totals,main="Number Draws",ylab="Frequency",xlab="Draws")
 
 Dans l'exemple précédent, la commande "barplot" est utilisée pour définir le titre du tracé et les libellés des axes. Les étiquettes sur les graduations pour l'axe horizontal sont générées automatiquement à l'aide des étiquettes de la table. Vous pouvez modifier les étiquettes en définissant les noms de ligne de la table.
 
-
-```r
-numberWhite <- rhyper(50,4,5,3)
+```{r}
+numberWhite <- rhyper(100,4,5,3)
 totals <- table(numberWhite)
 print(totals)
 rownames(totals) <- c("none","one","two","three")
@@ -2553,15 +2348,13 @@ barplot(totals,main="Number Draws",ylab="Frequency",xlab="Draws")
 
 L'ordre des fréquences est le même que celui de la table. Si vous modifiez l'ordre dans le tableau, cela changera la façon dont il apparaît dans le graphique à barres. Par exemple, si vous souhaitez organiser les fréquences dans l'ordre décroissant, vous pouvez utiliser la commande de tri avec l'option décroissante.
 
-
-```r
+```{r}
 barplot(sort(totals,decreasing=TRUE),main="Number Draws",ylab="Frequency",xlab="Draws")
 ```
 
 Les fonctions d'indexation de R peuvent être utilisées pour changer l'ordre des fréquences manuellement.
 
-
-```r
+```{r}
 totals
 sort(totals,decreasing=TRUE)
 numberWhite
@@ -2576,8 +2369,7 @@ barplot(totals[c(3,1,4,2)])
 Il existe plusieurs façons d'enregister un graphique dans un fichier. 
 Dans l'exemple ci-dessous, la fenêtre en cours est imprimée dans un fichier png appelé "hist.png" d'une largeur de 200 pixels.
 
-
-```r
+```{r,eval=FALSE}
 x = rnorm(100)
 hist(x)
 dev.print(device=png,width=200,"hist.png")
@@ -2586,8 +2378,7 @@ dev.print(device=png,width=200,"hist.png")
 
 Une autre façon de sauvegarder un graphique dans un fichier consiste à créer un périphérique. Une fois le périphérique créé, les différentes commandes de traçage sont données, puis le périphérique est désactivé pour écrire dans le fichier.
 
-
-```r
+```{r}
 png(file="hist.png")
 hist(x)
 rug(x,side=1)
@@ -2597,8 +2388,7 @@ dev.off()
 
 Si vous voulez sauvegarder et ranger votre figure dans un dossier, par exemple `figures`, il faut juste ajouter le nom du dossier (déjà existant) au nom du fichier:
 
-
-```r
+```{r, eval=F}
 png(file="figures/hist.png")
 hist(x)
 rug(x,side=1)
@@ -2610,8 +2400,7 @@ dev.off()
 
 > Importer à nouveau le jeu de données `tree` dans "data/exemples/trees91.csv"
 
-
-```r
+```{r, eval=F}
 tree = 
 ```
 
@@ -2623,23 +2412,20 @@ Par exemple, le premier chiffre de chaque rangée est un nombre, 1, 2, 3 ou 4, q
 
 > Sur un même graphique représenter la biomasse des tiges de l'arbre (6e colonne) en fonction de la concentration en Nitrate (N) (9e colonne) dans les tiges en colorant de manière différente les points en fonction de l'exposition au dioxyde de carbone (1e colonne). Ajouter la légende.
 
-
-```r
+```{r}
 #
 ```
 
 > Faire un graphe pour représenter le nombre d'arbres dans chacune des catégories d'exposition au dioxyde de carbone (1e colonne).
 
-
-```r
+```{r}
 #
 ```
 
 
 > Faire un graphe pour représenter la distribution de la biomasse des tiges de l'arbre (6e colonne) en fonction de l'exposition au dioxyde de carbone (1e colonne).
 
-
-```r
+```{r}
 #
 ```
 
@@ -2652,8 +2438,7 @@ Par exemple, le premier chiffre de chaque rangée est un nombre, 1, 2, 3 ou 4, q
 
 L'exécution conditionnelle est disponible en utilisant l'instruction `if`. 
 
-
-```r
+```{r}
 x = 0.1
 if( x < 0.2)
   {
@@ -2665,13 +2450,14 @@ x
 
 > Créez une variable contenant la chaîne de caractère de votre choix. A l'aide de l'instruction `if`, testez si cette chaîne contient la lettre "a". Si oui, écrivez "bingo!".
 
+```{r}
 
+```
 
 L'instruction else peut être utilisée pour spécifier une autre option. Dans l'exemple ci-dessous, notez que l'instruction else doit être sur la même ligne que l'accolade de fin pour le bloc if précédent.
 
 
-
-```r
+```{r}
 x = 2.0
 if ( x < 0.2)
  {
@@ -2688,8 +2474,7 @@ x
 
 Enfin, les instructions if peuvent être enchaînées.
 
-
-```r
+```{r}
 x = 1.0
 if(x < 0.2)
 {
@@ -2713,8 +2498,7 @@ La boucle for peut être utilisée pour répéter un ensemble d'instructions.
 
 Un exemple est donné ci-dessous:
 
-
-```r
+```{r}
 for(lupe in seq(0,1,by=0.3))
 {
     cat(lupe,"\n");
@@ -2729,7 +2513,9 @@ for(loop in x)
 
 > Créer une variable initiée à la valeur 0. A l'aide d'une boucle `for`, ajoutez lui tous les multiples de 5 entre 0 et 100. Affichez le résultat.
 
+```{r}
 
+```
 
 Vous verrez plus loin une autre manière de faire des itérations avec les fonctions apply qui seront alors à privilégier.
 
@@ -2738,8 +2524,7 @@ Vous verrez plus loin une autre manière de faire des itérations avec les fonct
 
 La boucle while peut être utilisée pour répéter une série d'instructions, et elle est souvent utilisée lorsque vous ne savez pas à l'avance le nombre d'instructions qui seront exécutées. 
 
-
-```r
+```{r}
 lupe <- 1;
 x <- 1
 while(x < 4)
@@ -2752,7 +2537,9 @@ while(x < 4)
 
 > Créer une variable initiée à la valeur 2. Tant qu'elle est inférieure à 2048, multipliez-là par deux. Affichez le nombre de multiplication que vous avez fait.
 
+```{r}
 
+```
 
 
 ## Les fonctions
@@ -2762,13 +2549,12 @@ while(x < 4)
 Une nouvelle fonction est créée par une construction de la forme :
 
 
-
-```r
+```{r, eval=FALSE} 
 fun_name <- function(arglist)
 {
 expr
 }
-```
+``` 
 
 avec :
 
@@ -2783,8 +2569,8 @@ renvoie la valeur de la dernière expression du bloc.
 
 Par exemple: 
 
+```{r}
 
-```r
 somme <- function(a,b)
 { 
   return(a+b)
@@ -2796,20 +2582,20 @@ somme(1,5)
 La valeur retournée par la fonction est celle contenue dans `return`
 ou la derniere valeur de la fonction.
 
-
-```r
+```{r}
 somme <- function(a,b)
 {
   a+b
 }
 
 somme(1,5)
+
 ```
 
 Vous pouvez aussi appeler d'autres fonctions dans vos fonctions :
 
+```{r}
 
-```r
 newDef <- function(a,b)
  {
      x = runif(10,a,b)
@@ -2825,6 +2611,7 @@ function(a,b)
 }
 x <- newDef(0,1)
 x
+
 ```
 
 
@@ -2834,21 +2621,15 @@ x
 Les arguments sont transmis dans l'ordre : R essaiera de faire correspondre les arguments nommés et de faire correspondre le reste de gauche à droite. Ils peuvent aussi être spécifiés explicitement, cependant.
 
 
-
-```r
+```{r} 
 newDef(b=10,a=1)
 newDef(10,1)
-```
-
-```
-## Warning in runif(10, a, b): production de NAs
 ```
 
 
 Une autre tâche courante consiste à avoir une fonction qui renvoie plusieurs éléments. Cela peut être accompli en renvoyant une liste d'éléments. On peut accéder aux objets dans une liste en utilisant la même notation `$` utilisée pour les trames de données.
 
-
-```r
+```{r}
 c = c(1,2,3,4,5)
 petites_stats <- function(x)
 {
@@ -2876,8 +2657,7 @@ Un autre problème potentiel peut survenir lors de l'utilisation d'une fonction 
 > Faire une fonction "paire" qui prend un nombre x, et renvoie TRUE ou FALSE si ce nombre est pair.
 
 
-
-```r
+```{r,eval=F}
 paire <- function(x) {
   [...]
   return()
@@ -2885,8 +2665,7 @@ paire <- function(x) {
 ```
 
 
-
-```r
+```{r ,eval=F}
 paire(2)
 paire(5)
 paire(2.3)
@@ -2896,16 +2675,14 @@ paire(2.3)
 > Faire une fonction "somme_carre"" qui prend 2 nombres x et y, et renvoie la somme des carrés de ces 2 nombres.
 
 
-
-```r
+```{r,eval=F}
 somme_carre <- function(x,y) {
   [...]
   return()
 }
 ```
 
-
-```r
+```{r ,eval=F}
 somme_carre(2,563)
 somme_carre(7,95)
 somme_carre(-2, 4)
@@ -2914,15 +2691,13 @@ somme_carre(-2, 4)
 
 > Faire une fonction qui trace un histogramme, l'enregistre en pdf, en mettant la couleur et le titre en option. 
 
-
-```r
+```{r,eval=F}
 trace_histo <- function(x,file="histo.pdf",[...]) {
   [...]
 }
 ```
 
-
-```r
+```{r ,eval=F}
 x=runif(1000)
 
 trace_histo(x, file="histo.pdf",titre="Super titre",couleur="red")
@@ -2931,14 +2706,18 @@ trace_histo(x, file="histo.pdf",titre="Super titre",couleur="red")
 
 > Faire une fonction "filtre_positif" qui prend un vecteur de nombres, et renvoie les valeurs positives.
 
+```{r ,eval=F}
 
+```
 
 
 #### Exercice 2
 
 > Créer	une	séquence d'ADN aléatoire de	1000 nucléotides. Combien de	fois est présent chaque	nucléotide ?	
 
+```{r ,eval=F}
 
+```
 
 > Lancer cette fonction 1000 fois et représenter la distribution du nombre de "A". Ajouter une verticale sur le graphique qui montre la moyenne attendue. Mettre un titre.
   	
@@ -2961,8 +2740,7 @@ Par exemple, une fonction graphique de haut niveau transmettra l’argument poin
 
 Supposons que nous voulions définir une fonction qui dessine un nuage de points et y ajoute une droite de régression :
 
-
-```r
+```{r, eval=FALSE} 
 f <- function(x, y, ...) {
 plot.default(x = x, y = y, ...)
 abline(coef = lm(y~x)$coef)
@@ -2972,8 +2750,7 @@ f(1:10,1:10)
 
 Comme nous avons transmis l’argument point-point-point à plot.default(), tout ce que plot.default() sait faire, la fonction f() sait le faire également.
 
-
-```r
+```{r, eval=FALSE} 
 f(1:10, 1:10, main = "Titre de ce graphique", pch = 19, col = "blue",
 las = 1, panel.first = grid(col = "pink", lty = "solid"))
 ```
@@ -2982,8 +2759,7 @@ las = 1, panel.first = grid(col = "pink", lty = "solid"))
 
 Si l'on souhaite afficher des choses dans une fonction (bien pratique pour débugguer), utiliser la fonction print.
 
-
-```r
+```{r, eval=FALSE} 
 f1 <- function(x = pi) { x ; 0}
 f1()
 [1] 0
@@ -3000,8 +2776,7 @@ Si une variable n’est pas trouvée à l’intérieur de la fonction, elle est 
 Si deux variables avec le même nom sont définies à l'intérieur et à l'extérieur de la fonction, c’est la variable locale qui sera utilisée.
 Une erreur aura lieu si aucune variable avec le nom demandé n’est trouvée.
 
-
-```r
+```{r, eval=FALSE} 
 mavariable <- 1
 mafonction1 <- function() {
 mavariable <- 5
@@ -3024,8 +2799,7 @@ Les différentes versions des commandes apply permettent de prendre une fonction
 
 Tout d'abord, la commande lapply est utilisée pour prendre une liste d'éléments et effectuer une fonction sur chaque membre de la liste. Autrement dit, la liste comprend un certain nombre d'objets différents. Vous voulez effectuer une opération sur chaque objet de la liste. Vous pouvez utiliser lappply pour indiquer à R de parcourir chaque élément de la liste et d'effectuer l'action souhaitée sur chaque élément.
 
-
-```r
+```{r, eval=FALSE}
 lapply(list(9,16,24), sqrt)
 lapply(list(1,2,3), function(x){x*x})
 ```
@@ -3033,21 +2807,20 @@ lapply(list(1,2,3), function(x){x*x})
 
 > Faire une fonction qui renvoie la somme des carrée d'une liste de nombres.
 
-
-```r
+```{r, eval=FALSE}
 somme_carre_list <- function( ... ) {
   ...
 }
 
 somme_carre_list(list(1,2,3,4,5,6))
+
 ```
 
 
 
 Dans l'exemple suivant, une liste est créée avec trois éléments. Le premier est un ensemble de nombres générés aléatoirement avec une distribution normale. Le second est un ensemble de nombres générés aléatoirement avec une distribution exponentielle. Le dernier est un ensemble de facteurs. Un résumé est ensuite effectué sur chaque élément de la liste.
 
-
-```r
+```{r,eval=FALSE}
 x <- list(bibi=rnorm(200,mean=1,sd=10),
             bobo=rexp(300,10.0),
             babar=as.factor(c("a","b","b","b","c","c")))
@@ -3056,8 +2829,7 @@ lapply(x,summary)
 
 La commande lapply retourne une liste. Les entrées de la liste portent le même nom que les entrées de la liste qui lui est transmise en entrée. Les valeurs de chaque entrée sont les résultats de l'application de la fonction. La fonction sapply est similaire, mais la différence est qu'elle essaie de transformer le résultat en un vecteur ou une matrice si possible. Si cela n'a pas de sens, alors il retourne une liste comme la commande lapply. 
 
-
-```r
+```{r,eval=FALSE}
 x <- list(a=rnorm(8,mean=1,sd=10),b=rexp(10,10.0))
 x
 val <- lapply(x,mean)
@@ -3077,8 +2849,7 @@ other[2]
 
 La fonction tapply prend une liste de données, généralement un vecteur, un facteur, et une fonction. Il applique ensuite la fonction à chaque sous-ensemble de données correspondant à chaque modalité du facteur.
 
-
-```r
+```{r,eval=FALSE}
 val <- data.frame(a=c(1,2,10,20,5,50),
                     b=as.factor(c("a","a","b","b","a","b")))
 val
@@ -3098,8 +2869,7 @@ result$a
 
 La fonction apply prend un tableau, et une fonction. Elle peut appliquer la fonction soit sur les lignes, soit sur les colonnes, soit sur les deux ; par exemple elle permet de calculer la somme d'un tableau ligne par ligne ou colonne par colonne. 
 
-
-```r
+```{r,eval=FALSE}
 val <- data.frame(a=runif(10,1,10),
                     b=runif(10,1,10),
                   c=runif(10,1,10))
@@ -3111,17 +2881,18 @@ val
 
 val["total",] = apply(val,2,sum)
 val
+
 ```
 
 > Faire la meme chose sur val2.
 
-
-```r
+```{r,eval=FALSE}
 val2 <- data.frame(name=LETTERS[1:10],
                   a=runif(10,1,10),
                     b=runif(10,1,10),
                   c=runif(10,1,10))
 val2
+
 ```
 
 ### Pratiquons, pratiquons
@@ -3143,17 +2914,15 @@ val2
 
 Un ensemble de commandes R peut être enregistré dans un fichier, puis exécuté comme si vous l'aviez tapé depuis la ligne de commande. La commande source est utilisée pour lire le fichier et exécuter les commandes dans la même séquence que celle donnée dans le fichier.
 
-
-```r
+```{r, eval=FALSE} 
 source('file.R')
-```
+``` 
  
 Si vous générez simplement le fichier, les commandes ne sont pas imprimées et les résultats des commandes ne sont pas imprimés. Cela peut être remédié en utilisant les options echo , print.eval et verbose.
 
 Certains exemples sont donnés en supposant qu'un fichier, simpleEx.R , se trouve dans le répertoire courant. Le contenu du fichier est donné ci-dessous:
 
-
-```r
+```{r}
  # Define a variable.
 x <- rnorm(10)
 
@@ -3188,20 +2957,18 @@ Ici vous allez tester si l'intensité de la sélection sexuelle, estimée à par
 
 > Importer le jeu de données contenu dans "data/appli2/lezard.csv" et afficher les 5 premières lignes.
 
-
-```r
+```{r, eval=FALSE} 
 # A vous de jouer
-```
+``` 
 
 Chacune des lignes représente une population où des individus ont été capturés. Le nombre de mâles, de femelles ainsi que le nombre de morphes observés a été répertorié. La colonne "richness" correspond au nombre de morphes dans la population et la colonne "eveness" correspond à la « régularité » de la répartition du nombre d'individus entre les morphes.
 
 
 > Calculer le nombre de populations (colonne "poblacio" dans la table), le nombre total de femelles, le nombre total de mâles, le nombre total d'individus.
   
-
-```r
+```{r, eval=FALSE} 
 # A vous de jouer (etc)
-```
+``` 
 
 
 > Construire une nouvelle colonne contenant le sex ratio pour chacune des populations. Quels sont le minimum, la moyenne et le maximum  des sex ratio observés dans les populations ? 
@@ -3227,8 +2994,7 @@ $$ S = - \sum \limits_{i=1}^n p_i ln(p_i)$$ avec $n$ le nombre de morphes dans l
 
 > Avez vous bien utilisé la famille apply, et la fonction "table" ? Sinon, corrigez les lignes suivantes pour le faire :
 
-
-```r
+```{r, eval=FALSE} 
 calc_shannon <- function(x) {
   p = length(x)
   p=p[p>0]
@@ -3237,7 +3003,7 @@ calc_shannon <- function(x) {
 }
 
 shannon_l = tapply(x, x, calc_shannon)
-```
+``` 
 
 > Représenter l'indice de shannon en fonction du sex ratio. Ajouter sur le graphe une droite de tendance. Que pouvez vous conclure ?
 
@@ -3275,8 +3041,7 @@ Chacune des lignes représente une abeille étudiée. L'identifiant de la coloni
 # Démarrage de ggplot2 en douceur...
 
 
-
-```r
+```{r, eval=FALSE} 
 library(ggplot2)
 p = ggplot(data = df1, aes(y = `Bee weight (g)`, x = `Treatment (# spores)`))
 p
@@ -3287,23 +3052,20 @@ Aucun graphique ne s’affiche ici : en effet, ce que l’on a stocké, dans l�
 
 Rajoutons désormais un objet géométrique, geom_point, qui va projeter, sur le graphique, des points aux coordonnées précédemment définies.
 
-
-```r
+```{r, eval=FALSE} 
 p + geom_point()
 ```
 
 Divisons le graphique en projetant les points de chaque colonie dans une facette différente du graphique. Utiliser facet_grid :
 
 
-
-```r
+```{r, eval=FALSE} 
 p + geom_point()+facet_grid(.~ `Colony Label`)
 ```
 
 Le graphique ci-dessus présente un problème fréquent : l’axe horizontal du graphique est illisible. Grâce à l’argument scale_x_continuous, on va pouvoir clarifier cet axe en n’y faisant figurer que certaines valeurs :
 
-
-```r
+```{r, eval=FALSE} 
 p + geom_point() +
   facet_grid(. ~ `Colony Label`) +
   scale_x_continuous(breaks = c(0, 10000, 40000))
@@ -3311,8 +3073,7 @@ p + geom_point() +
 
 Ensuite on peut aussi changer les étiquettes des axes, c'est nettement plus joli, non ? Ha bon, tant pis.
 
-
-```r
+```{r, eval=FALSE} 
 p + geom_point() +
   facet_grid(. ~ `Colony Label`) +
   scale_x_continuous(breaks = c(0, 10000, 40000), labels=c("0","1e4","4e4"))
@@ -3320,31 +3081,28 @@ p + geom_point() +
 
 On souhaite encore procéder à une dernière modification, en rajoutant une régression locale à travers les points de chaque facette. Pas que ça ait grand sens, sur 3 concentrations, mais bon. Au passage, si on modifie l'objet p, on a moins de lignes à copier-coller.
 
-
-```r
+```{r, eval=FALSE} 
  p <- p + geom_point() +
   facet_grid(. ~ `Colony Label`) +
   scale_x_continuous(breaks = c(0, 10000, 40000), labels=c("0","1e4","4e4"))
 
 p + geom_smooth(method = "loess", se = FALSE,
                 size = 1, color = "black")
-```
+```                
     
 Si on veut des axes in french : 
                 
-
-```r
+```{r, eval=FALSE} 
  p +
  geom_smooth(method = "loess", se = FALSE,
                 size = 1, color = "black") + 
   labs(x= "Traitement (nb spores)",y = "Poids des abeilles (g)\n")
-```
+```                
 
 
 Si on aime la sobriété des couleurs :
 
-
-```r
+```{r, eval=FALSE} 
  ggplot(data = df1, aes(y = `Bee weight (g)`, x = `Treatment (# spores)`)) + geom_point(color = "grey50") +
   facet_grid(. ~ `Colony Label`) +
   scale_x_continuous(breaks = c(0, 10000, 40000), labels=c("0","1e4","4e4"))+
@@ -3355,17 +3113,17 @@ labs(x= "Traitement (nb spores)",y = "Poids des abeilles (g)\n")+
   theme(strip.background = element_rect(fill = "grey90", color = "grey50"),
         strip.text = element_text(size = rel(1)),
         panel.grid = element_blank())
-```
+```         
 
 Pourquoi pas un boxplot, soyons fous. Attention pour les boxplots il faut donner un factor en x. Mais sinon on a basculé très facilement de la visualisation sous forme de niveaux de traitements à une visualisation par boxplots. Ces basculements sont très faciles à envisager dès que l’on maîtrise les principaux éléments de ggplot2. Ca tombe bien : plus qu'un dernier exercice, et vous attaquez le TP ggplot2.
 
-
-```r
+```{r, eval=FALSE} 
 ggplot(data = df1, aes(y = `Bee weight (g)`, x = factor(`Treatment (# spores)`)))+ geom_boxplot() +
 facet_grid(. ~ `Colony Label`) +
 scale_x_discrete(labels = c("0","+","++"))+
 labs(x= "Traitement (nb spores)",y = "Poids des abeilles (g)\n")
-```
+
+```   
 
 
 > Importer maintenant le jeu de données dans "NosemaS4_Table.xls" et afficher les 5 premières lignes (qui correspondent aux 5 premières abeilles). La première colonne est le traitement, la seconde est la durée de vie de l'abeille.
@@ -3400,15 +3158,13 @@ La fonction la plus utile est sans doute `help` (ou son équivalent `?`) qui per
 
 Pour accéder à l'aide de la fonction `mean`, par exemple, il vous suffit de saisir directement :
 
-
-```r
+```{r, eval=FALSE, tidy=FALSE}
 ?mean
 ```
 
 ou bien
 
-
-```r
+```{r, eval=FALSE}
 help("mean")
 ```
 

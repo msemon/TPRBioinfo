@@ -1844,16 +1844,16 @@ numberChipped &lt;-<span class="st"> </span><span class="kw">rhyper</span> ( <sp
 <div id="barplot" class="section level3">
 <h3><span class="header-section-number">8.2.1</span> Barplot</h3>
 <p>La commande plot tentera de produire les graphiques appropriés en fonction du type de données. Les données définies ci-dessus, cependant, sont des données numériques. La commande “as.factor” est utilisée pour convertir les données en facteurs et garantit que R les traite comme des données discrètes.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">numberWhite &lt;-<span class="st"> </span><span class="kw">rhyper</span>(<span class="dv">50</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">3</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">numberWhite &lt;-<span class="st"> </span><span class="kw">rhyper</span>(<span class="dv">100</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">3</span>)
 numberWhite &lt;-<span class="st"> </span><span class="kw">as.factor</span>(numberWhite)
 <span class="kw">plot</span>(numberWhite)</code></pre></div>
 <p>Dans ce cas, R produira un barplot. La commande “barplot” peut également être utilisée pour créer un barplot. La commande “barplot” nécessite cependant un vecteur de hauteurs, et vous ne pouvez pas simplement lui donner les données brutes. Ces valeurs peuvent être facilement calculées à l’aide de la commande “table”.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">numberWhite &lt;-<span class="st"> </span><span class="kw">rhyper</span>(<span class="dv">50</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">3</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">numberWhite &lt;-<span class="st"> </span><span class="kw">rhyper</span>(<span class="dv">100</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">3</span>)
 totals &lt;-<span class="st"> </span><span class="kw">table</span>(numberWhite)
 totals
 <span class="kw">barplot</span>(totals,<span class="dt">main=</span><span class="st">&quot;Number Draws&quot;</span>,<span class="dt">ylab=</span><span class="st">&quot;Frequency&quot;</span>,<span class="dt">xlab=</span><span class="st">&quot;Draws&quot;</span>)</code></pre></div>
 <p>Dans l’exemple précédent, la commande “barplot” est utilisée pour définir le titre du tracé et les libellés des axes. Les étiquettes sur les graduations pour l’axe horizontal sont générées automatiquement à l’aide des étiquettes de la table. Vous pouvez modifier les étiquettes en définissant les noms de ligne de la table.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">numberWhite &lt;-<span class="st"> </span><span class="kw">rhyper</span>(<span class="dv">50</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">3</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">numberWhite &lt;-<span class="st"> </span><span class="kw">rhyper</span>(<span class="dv">100</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">3</span>)
 totals &lt;-<span class="st"> </span><span class="kw">table</span>(numberWhite)
 <span class="kw">print</span>(totals)
 <span class="kw">rownames</span>(totals) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;none&quot;</span>,<span class="st">&quot;one&quot;</span>,<span class="st">&quot;two&quot;</span>,<span class="st">&quot;three&quot;</span>)
