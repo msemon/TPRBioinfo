@@ -2399,11 +2399,13 @@ dev.off()
 ## Pratiquons, pratiquons
 
 ### Les graphes
-TODO:
-Faire des exercices sur les graphes intermédiaires en utilisans soit des jeux de données a partir de data soit en réutilisant les jeux de données déjà importé (ex: tree).
 
-Le but est de leur faire faire des graphes un peu plus compliqués.
-dfdd
+
+
+```{r}
+
+```
+
 
 
  
@@ -2413,7 +2415,7 @@ dfdd
 
 ### if 
 
-L'exécution conditionnelle est disponible en utilisant l'instruction if. 
+L'exécution conditionnelle est disponible en utilisant l'instruction `if`. 
 
 ```{r}
 x = 0.1
@@ -2423,6 +2425,12 @@ if( x < 0.2)
      print("increment that number!\n")
   }
 x
+```
+
+> Créez une variable contenant la chaîne de caractère de votre choix. A l'aide de l'instruction `if`, testez si cette chaîne contient la lettre "a". Si oui, écrivez "bingo!".
+
+```{r}
+
 ```
 
 L'instruction else peut être utilisée pour spécifier une autre option. Dans l'exemple ci-dessous, notez que l'instruction else doit être sur la même ligne que l'accolade de fin pour le bloc if précédent.
@@ -2482,13 +2490,18 @@ for(loop in x)
 }
 ```
 
+> Créer une variable initiée à la valeur 0. A l'aide d'une boucle `for`, ajoutez lui tous les multiples de 5 entre 0 et 100. Affichez le résultat.
 
-Vous verrez plus loin une autre manière de faire des itérations avec les fonctions apply qui seront alors à priviligier.
+```{r}
+
+```
+
+Vous verrez plus loin une autre manière de faire des itérations avec les fonctions apply qui seront alors à privilégier.
 
 
 ### while
 
-La boucle while peut être utilisée pour répéter une série d'instructions, et elle est souvent utilisée lorsque vous ne savez pas à l'avance à quelle fréquence les instructions seront exécutées. 
+La boucle while peut être utilisée pour répéter une série d'instructions, et elle est souvent utilisée lorsque vous ne savez pas à l'avance le nombre d'instructions qui seront exécutées. 
 
 ```{r}
 lupe <- 1;
@@ -2501,6 +2514,11 @@ while(x < 4)
  }
 ```
 
+> Créer une variable initiée à la valeur 2. Tant qu'elle est inférieure à 2048, multipliez-là par deux. Affichez le nombre de multiplication que vous avez fait.
+
+```{r}
+
+```
 
 
 ## Les fonctions
@@ -2540,7 +2558,7 @@ somme <- function(a,b)
 somme(1,5)
 ```
 
-La valeur retournée par la fonction est celle contenue de return
+La valeur retournée par la fonction est celle contenue dans `return`
 ou la derniere valeur de la fonction.
 
 ```{r}
@@ -2553,7 +2571,7 @@ somme(1,5)
 
 ```
 
-Vous pouvez aussi appeler d'autres fonctions dans vos fonctions:
+Vous pouvez aussi appeler d'autres fonctions dans vos fonctions :
 
 ```{r}
 
@@ -2579,7 +2597,7 @@ x
 ### Arguments des fonctions 
 
 
-Les arguments sont transmis dans l'ordre: R essaiera de faire correspondre les arguments nommés et de faire correspondre le reste de gauche à droite. Ils peuvent être spécifiés explicitement, cependant.
+Les arguments sont transmis dans l'ordre : R essaiera de faire correspondre les arguments nommés et de faire correspondre le reste de gauche à droite. Ils peuvent aussi être spécifiés explicitement, cependant.
 
 
 ```{r} 
@@ -2588,8 +2606,7 @@ newDef(10,1)
 ```
 
 
-
-Une autre tâche courante consiste à avoir une fonction qui renvoie plusieurs éléments. Cela peut être accompli en renvoyant une liste d'éléments. Les objets dans une liste peuvent être accédés en utilisant la même notation $ utilisée pour les trames de données.
+Une autre tâche courante consiste à avoir une fonction qui renvoie plusieurs éléments. Cela peut être accompli en renvoyant une liste d'éléments. On peut accéder aux objets dans une liste en utilisant la même notation `$` utilisée pour les trames de données.
 
 ```{r}
 c = c(1,2,3,4,5)
@@ -2614,7 +2631,7 @@ Un autre problème potentiel peut survenir lors de l'utilisation d'une fonction 
 ### Pratiquons, pratiquons
 
 
-#### exercie 1
+#### Exercice 1
 
 > Faire une fonction "paire" qui prend un nombre x, et renvoie TRUE ou FALSE si ce nombre est pair.
 
@@ -2673,15 +2690,15 @@ trace_histo(x, file="histo.pdf",titre="Super titre",couleur="red")
 ```
 
 
-#### exercie 2
+#### Exercice 2
 
-> Créer	une	séquence d'ADN aléatoire de	1000 nucléotides. Combien de	fois est présent chaque	nucléotide?	
+> Créer	une	séquence d'ADN aléatoire de	1000 nucléotides. Combien de	fois est présent chaque	nucléotide ?	
 
 ```{r ,eval=F}
 
 ```
 
-> Lancer cette fonction 1000 fois et représenter la distribution du nombre de "A". Ajouter une verticale sur le graphique qui montre la moyenne attendue.   Mettre un titre.
+> Lancer cette fonction 1000 fois et représenter la distribution du nombre de "A". Ajouter une verticale sur le graphique qui montre la moyenne attendue. Mettre un titre.
   	
 > Encapsuler la manip précédente dans une fonction, qui prend le nucléotide demandé en argument, une couleur pour le graphique et le sauve.
 
@@ -2689,13 +2706,13 @@ trace_histo(x, file="histo.pdf",titre="Super titre",couleur="red")
 
 
 
-### Precicion sur les fonctions
+### Precicions sur les fonctions
 
 
 #### L’argument spécial point-point-point
 
-L'argument point-point-point permet à une fonction d'accepter un nombre quelconque d’arguments.
-L'argument point-point-point (...) indique que la fonction accepte n'importe quoi d’autre comme argument.
+L'argument point-point-point (...) permet à une fonction d'accepter un nombre quelconque d’arguments.
+L'argument point-point-point indique que la fonction accepte n'importe quoi d’autre comme argument.
 Ce qu’il adviendra de ces arguments est déterminé par la fonction.
 En général ils sont transmis à d'autres fonctions.
 Par exemple, une fonction graphique de haut niveau transmettra l’argument point-point-point à des fonctions graphiques de bas niveau pour traitement.
@@ -2710,16 +2727,16 @@ abline(coef = lm(y~x)$coef)
 f(1:10,1:10)
 ```
 
-Comme nous avons transmis l’argument point-point-point à plot.default(), tout ce que plot.default() sait faire, notre fonction f() sait le faire également.
+Comme nous avons transmis l’argument point-point-point à plot.default(), tout ce que plot.default() sait faire, la fonction f() sait le faire également.
 
 ```{r, eval=FALSE} 
 f(1:10, 1:10, main = "Titre de ce graphique", pch = 19, col = "blue",
 las = 1, panel.first = grid(col = "pink", lty = "solid"))
 ```
 
-#### Illustration de la neutralisation de l’affichage automatique dans les fonctions:
+#### Illustration de la neutralisation de l’affichage automatique dans les fonctions
 
-Si l'on souhaite afficher des choses dans une fonction (bien pratique pour débugguer) alors utiliser la fonction print.
+Si l'on souhaite afficher des choses dans une fonction (bien pratique pour débugguer), utiliser la fonction print.
 
 ```{r, eval=FALSE} 
 f1 <- function(x = pi) { x ; 0}
@@ -2732,11 +2749,10 @@ f2()
 #### Détermination de la valeur d'une variable dans une fonction
 
 
-Quand une expression fait appel à une variable, comment la valeur de cette variable est elle déterminée ?
+Quand une expression fait appel à une variable, comment la valeur de cette variable est-elle déterminée ?
 
-Si une variable n’est pas trouvée à l’intérieur de la fonction, elle est recherchée en dehors de la fonction. Tout ce que l’on a à retenir est que :
-une variable définie à l'exterieur de la fonction est accessible aussi dans la fonction.
-Si deux variables avec le même nom sont définies à l'intérieur et à l'exterieur de la fonction, c’est la variable locale qui sera utilisée.
+Si une variable n’est pas trouvée à l’intérieur de la fonction, elle est recherchée en dehors de la fonction. Tout ce que l’on a à retenir est qu'une variable définie à l'exterieur de la fonction est accessible aussi dans la fonction.
+Si deux variables avec le même nom sont définies à l'intérieur et à l'extérieur de la fonction, c’est la variable locale qui sera utilisée.
 Une erreur aura lieu si aucune variable avec le nom demandé n’est trouvée.
 
 ```{r, eval=FALSE} 
@@ -2768,7 +2784,7 @@ lapply(list(1,2,3), function(x){x*x})
 ```
 
 
-> Faire une fonction qui renvoie la somme des carrée d'une liste de nombres
+> Faire une fonction qui renvoie la somme des carrée d'une liste de nombres.
 
 ```{r, eval=FALSE}
 somme_carre_list <- function( ... ) {
@@ -2790,7 +2806,7 @@ x <- list(bibi=rnorm(200,mean=1,sd=10),
 lapply(x,summary)
 ```
 
-La commande lapply retourne une liste. Les entrées de la liste portent le même nom que les entrées de la liste qui lui est transmise en entrée. Les valeurs de chaque entrée sont les résultats de l'application de la fonction. La fonction sapply est similaire, mais la différence est qu'elle essaie de transformer le résultat en un vecteur ou une matrice si possible. Si cela n'a pas de sens, alors il retourne une liste comme la commande lapply . 
+La commande lapply retourne une liste. Les entrées de la liste portent le même nom que les entrées de la liste qui lui est transmise en entrée. Les valeurs de chaque entrée sont les résultats de l'application de la fonction. La fonction sapply est similaire, mais la différence est qu'elle essaie de transformer le résultat en un vecteur ou une matrice si possible. Si cela n'a pas de sens, alors il retourne une liste comme la commande lapply. 
 
 ```{r,eval=FALSE}
 x <- list(a=rnorm(8,mean=1,sd=10),b=rexp(10,10.0))
@@ -2810,7 +2826,7 @@ other[2]
 
 #### Opérations groupées par modalités d'un facteur
 
-La fonction tapply prend une liste de données, généralement un vecteur, un facteur, et une fonction. Il appliquera ensuite la fonction à chaque sous-ensemble de données correspondant à chaque modalité du facteur.
+La fonction tapply prend une liste de données, généralement un vecteur, un facteur, et une fonction. Il applique ensuite la fonction à chaque sous-ensemble de données correspondant à chaque modalité du facteur.
 
 ```{r,eval=FALSE}
 val <- data.frame(a=c(1,2,10,20,5,50),
@@ -2830,7 +2846,7 @@ result$a
 
 #### Opérations sur un tableau
 
-La fonction apply prend un tableau, et une fonction.  ...
+La fonction apply prend un tableau, et une fonction. Elle peut appliquer la fonction soit sur les lignes, soit sur les colonnes, soit sur les deux ; par exemple elle permet de calculer la somme d'un tableau ligne par ligne ou colonne par colonne. 
 
 ```{r,eval=FALSE}
 val <- data.frame(a=runif(10,1,10),
@@ -2847,7 +2863,7 @@ val
 
 ```
 
-> Faire la meme chose sur val2 
+> Faire la meme chose sur val2.
 
 ```{r,eval=FALSE}
 val2 <- data.frame(name=LETTERS[1:10],
@@ -2860,15 +2876,15 @@ val2
 
 ### Pratiquons, pratiquons
 
-#### exercice 3
+#### Exercice 3
 
-exercice sur un if et une boucle for
+> Chargez le tableau 'iris'. Créez un vecteur contenant autant d'éléments que de lignes dans le tableau, dans lequel vous placerez la chaîne "plus grand que 5" si la longueur des sépales est supérieure à 5, et la chaîne "moins grand que 5" dans le cas contraire. Faites le de deux manières différentes, à l'aide d'une boucle for.
 
-#### exercice 4
+#### Exercice 4
 
-exercice sur les 3 types de apply qui reprend l'exercice du for précedent pour montrer comment c'est plus puissant
+> Reprenez l'exercice précédent en utilisant cette fois-ci la fonction "apply".
 
-
+> Pour chaque fleur, calculez, à l'aide de "apply", le produit de la longueur des pétales par leur largeur.
 
 
 ## Exécuter un fichier
@@ -2903,24 +2919,17 @@ Le fichier montre également l'utilisation de # pour spécifier des commentaires
  
 
 
-## Pratiquons, pratiquons
-
-
-Faire des exercices pour appliquer les fonctions apply
-
-
-
 # Application sur un second jeu de données (lézards)
 
 
 Le  lézard des murailles (\textit{Podarcis muralis}) est très commun en Europe. 
 Son dos est d'une ennuyeuse couleur brune, probablement pas très visible des prédateurs. Par contre, le ventre des mâles peut prendre des couleurs fabuleuses. Tous les lézards muraux n'ont pas la même couleur, certains sont oranges, d'autres blancs ou jaunes. Les chercheurs ont récemment proposé que ces couleurs ont une fonction dans la signalisation sociale. Le lézard pourrait garder ses «vraies couleurs» cachées, loin des regards indiscrets des prédateurs, et les montrer aux autres lézards au moment approprié. 
 
-La selection sexuelle est l'un des principaux processus inpliqués dans l'emergence et le maintien des polymorphismes avec des variations de couleurs dans de nombreux taxa. Si c'est le cas ici, on s'attend à ce que l'intensité de la sélection sexuelle dans les populations soit corrélée avec l'importance du polymorphisme dans les populations. 
+La selection sexuelle est l'un des principaux processus inpliqués dans l'émergence et le maintien des polymorphismes avec des variations de couleurs dans de nombreux taxa. Si c'est le cas ici, on s'attend à ce que l'intensité de la sélection sexuelle dans les populations soit corrélée avec l'importance du polymorphisme dans les populations. 
 
 
 
-Ici vous allez tester si l'intensité de la selection sexuelle, estimée à partir du sex ratio, prédit la diversité des morphes chez \textit{Podarcis muralis}.
+Ici vous allez tester si l'intensité de la sélection sexuelle, estimée à partir du sex ratio, prédit la diversité des morphes chez \textit{Podarcis muralis}.
 
 ![Podarcis muralis](data/image/morphs.jpg){ width=50% }
 
@@ -2934,7 +2943,7 @@ Ici vous allez tester si l'intensité de la selection sexuelle, estimée à part
 Chacune des lignes représente une population où des individus ont été capturés. Le nombre de mâles, de femelles ainsi que le nombre de morphes observés a été répertorié. La colonne "richness" correspond au nombre de morphes dans la population et la colonne "eveness" correspond à la « régularité » de la répartition du nombre d'individus entre les morphes.
 
 
-> Calculer le nombre de populations (colonne "poblacio" dans la table), le nombre total de femelles, le nombre total de mâles, le nombre total d'individus
+> Calculer le nombre de populations (colonne "poblacio" dans la table), le nombre total de femelles, le nombre total de mâles, le nombre total d'individus.
   
 ```{r, eval=FALSE} 
 # A vous de jouer (etc)
@@ -2949,9 +2958,9 @@ $$ Sex ratio = \frac{Nb_{male}}{Nb_{femelle}} $$
 
 > Restreindre votre jeu de données aux populations qui ont 50 lézards ou plus. Quelles populations passent le seuil ?
 
-> Représenter en fonction du nombre de morphes (colonne "richness") la distribution des sex ratio. Qu'est ce que vous observez ?
+> Représenter en fonction du nombre de morphes (colonne "richness") la distribution des sex ratio. Qu'est-ce que vous observez ?
 
-> Représenter la « régularité » de la répartition du nombre d'individus entre les morphes (eveness) en fonction du sex ratio. Ajouter sur le graphe une droite de tendance. Que pouvez vous conclure ?
+> Représenter la « régularité » de la répartition du nombre d'individus entre les morphes (eveness) en fonction du sex ratio. Ajouter sur le graphe une droite de tendance. Que pouvez-vous conclure ?
 
 > Importer maintenant le jeu de données contenu dans "data/appli2/lezard2.csv". Il contient les caractéristiques (populations, morph, sexe) de chaque individu. Calculer le nombre de morphe pour chacun des sexes par population.
 
@@ -2962,7 +2971,7 @@ $$ S = - \sum \limits_{i=1}^n p_i ln(p_i)$$ avec $n$ le nombre de morphes dans l
 
 > Faire une fonction pour calculer cet indice puis calculez-le pour chacune des populations.
 
-> Avez vous bien utilisé la famille apply, et la fonction "table"? Sinon, corrigez les lignes suivantes pour le faire
+> Avez vous bien utilisé la famille apply, et la fonction "table" ? Sinon, corrigez les lignes suivantes pour le faire :
 
 ```{r, eval=FALSE} 
 calc_shannon <- function(x) {
@@ -2982,7 +2991,7 @@ shannon_l = tapply(x, x, calc_shannon)
 
 
 
-# Application sur un troisième jeu de données (Les abeilles) et initiation à ggplot2
+# Application sur un troisième jeu de données (les abeilles) et initiation à ggplot2
 
 Nosema ceranae est un champignon microscopique, qui provoque une maladie répandue chez abeilles.
 Ce microchampignon n'existe hors des cellules de son hôte que sous la forme de spores métaboliquement inactives. Ces spores, infectieuses, permettent la transmission de maladies entre individus. 
@@ -2996,20 +3005,19 @@ Ils ont ensuite compté le nombre de spores chez les larves d'abeilles de 8 jour
 > Importer le jeu de données contenu dans "data/appli3/NosemaS1_Table.xls" et afficher les 5 premières lignes.
 
 
-Chacune des lignes représente une abeille étudiée. L'identifiant de la colonie, et le poids de l'abeille à l'émergence a été répertorié.
+Chacune des lignes représente une abeille étudiée. L'identifiant de la colonie, et le poids de l'abeille à l'émergence ont été répertoriés.
 
-> Calculer:
+> Calculer :
 
   * le nombre total d'abeilles
   * le nombre d'abeilles par type de traitement
-  * le poids moyen des abeilles, en mg par traitement (le stocker dans une nouvelle colonne de la table): avez vous l'impression qu'il soit différent?
+  * le poids moyen des abeilles, en mg par traitement (le stocker dans une nouvelle colonne de la table) : avez-vous l'impression qu'il soit différent ?
   
 > Représenter la distribution du poids en mg en fonction de la colonie.
 
 > Faire une fonction qui représente, pour une colonie donnée, la distribution du poids en fonction du traitement.
 
-
-> Démarrage de ggplot2 en douceur
+# Démarrage de ggplot2 en douceur...
 
 
 ```{r, eval=FALSE} 
@@ -3027,7 +3035,7 @@ Rajoutons désormais un objet géométrique, geom_point, qui va projeter, sur le
 p + geom_point()
 ```
 
-Divisons le graphique en projetant les points de chaque colonie dans une facette différente du graphique. Utiliser facet_grid
+Divisons le graphique en projetant les points de chaque colonie dans une facette différente du graphique. Utiliser facet_grid :
 
 
 ```{r, eval=FALSE} 
@@ -3042,7 +3050,7 @@ p + geom_point() +
   scale_x_continuous(breaks = c(0, 10000, 40000))
 ```
 
-Ensuite on peut aussi changer les étiquettes des axes, c'est nettement plus joli, non? Ha bon, tant pis.
+Ensuite on peut aussi changer les étiquettes des axes, c'est nettement plus joli, non ? Ha bon, tant pis.
 
 ```{r, eval=FALSE} 
 p + geom_point() +
@@ -3061,7 +3069,7 @@ p + geom_smooth(method = "loess", se = FALSE,
                 size = 1, color = "black")
 ```                
     
-Si on veut des axes in french    
+Si on veut des axes in french : 
                 
 ```{r, eval=FALSE} 
  p +
@@ -3071,7 +3079,7 @@ Si on veut des axes in french
 ```                
 
 
-Si on aime la sobriété des couleurs 
+Si on aime la sobriété des couleurs :
 
 ```{r, eval=FALSE} 
  ggplot(data = df1, aes(y = `Bee weight (g)`, x = `Treatment (# spores)`)) + geom_point(color = "grey50") +
@@ -3097,7 +3105,7 @@ labs(x= "Traitement (nb spores)",y = "Poids des abeilles (g)\n")
 ```   
 
 
-> Importer maintenant le jeu de données dans "NosemaS4_Table.xls" et afficher les 5 premières lignes (qui correspondent aux 5 premieres abeilles). La première colonne est le traitement, la seconde est la durée de vie de l'abeille.
+> Importer maintenant le jeu de données dans "NosemaS4_Table.xls" et afficher les 5 premières lignes (qui correspondent aux 5 premières abeilles). La première colonne est le traitement, la seconde est la durée de vie de l'abeille.
 
 Reproduire la Figure 3 de l'article Eiri et al. 
 
@@ -3107,10 +3115,10 @@ Reproduire la Figure 3 de l'article Eiri et al.
 Pour cela il est possible de procéder par étapes:
 
 * Fabriquer un vecteur qui contient les ages en jours de 1 à 40
-* Récupérer la sous-table qui contient les abeilles controles
-* Fabriquer une fonction qui compte, pour un age donné, la proportion d'abeilles qui ont survécu au moins jusqu'à cet age
-* Appliquer cette fonction à tous les ages
-* Faire un graphique qui montre les ages en fonction des pourcentages de survie pour les controles
+* Récupérer la sous-table qui contient les abeilles contrôles
+* Fabriquer une fonction qui compte, pour un âge donné, la proportion d'abeilles qui ont survécu au moins jusqu'à cet âge
+* Appliquer cette fonction à tous les âges
+* Faire un graphique qui montre les aâs en fonction des pourcentages de survie pour les contrôles
 * Ajouter sur le graphique les pourcentages de survie pour les 10K, et 40K.
 * Ajouter les légendes
 * Enregistrer votre figure au format pdf
@@ -3118,18 +3126,14 @@ Pour cela il est possible de procéder par étapes:
 
 # Où trouver de l'aide plus tard ?
 
-Lors de ce TP vous pouvez posez toutes les questions que vous voulez aux professeurs mais comment faire plus tard ?
+Lors de ce TP vous pouvez poser toutes les questions que vous voulez aux professeurs mais comment faire plus tard ?
 
 ## Aide en ligne
-**R** dispose d'une aide en ligne très complète, mais dont l'usage n'est pas forcément très simple. D'une
-part car elle est intégralement en anglais, d'autre part car son organisation prend un certain temps à être
-maîtrisée.
+**R** dispose d'une aide en ligne très complète, mais dont l'usage n'est pas forcément très simple. D'une part car elle est intégralement en anglais, d'autre part car son organisation prend un certain temps à être maîtrisée.
 
 ### Aide sur une fonction
 
-La fonction la plus utile est sans doute `help` (ou son équivalent `?`) qui permet d'afficher la page d'aide liée à une ou 
-plusieurs fonctions. Celle-ci permet de lister les arguments de la fonction, d'avoir des informations détaillées 
-sur son fonctionnement, les résultats qu'elle retourne, etc.
+La fonction la plus utile est sans doute `help` (ou son équivalent `?`) qui permet d'afficher la page d'aide liée à une ou plusieurs fonctions. Celle-ci permet de lister les arguments de la fonction, d'avoir des informations détaillées sur son fonctionnement, les résultats qu'elle retourne, etc.
 
 Pour accéder à l'aide de la fonction `mean`, par exemple, il vous suffit de saisir directement :
 
@@ -3145,16 +3149,13 @@ help("mean")
 
 ## Ressources sur le Web
 
-De nombreuses ressources existent en ligne, mais la plupart sont en anglais, il faudra donc formuler vos requête en anglais.
+De nombreuses ressources existent en ligne, mais la plupart sont en anglais, il faudra donc formuler vos requêtes en anglais.
 
 ### Moteur de recherche
 
-Le fait que le logiciel s'appelle **R** ne facilite malheureusement pas les recherches sur le Web... La
-solution à ce problème a été trouvée grâce à la constitution d'un moteur de recherche *ad hoc* à partir de
-**Google**, nommé **Rseek** : http://www.rseek.org/.
+Le fait que le logiciel s'appelle **R** ne facilite malheureusement pas les recherches sur le Web... La solution à ce problème a été trouvée grâce à la constitution d'un moteur de recherche *ad hoc* à partir de **Google**, nommé **Rseek** : http://www.rseek.org/.
 
-Les requêtes saisies dans **Rseek** sont exécutées dans des corpus prédéfinis liés à **R**, notamment les
-documents et manuels, les listes de discussion ou le code source du programme.
+Les requêtes saisies dans **Rseek** sont exécutées dans des corpus prédéfinis liés à **R**, notamment les documents et manuels, les listes de discussion ou le code source du programme.
 
 
 ### Antisèches (cheatsheet)
@@ -3162,7 +3163,7 @@ documents et manuels, les listes de discussion ou le code source du programme.
 On peut trouver un peu partout sur internet des antisèches (*cheatsheets* en anglais) qui sont 
 en général un fichier **PDF** résumant les principales fonctions d'une extension ou
 d'une problématique donnée. Ces antisèches peuvent être imprimées afin de les avoir facilement 
-à porter de main.
+à portée de main.
 
 Pour les trouver, il suffit d'effectuer une recherche **Google** avec les mots-clés
 `R cheatsheet` ou `<pkg> cheatsheet` en remplacant `<pkg>` par le nom du package qui
@@ -3173,9 +3174,7 @@ Certaines sont également disponibles directement dans **RStudio**, dans le menu
 
 ### Aide en ligne
 
-Le site **R documentation** propose un accès clair et rapide à la documentation de **R** et des extensions
-hébergées sur le **CRAN** (ainsi que certaines extensions hébergées sur **GitHub**). Il permet notamment de 
-rechercher et naviguer facilement entre les pages des différentes fonctions : www.rdocumentation.org.
+Le site **R documentation** propose un accès clair et rapide à la documentation de **R** et des extensions hébergées sur le **CRAN** (ainsi que certaines extensions hébergées sur **GitHub**). Il permet notamment de rechercher et naviguer facilement entre les pages des différentes fonctions : www.rdocumentation.org.
 
 ### Ressources officielles
 
@@ -3225,8 +3224,7 @@ Et enfin, une liste de ressources francophones : <https://github.com/frrrenchies
 
 ### Ressources francophones
 
-Il existe des ressources en français sur l'utilisation de **R**, mais peu sont réellement destinées aux
-débutants, elles nécessitent en général des bases à la fois en informatique et en statistique.
+Il existe des ressources en français sur l'utilisation de **R**, mais peu sont réellement destinées aux débutants, elles nécessitent en général des bases à la fois en informatique et en statistique.
 
 Le document le plus abordable et le plus complet est sans doute *R pour les débutants*, d'Emmanuel
 Paradis, accessible au format **PDF** :<br /><http://cran.r-project.org/doc/contrib/Paradis-rdebuts_fr.pdf>.
