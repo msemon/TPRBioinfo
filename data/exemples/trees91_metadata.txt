@@ -1,0 +1,63 @@
+______________________________________________________
+           Variable            sheet  
+Variable   type        Units   column    Definition
+______________________________________________________
+                       
+C          character             A     CO2 treatment
+                                       level
+N          character             B     N treatment 
+                                       level
+CHBR       character             C     Open-top 
+                                       chamber
+                                       identification
+                                       label
+REP        character             D     Seedling 
+                                       replicate
+                                       identification
+                                       label
+LFBM       numeric      g        E     Leaf biomass
+STBM       numeric      g        F     Stem biomass
+RTBM       numeric      g        G     Root biomass
+LFNCC      numeric      %        H     Leaf N
+                                       concentration
+STNCC      numeric      %        I     Stem N 
+                                       concentration
+RTNCC      numeric      %        J     Root N
+                                       concentration
+LFBCC      numeric      ppm      K     Leaf B 
+                                       concentration
+STBCC      numeric      ppm      L     Stem B
+                                       concentration
+RTBCC      numeric      ppm      M     Root B
+                                       concentration
+LFCACC     numeric      %        N     Leaf Ca
+                                       concentration
+STCACC     numeric      %        O     Stem Ca 
+                                       concentration
+RTCACC     numeric      %        P     Root Ca 
+                                       concentration
+LFKCC      numeric      %        Q     Leaf K 
+                                       concentration
+STKCC      numeric      %        R     Stem K 
+                                       concentration
+RTKCC      numeric      %        S     Root K 
+                                       concentration
+LFMGCC     numeric      %        T     Leaf Mg 
+                                       concentration
+STMGCC     numeric      %        U     Stem Mg 
+                                       concentration
+RTMGCC     numeric      %        V     Root Mg 
+                                       concentration
+LFPCC      numeric      %        W     Leaf P 
+                                       concentration
+STPCC      numeric      %        X     Stem P 
+                                       concentration
+RTPCC      numeric      %        Y     Root P 
+                                       concentration
+LFSCC      numeric      %        Z     Leaf S 
+                                       concentration
+STSCC      numeric      %        AA    Stem S 
+                                       concentration
+RTSCC      numeric      %        AB    Root S
+                                       concentration
+_____________________________________________________________________________________
