@@ -644,12 +644,13 @@ c&lt;-heisenberg$velocity</code></pre></div>
 <div id="installation" class="section level3">
 <h3><span class="header-section-number">4.4.2</span> Installation</h3>
 <p>L’installation d’une extension se fait par la fonction <code>install.packages</code>, à laquelle on fournit le nom de l’extension. Par exemple, si on souhaite installer l’extension <strong>readr</strong> :</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">&quot;readr&quot;</span>, <span class="dt">dep=</span><span class="ot">TRUE</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">&quot;readr&quot;</span>, <span class="dt">dep=</span><span class="ot">TRUE</span>, <span class="dt">repos=</span><span class="st">&quot;http://cran.rstudio.com/&quot;</span>)</code></pre></div>
 <pre><code>## Installing package into '/home/crey02/R/x86_64-pc-linux-gnu-library/3.4'
 ## (as 'lib' is unspecified)</code></pre>
-<pre><code>## Warning in install.packages(&quot;readr&quot;, dep = TRUE): installation of package
-## 'readr' had non-zero exit status</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">&quot;questionr&quot;</span>, <span class="dt">dep=</span><span class="ot">TRUE</span>)</code></pre></div>
+<pre><code>## Warning in install.packages(&quot;readr&quot;, dep = TRUE, repos = &quot;http://
+## cran.rstudio.com/&quot;): installation of package 'readr' had non-zero exit
+## status</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">&quot;questionr&quot;</span>, <span class="dt">dep=</span><span class="ot">TRUE</span>, <span class="dt">repos=</span><span class="st">&quot;http://cran.rstudio.com/&quot;</span>)</code></pre></div>
 <pre><code>## Installing package into '/home/crey02/R/x86_64-pc-linux-gnu-library/3.4'
 ## (as 'lib' is unspecified)</code></pre>
 <p>L’option <code>dep=TRUE</code> indique à <strong>R</strong> de télécharger et d’installer également toutes les extensions dont le fonctionnement de l’extension choisie dépend.</p>

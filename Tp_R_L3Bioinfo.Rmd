@@ -469,8 +469,8 @@ L'installation d'une extension se fait par la fonction `install.packages`,
 à laquelle on fournit le nom de l'extension. Par exemple, si on souhaite installer l'extension **readr** :
 
 ```{r}
-install.packages("readr", dep=TRUE)
-install.packages("questionr", dep=TRUE)
+install.packages("readr", dep=TRUE, repos="http://cran.rstudio.com/")
+install.packages("questionr", dep=TRUE, repos="http://cran.rstudio.com/")
 ```
 
 L'option `dep=TRUE` indique à **R** de télécharger et d'installer également toutes les extensions dont le fonctionnement de l'extension choisie dépend.
