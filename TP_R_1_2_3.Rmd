@@ -1856,43 +1856,43 @@ NB Certains exercices (notés avec un *) nécessitent l'utilisation de fonctions
 > Créez un vecteur contenant les chiffres 1 à 6. Affichez la classe de ce vecteur.
 
 ```{r}
-
+#
 ```
 
 > Créez un vecteur contenant les noms de quelques uns de vos camarades. Affichez la longueur de ce vecteur. Affichez les 2 premiers camarades du vecteur. Affichez le 2ème et le 3ème. Classez le vecteur par ordre alphabétique, puis par ordre alphabétique décroissant.
 
 ```{r}
-
+#
 ```
 
 > En utilisant les fonctions rep() et seq(), créez le vecteur 'a','a',1,2,3,4,5,7,9,11.
 
 ```{r}
-
+#
 ```
 
 > Supprimez les valeurs manquantes du vecteur c(1,2,NA,4).
 
 ```{r}
-
+#
 ```
 
 > * Créez un vecteur de 50 valeurs choisies aléatoirement et avec remise entre 1 et 100.
 
 ```{r}
-
+#
 ```
 
 > * Calculez la somme cumulative des valeurs du vecteur précédent.
 
 ```{r}
-
+#
 ```
 
 > * Créez la chaîne de caractère 'Les chaussettes de l'archiduchesse sont elles seches ou archi-seches'. Séparez-la en différentes sous-chaînes délimitées par le caractère 'e'. Lisez distinctement le résultat à votre voisin.
 
 ```{r}
-
+#
 ```
 
 
@@ -1901,43 +1901,43 @@ NB Certains exercices (notés avec un *) nécessitent l'utilisation de fonctions
 > Nous allons ici utiliser un jeu de données disponible sur R, 'iris'. Affichez la classe de ce jeu de données. Affichez le résumé du tableau de données. Affichez les 6 premières lignes du tableau. Affichez le tableau dans Rstudio. Affichez les noms des lignes, puis les noms des colonnes. Affichez le nombre de lignes et de colonnes.
 
 ```{r}
-
+#
 ```
 
 > Affichez la 8ème ligne du tableau, puis la valeur de la 12ème ligne et 3ème colonne.
 
 ```{r}
-
+#
 ```
 
 > Affichez les longeurs des pétales pour les lignes 10 à 15.
 
 ```{r}
-
+#
 ```
 
 > Affichez les longeur et largeur des sépales pour la ligne 38.
 
 ```{r}
-
+#
 ```
 
 > Affichez les numéros de ligne pour lesquelles la largeur des pétales est supérieure à 1.8.
 
 ```{r}
-
+#
 ```
 
 > Affichez les espèces pour lesquelles la longueur des sépales est supérieure à 5 et inférieure à 6.
 
 ```{r}
-
+#
 ```
 
 > Créez une table de contingence des largeurs de sépales et espèces.
 
 ```{r}
-
+#
 ```
 
 # Graphiques de base
