@@ -2,7 +2,7 @@
 title: "Tutoriel d'initiation à R"
 author: "Carine Rey, Magali Naville & Marie Sémon"
 
-date: "Dernière mise à jour: 13 mars 2019" 
+date: "Dernière mise à jour: 24 avril 2019" 
 output:
   #pdf_document:
   #  toc: true
@@ -477,7 +477,7 @@ L'installation d'une extension se fait par la fonction `install.packages`,
 
 
 ```r
-install.packages("readr", dep=TRUE)
+install.packages("readr", dep=TRUE, repos="http://cran.rstudio.com/")
 ```
 
 ```
@@ -486,12 +486,13 @@ install.packages("readr", dep=TRUE)
 ```
 
 ```
-## Warning in install.packages("readr", dep = TRUE): installation of package
-## 'readr' had non-zero exit status
+## Warning in install.packages("readr", dep = TRUE, repos = "http://
+## cran.rstudio.com/"): installation of package 'readr' had non-zero exit
+## status
 ```
 
 ```r
-install.packages("questionr", dep=TRUE)
+install.packages("questionr", dep=TRUE, repos="http://cran.rstudio.com/")
 ```
 
 ```
@@ -2299,7 +2300,7 @@ l’existence et étudié les comportements de fellation chez les chauves-souris
 pendant l’accouplement ;
 * time copulation mesure le temps total, en secondes, qu’a duré l’accouplement, léchage inclus.
 
-> Récupérer le jeu de données sur le portail des études (chauves-souris-fellatio-data.txt) et l'importer.
+> Récupérer le jeu de données sur le portail des études ('data/appli1/chauves_souris_data.txt') et l'importer.
 
 
 ```r
