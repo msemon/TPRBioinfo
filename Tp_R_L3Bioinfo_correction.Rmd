@@ -525,8 +525,6 @@ as.data.frame.matrix(t)
 hist(iris$Petal.Width,main='Titre',xlab='Petal.Width')
 stripchart(iris$Petal.Width,add=TRUE,at=-0.5)
 ``` 
-``` 
-
 
 ## Boxplots 
 
@@ -548,69 +546,143 @@ pendant l’accouplement ;
 > Récupérer le jeu de données sur le portail des études (chauves-souris-fellatio-data.txt) et l'importer.
 
 ```{r}
-## Ici il faut faire quelque chose !! 
+chauvesouris=read.csv(file='data/appli1/chauves_souris_data.txt',head=T, sep=" ")
 ```
 
 
 > Quelle commande permet d’obtenir l’affichage des 7 premières lignes du jeu de données ?
 
 ```{r}
-## Ici aussi (etc)
+head(chauvesouris,7)
+chauvesouris[1:7,]
 ```
 
 > Quelle commande permet d’obtenir le nombre de lignes et de colonnes de votre table ?
 
 ```{r}
-## Ici aussi (etc)
+dim(chauvesouris)
+ncol(chauvesouris)
+nrow(chauvesouris)
 ```
 
 > Quelle commande permet d’obtenir le nom des colonnes de votre table ?
 
+```{r}
+colnames(chauvesouris)
+#pour les lignes
+rownames(chauvesouris)
+```
+
+
 > Quelle commande permet d’obtenir la moyenne des temps de copulation pour toutes les données ?
+
+```{r}
+mean(chauvesouris$time_copulation)
+mean(chauvesouris$time_copulation, na.rm = T)
+```
 
 > Quelles commandes permettent de créer deux nouveaux tableaux, un pour chaque comportement ?
 
+```{r}
+lick1<- chauvesouris[chauvesouris$licking != 0,]
+lick0<- chauvesouris[chauvesouris$licking != 1,]
+head(lick1)
+
+lick1<- chauvesouris[which(chauvesouris$licking != 0),]
+lick0<- chauvesouris[which(chauvesouris$licking != 1),]
+head(lick1)
+
+lick1 <- subset(chauvesouris, licking == 1)
+lick0 <- subset(chauvesouris, licking == 0)
+head(lick1)
+```
+
+
 > Quelle commande permet de selectionner les lignes telles que le temps de copulation soit supérieur à 100 ?
+
+```{r}
+subset(chauvesouris, time_copulation>100)
+chauvesouris[chauvesouris$time_copulation>100,]
+chauvesouris[which(chauvesouris$time_copulation>100),]
+```
 
 > Quelle commande permet de selectionner les lignes telles que le temps de copulation soit supérieur à 200 et le temps de léchage inférieur ou égal à 20 ?
 
+```{r}
+subset(chauvesouris, time_copulation>200 & time_licking<=20)
+chauvesouris[chauvesouris$time_copulation>200 & chauvesouris$time_licking<=20,]
+chauvesouris[which(chauvesouris$time_copulation>200 & chauvesouris$time_licking<=20),]
+```
+
 > Quelle commande permet de récupérer le temps de copulation dans le cas où le temps de léchage est supérieur à 20 ?
+
+```{r}
+chauvesouris$time_copulation[chauvesouris$time_licking>20]
+```
 
 > Quelle commande permet d’obtenir la moyenne des temps de copulation par comportement ?
 
+```{r}
+tapply(chauvesouris$time_copulation, chauvesouris$licking, mean)
+```
+
 > Donner deux commandes permettant de savoir dans combien de cas le comportement de léchage a été observé.
+
+```{r}
+table (chauvesouris$licking)
+tapply(chauvesouris$licking,chauvesouris$licking,length)
+```
 
 Dans l’étude, les chercheurs ont commencé par regarder s’il existait une relation entre le temps de léchage et le temps de copulation total.
 
 > Donner la commande permettant de tracer ce graphique, sans oublier les légendes.
 
+```{r}
+plot(chauvesouris$time_licking,chauvesouris$time_copulation, xlab="Time licking", ylab="Time copulation")
+```
+
 > Rajouter une droite de régression sur ce graphique.
+
+```{r}
+
+# ATTENTION lm(y~x) et plot(x,y)
+
+reg=lm(chauvesouris$time_licking~chauvesouris$time_copulation)
+reg
+
+plot(x=chauvesouris$time_copulation, y=chauvesouris$time_licking, xlab="Time licking", ylab="Time copulation")
+abline(reg, col='red' )
+```
+
 
 Le coefficient de corrélation entre le temps de léchage et le temps de copulation (calculé sur l’ensemble des données) vaut R = 0.86, et un test statistique montre que cette valeur est significativement différente de 0.
 
 > Recalculer la valeur du coefficient de corrélation et refaire le test. Pourquoi les chercheurs ne peuvent-ils pas en déduire que le phénomène de léchage est la cause d’un temps de copulation plus long ? (Réponse simple attendue)
 
+```{r}
+cor(chauvesouris$time_licking, chauvesouris$time_copulation)
+cor.test(chauvesouris$time_licking,chauvesouris$time_copulation)
+
+## Corrélation != Causalité
+```
+
 > Quel graphe feriez-vous pour illustrer la différence des temps de copulation entre les couples où l’on observe le phénomène de léchage et les couples où on ne l’observe pas ? Donner la (ou les) commande(s) correspondante(s).
 
-Article original: http://www.plosone.org/article/info%3Adoi%2F10.1371%2Fjournal.pone.0007595
-Vidéo : http://sciences.blog.lemonde.fr/2009/11/04/la-vie-sexuelle-agitee-des-chauves-souris/
-
-PS: l’IgNobel de 2013 était peut-être plus poétique : "Dung beetles use the milky way for orientation"
-(http://www.sciencedirect.com/science/article/pii/S0960982212015072).
-
+```{r}
+boxplot(chauvesouris$time_copulation~chauvesouris$licking, xlab = "Licking")
+```
 
 
 # Graphiques intermédiaires
 
-Cette section est divisée en trois sections. L'objectif de la première section est de représenter graphiquement des données continues. L'objectif de la deuxième section est de représenter graphiquement des données discrètes. La troisième section offre quelques options diverses utiles dans divers contextes.
+
 
 ## Données continues
 
-Dans les exemples ci-dessous, un ensemble de données est défini en utilisant le générateur de nombres aléatoires normalement distribués de R.
 
 ```{r}
 x <- rnorm(100,sd=5,mean=20)
-y <- 2.5*x-1.0+rnorm(10,sd=9,mean=0)
+y <- 2.5*x-1.0+rnorm(100,sd=9,mean=0) # ERREUR ENONCE 10 -> 100
 plot(x,y)
 cor(x,y)
 ```
@@ -618,217 +690,43 @@ cor(x,y)
 
 ### Plusieurs jeux de données sur un graphique
 
-Une tâche courante consiste à tracer plusieurs ensembles de données sur le même graphique. Dans de nombreuses situations, la méthode consiste à créer le plot initial, puis à ajouter des informations supplémentaires. Par exemple, pour tracer des données bivariées, la commande "plot" est utilisée pour initialiser et créer le tracé. La commande "points" peut ensuite être utilisée pour ajouter des données supplémentaires au tracé.
-
-Définissez d'abord un ensemble de nombres aléatoires, puis tracez-les (ce même jeu de données est utilisé dans tous les exemples ci-dessous).
 
 ```{r}
 x <- rnorm(50,sd=5,mean=20)
-y <- 2.5*x - 1.0 + rnorm(10,sd=9,mean=0)
+y <- 2.5*x - 1.0 + rnorm(10,sd=9,mean=0) # ERREUR ENONCE 10 -> 50
 
 plot(x,y,xlab="Independent",ylab="Dependent",main="Random Stuff")
 x1 <- runif(25,15,25)
-y1 <- 2.5*x1 - 1.0 + runif(8,-6,6)
+y1 <- 2.5*x1 - 1.0 + runif(8,-6,6) # ERREUR ENONCE 8 -> 25
 points(x1,y1,col=2)
 ```
 
-Notez que dans l'exemple précédent, la couleur du second ensemble de points de données est définie à l'aide de l'option "col". Vous pouvez essayer différents nombres pour voir quelles couleurs sont disponibles. Notez également que dans l'exemple ci-dessus, les points sont représentés par des cercles. Le symbole utilisé peut être changé en utilisant l'option "pch".
-
-```{r}
-x2 <- runif(8,15,25)
-y2 <- 2.5*x2 - 1.0 + runif(8,-6,6)
-plot(x,y,xlab="Independent",ylab="Dependent",main="Random Stuff")
-points(x2,y2,col=3,pch=2)
-```
-
-Une autre option utile consiste à ajouter une légende. Cela peut être fait avec la commande "legend". Les options de la commande, dans l'ordre, sont les coordonnées x et y sur le tracé pour placer la légende, suivies d'une liste d'étiquettes à utiliser. Il existe un grand nombre d'autres options ; utilisez "help(legend)" pour les voir. Par exemple, une liste de couleurs peut être donnée avec l'option "col", et une liste de symboles peut être donnée avec l'option "pch".
-
-```{r}
-plot(x,y,xlab="Independent",ylab="Dependent",main="Random Stuff")
-points(x1,y1,col=2,pch=3)
-points(x2,y2,col=4,pch=5)
-legend(14,70,c("Original","one","two"),col=c(1,2,4),pch=c(1,3,5))
-```
 
 ### Barres d'erreur 
 
-Une autre tâche courante consiste à ajouter des barres d'erreur à un ensemble de points de données. Cela peut être accompli en utilisant la commande "arrows". La commande arrows prend deux paires de coordonnées, c'est-à-dire deux paires de valeurs x et y. La commande dessine ensuite une ligne entre chaque paire et ajoute une "tête de flèche" avec une longueur et un angle donnés. 
-
-```{r}
-plot(x,y,xlab="Independent",ylab="Dependent",main="Random Stuff")
-xHigh <- x
-yHigh <- y + abs(rnorm(10,sd=3.5))
-xLow <- x
-yLow <- y - abs(rnorm(10,sd=3.1))
-arrows(xHigh,yHigh,xLow,yLow,col=2,angle=90,length=0.1,code=3)
-```
-
-
-Notez que le code d'option est utilisé pour spécifier où les barres sont dessinées. Sa valeur peut être 1, 2 ou 3. 
 
 ### Plusieurs graphiques sur une image
-
-Les graphiques sont disposés dans un tableau où le nombre par défaut de lignes et de colonnes est un (un graphique par page par défaut). Le paramètre "mfrow" est un vecteur avec deux entrées. La première entrée est le nombre de lignes d'images. La deuxième entrée est le nombre de colonnes. Dans l'exemple ci-dessous, les graphiques ont été disposées en 2 lignes avec 3 graphiques par ligne.
-
-```{r}
-par(mfrow=c(2,3))
-numberWhite <- rhyper(400,4,5,3)
-numberChipped <- rhyper(400,2,7,3)
-boxplot(numberWhite,main="first plot")
-boxplot(numberChipped,main="second plot")
-plot(jitter(numberWhite),jitter(numberChipped),xlab="Number White Marbles Drawn",
-       ylab="Number Chipped Marbles Drawn",main="Pulling Marbles With Jitter")
-hist(numberWhite,main="fourth plot")
-hist(numberChipped,main="fifth plot")
-mosaicplot(table(numberWhite,numberChipped),main="sixth plot")
-```
-
 
 
 ### Tracés de densité
 
-Il y a des moments où vous ne voulez pas tracer des points spécifiques mais souhaitez tracer une densité. Cela peut être fait en utilisant la commande "smoothScatter".
-
-```{r}
-numberWhite <- rhyper(50,4,5,3)
-numberChipped <- rhyper(50,2,7,3)
-smoothScatter(numberWhite,numberChipped,
-             xlab="White Marbles",ylab="Chipped Marbles",main="Drawing Marbles")
-```
-
-
 ### Colorier des régions
-
-Une région ombrée peut être tracée en utilisant la commande "polygone". La commande polygone prend une paire de vecteurs, x et y , et ombre la région délimitée par les paires de coordonnées. Dans l'exemple ci-dessous, un carré bleu est dessiné. Les sommets sont définis à partir de la partie inférieure gauche. Cinq paires de points sont données car le point de départ et le point final sont les mêmes.
-
-```{r}
-x = c(-1,1,1,-1,-1)
-y = c(-1,-1,1,1,-1)
-plot(x,y)
-polygon(x,y,col='blue')
-```
-
-Un exemple plus compliqué est donné ci-dessous. Dans cet exemple, la région de rejet pour un test d'hypothèse du côté droit est tracée, et elle est ombrée en rouge. 
-
-```{r}
-stdDev <- 0.75;
-x <- seq(-5,5,by=0.01)
-y <- dnorm(x,sd=stdDev)
-right <- qnorm(0.95,sd=stdDev)
-plot(x,y,type="l",xaxt="n",ylab="p",
-       xlab=expression(paste('Assumed Distribution of ',bar(x))),
-       axes=FALSE,ylim=c(0,max(y)*1.05),xlim=c(min(x),max(x)),
-       frame.plot=FALSE)
-axis(1,at=c(-5,right,0,5),
-       pos = c(0,0),
-       labels=c(expression(' '),expression(bar(x)[cr]),expression(mu[0]),expression(' ')))
-axis(2)
-xReject <- seq(right,5,by=0.01)
-yReject <- dnorm(xReject,sd=stdDev)
-polygon(c(xReject,xReject[length(xReject)],xReject[1]),
-          c(yReject,0, 0), col='red')
-```
-
-
-Les axes sont dessinés séparément. Ceci est fait en supprimant d'abord le tracé des axes dans la commande plot , et l'axe horizontal est dessiné séparément. Notez également que la commande "expression" est utilisée pour tracer un caractère grec et également produire des indices.
 
 
 ## Données discrètes
 
-Dans les exemples ci-dessous, un ensemble de données est défini à l'aide du générateur de nombres aléatoires hypergéométriques de R.
-
-```{r}
-numberWhite <- rhyper ( 30 , 4 , 5 , 3 )
-numberChipped <- rhyper ( 30 , 2 , 7 , 3 )
-```
-
 ### Barplot
-
-La commande plot tentera de produire les graphiques appropriés en fonction du type de données. Les données définies ci-dessus, cependant, sont des données numériques. La commande "as.factor" est utilisée pour convertir les données en facteurs et garantit que R les traite comme des données discrètes.
-
-```{r}
-numberWhite <- rhyper(100,4,5,3)
-numberWhite <- as.factor(numberWhite)
-plot(numberWhite)
-```
-
-Dans ce cas, R produira un barplot. La commande "barplot" peut également être utilisée pour créer un barplot. La commande "barplot" nécessite cependant un vecteur de hauteurs, et vous ne pouvez pas simplement lui donner les données brutes. Ces valeurs peuvent être facilement calculées à l'aide de la commande "table".
-
-
-```{r}
-numberWhite <- rhyper(100,4,5,3)
-totals <- table(numberWhite)
-totals
-barplot(totals,main="Number Draws",ylab="Frequency",xlab="Draws")
-```
-
-
-Dans l'exemple précédent, la commande "barplot" est utilisée pour définir le titre du tracé et les libellés des axes. Les étiquettes sur les graduations pour l'axe horizontal sont générées automatiquement à l'aide des étiquettes de la table. Vous pouvez modifier les étiquettes en définissant les noms de ligne de la table.
-
-```{r}
-numberWhite <- rhyper(100,4,5,3)
-totals <- table(numberWhite)
-print(totals)
-rownames(totals) <- c("none","one","two","three")
-barplot(totals,main="Number Draws",ylab="Frequency",xlab="Draws")
-```
-
-L'ordre des fréquences est le même que celui de la table. Si vous modifiez l'ordre dans le tableau, cela changera la façon dont il apparaît dans le graphique à barres. Par exemple, si vous souhaitez organiser les fréquences dans l'ordre décroissant, vous pouvez utiliser la commande de tri avec l'option décroissante.
-
-```{r}
-barplot(sort(totals,decreasing=TRUE),main="Number Draws",ylab="Frequency",xlab="Draws")
-```
-
-Les fonctions d'indexation de R peuvent être utilisées pour changer l'ordre des fréquences manuellement.
-
-```{r}
-totals
-sort(totals,decreasing=TRUE)
-numberWhite
-totals[c(3,1,4,2)]
-numberWhite
-barplot(totals[c(3,1,4,2)])
-```
 
 
 ## Sauvegarder un graphique dans un fichier
-
-Il existe plusieurs façons d'enregister un graphique dans un fichier. 
-Dans l'exemple ci-dessous, la fenêtre en cours est imprimée dans un fichier png appelé "hist.png" d'une largeur de 200 pixels.
-
-```{r,eval=FALSE}
-x = rnorm(100)
-hist(x)
-dev.print(device=png,width=200,"hist.png")
-```
-
-
-Une autre façon de sauvegarder un graphique dans un fichier consiste à créer un périphérique. Une fois le périphérique créé, les différentes commandes de traçage sont données, puis le périphérique est désactivé pour écrire dans le fichier.
-
-```{r}
-png(file="hist.png")
-hist(x)
-rug(x,side=1)
-dev.off()
-```
-
-
-Si vous voulez sauvegarder et ranger votre figure dans un dossier, par exemple `figures`, il faut juste ajouter le nom du dossier (déjà existant) au nom du fichier:
-
-```{r, eval=F}
-png(file="figures/hist.png")
-hist(x)
-rug(x,side=1)
-dev.off()
-```
-
 
 ## Pratiquons, pratiquons
 
 > Importer à nouveau le jeu de données `tree` dans "data/exemples/trees91.csv"
 
-```{r, eval=F}
-tree = 
+```{r}
+tree = read.csv(file="data/exemples/trees91.csv",sep=",",head=TRUE)
+head(tree)
 ```
 
 Pour rappel, les données contiennent des estimations de la biomasse de pin ponderosa dans une étude réalisée par Dale W. Johnson, J. Timothy Ball et Roger F. Walker (Université du Nevada). La table contient 54 lignes, et chaque ligne représente une observation. Chaque observation comprend des mesures et des marqueurs pour 28 mesures différentes d'un arbre donné.

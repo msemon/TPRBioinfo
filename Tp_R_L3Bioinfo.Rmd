@@ -2118,7 +2118,7 @@ l’existence et étudié les comportements de fellation chez les chauves-souris
 pendant l’accouplement ;
 * time copulation mesure le temps total, en secondes, qu’a duré l’accouplement, léchage inclus.
 
-> Récupérer le jeu de données sur le portail des études (chauves-souris-fellatio-data.txt) et l'importer.
+> Récupérer le jeu de données sur le portail des études ('data/appli1/chauves_souris_data.txt') et l'importer.
 
 ```{r}
 ## Ici il faut faire quelque chose !! 
@@ -2183,7 +2183,7 @@ Dans les exemples ci-dessous, un ensemble de données est défini en utilisant l
 
 ```{r}
 x <- rnorm(100,sd=5,mean=20)
-y <- 2.5*x-1.0+rnorm(10,sd=9,mean=0)
+y <- 2.5*x-1.0+rnorm(100,sd=9,mean=0)
 plot(x,y)
 cor(x,y)
 ```
@@ -2197,11 +2197,11 @@ Définissez d'abord un ensemble de nombres aléatoires, puis tracez-les (ce mêm
 
 ```{r}
 x <- rnorm(50,sd=5,mean=20)
-y <- 2.5*x - 1.0 + rnorm(10,sd=9,mean=0)
+y <- 2.5*x - 1.0 + rnorm(50,sd=9,mean=0)
 
 plot(x,y,xlab="Independent",ylab="Dependent",main="Random Stuff")
 x1 <- runif(25,15,25)
-y1 <- 2.5*x1 - 1.0 + runif(8,-6,6)
+y1 <- 2.5*x1 - 1.0 + runif(25,-6,6)
 points(x1,y1,col=2)
 ```
 
