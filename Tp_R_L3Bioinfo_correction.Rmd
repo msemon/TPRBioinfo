@@ -23,7 +23,7 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE,  cache = T)
+knitr::opts_chunk$set(echo = TRUE,  cache = F, tidy = T)
 ```
 
 Le but de ces séances est d’apprendre à utiliser R dans des cas concrets, à produire un rapport reproductible, et à représenter des données avec R de manière optimale. Vous aborderez également l’analyse de données.
@@ -86,24 +86,6 @@ A la fin de ces 3 séances de TP, vous devrez être capable de maîtriser tous l
 #  Rstudio et le RMarkdown
 
 # C'est parti !
-
-Pour continuer le TP, vous allez avoir besoin de télécharger ce document afin de le compléter :
-
-https://github.com/msemon/TPRBioinfo/archive/master.zip
-
-Ce dossier contient:
-
- * un fichier `Tp_R_L3Bioinfo.Rmd`, document que l'on pourra appeler fichier maitre ;
- * un dossier `data` qui contient tous les fichiers utilisés par ce fichier maitre.
-
-Vous pouvez ouvrir le fichier `Tp_R_L3Bioinfo.Rmd` dans Rstudio, retrouver ce paragraphe et commencer les choses sérieuses !
-
-Vérifier que le fichier compile bien (en appuyant sur le bouton `Knit`) ; si ce n'est pas le cas, appeler un professeur.
-
-A chaque fois que vous ferez une modification (ou quelques unes), nous vous conseillons de compiler pour être sûr que tout fonctionne. 
-
-> C'est vraiment parti cette fois ci, vous allez faire du R ! Continuez de lire ce document pas à pas, n'hésitez pas à exécuter le code, modifiez-le pour être sûr d'avoir bien compris, prenez le temps de faire les exercices. Si vous avez des questions ou que vous bloquez, n'hésitez pas à appeler un professeur.
-
 
 # Importer des données
 
@@ -532,17 +514,6 @@ stripchart(iris$Petal.Width,add=TRUE,at=-0.5)
 
 # Application sur un premier vrai jeu de données (les chauves-souris)
 
-Le prix Ig Nobel est attribué chaque année dans différentes disciplines ; il est dédié aux chercheurs dont les recherches "font rire, puis font réfléchir" (http://www.improbable.com/ig/winners/). Toutes les études récompensées sont méthodologiquement correctes, même si leur sujet laisse parfois sourire.
-
-Le prix Ig Nobel de biologie a été attribué en 2010 à Libiao Zhang, Min Tan, Guangjian Zhu, Jian-
-ping Ye, Tiyu Hong, Shanyi Zhou, Shuyi Zhang (Chine) et Gareth Jones (Royaume-Uni), qui ont montré
-l’existence et étudié les comportements de fellation chez les chauves-souris de l’espèce C. sphinx. Ils ont filmé des chauves-souris de nuit et ont pu mettre en évidence ce comportement sexuel connu jusqu’alors uniquement chez les primates (bonobos, orang-outan et homme) : les femelles de cette chauve-souris, pendant l’accouplement, peuvent se positionner de manière à lécher la base du sexe du mâle. Le jeu de données analysé porte sur les temps relatifs de copulation et de fellation. Chaque ligne représente un accouplement, pour lequel 3 variables ont été mesurées :
-
-* licking vaut 1 si le comportement de léchage a été observé, 0 dans le cas contraire ;
-* time licking mesure le temps, en secondes, durant lequel le comportement de léchage est observé
-pendant l’accouplement ;
-* time copulation mesure le temps total, en secondes, qu’a duré l’accouplement, léchage inclus.
-
 > Récupérer le jeu de données sur le portail des études (chauves-souris-fellatio-data.txt) et l'importer.
 
 ```{r}
@@ -596,7 +567,6 @@ lick1 <- subset(chauvesouris, licking == 1)
 lick0 <- subset(chauvesouris, licking == 0)
 head(lick1)
 ```
-
 
 > Quelle commande permet de selectionner les lignes telles que le temps de copulation soit supérieur à 100 ?
 
@@ -676,7 +646,6 @@ boxplot(chauvesouris$time_copulation~chauvesouris$licking, xlab = "Licking")
 # Graphiques intermédiaires
 
 
-
 ## Données continues
 
 
@@ -700,7 +669,6 @@ x1 <- runif(25,15,25)
 y1 <- 2.5*x1 - 1.0 + runif(8,-6,6) # ERREUR ENONCE 8 -> 25
 points(x1,y1,col=2)
 ```
-
 
 ### Barres d'erreur 
 
@@ -729,29 +697,54 @@ tree = read.csv(file="data/exemples/trees91.csv",sep=",",head=TRUE)
 head(tree)
 ```
 
-Pour rappel, les données contiennent des estimations de la biomasse de pin ponderosa dans une étude réalisée par Dale W. Johnson, J. Timothy Ball et Roger F. Walker (Université du Nevada). La table contient 54 lignes, et chaque ligne représente une observation. Chaque observation comprend des mesures et des marqueurs pour 28 mesures différentes d'un arbre donné.
-
-Une description du fichier de données se trouve à http://cdiac.ornl.gov/ftp/ndp061a/ndp061a.txt (ou dans data/exemples/trees91_metadata.txt)
-
-Par exemple, le premier chiffre de chaque rangée est un nombre, 1, 2, 3 ou 4, qui indique un niveau différent d'exposition au dioxyde de carbone. Le sixième nombre dans chaque rangée est une estimation de la biomasse des tiges de l'arbre. Notez que la toute première ligne du fichier est une liste d'étiquettes utilisées pour désigner les différentes colonnes de données.
-
 > Sur un même graphique représenter la biomasse des tiges de l'arbre (6e colonne) en fonction de la concentration en Nitrate (N) (9e colonne) dans les tiges en colorant de manière différente les points en fonction de l'exposition au dioxyde de carbone (1e colonne). Ajouter la légende.
 
+Proposition 1 : 
+
 ```{r}
-#
+plot(tree[,9][tree$C==1],tree[,6][tree$C==1], xlab="Concentration en Nitrate", ylab="Biomasse des tiges de l'arbre", xlim=c(min(tree[,9]),max(tree[,9])), ylim=c(min(tree[,6]),max(tree[,6])), col=1)
+points(tree[,9][tree$C==2],tree[,6][tree$C==2],col=2)
+points(tree[,9][tree$C==3],tree[,6][tree$C==3],col=3)
+points(tree[,9][tree$C==4],tree[,6][tree$C==4],col=4)
+```
+```{r}
+plot(tree$STNCC,tree$STBM, main='Biomasse des tiges en fonction\nde la concentration en nitrate', col=tree$C)
+legend(1.15,0.7,c("C=1", "C=2", "C=3", "C=4"), col=1:4, pch=1)
 ```
 
 > Faire un graphe pour représenter le nombre d'arbres dans chacune des catégories d'exposition au dioxyde de carbone (1e colonne).
 
+
+Proposition 1 :
+
 ```{r}
-#
+barplot(table(tree$C),main="Nombre d'arbre en fonction de l'exposition au CO2",ylab="Nombre d'arbres")
 ```
 
+Proposition 2 :
+
+```{r}
+effectif=tapply(tree$C, tree$C, length)
+
+barplot(effectif,main="Nombre d'arbre en fonction de l'exposition au CO2", xlab="Catégorie d'exposition au CO2", ylab="Nombre d'arbres")
+
+```
+
+Proposition 3 :
+
+```{r}
+freqtree= table(tree[,1])
+freqtree
+rownames(freqtree) <- c("one","two","three","four")
+barplot(freqtree, main ="Répartition", ylab="nombre d'arbres", xlab="Tx exposition C")
+```
 
 > Faire un graphe pour représenter la distribution de la biomasse des tiges de l'arbre (6e colonne) en fonction de l'exposition au dioxyde de carbone (1e colonne).
 
+Proposition 1 :
+
 ```{r}
-#
+boxplot(tree[,6]~tree$C, main="Distribution de la biomasse des tiges\nen fonction de l'exposition au CO2",xlab="Catégories d'exposition au CO2", ylab="Distribution de la biomasse des tiges")
 ```
 
  
@@ -761,109 +754,54 @@ Par exemple, le premier chiffre de chaque rangée est un nombre, 1, 2, 3 ou 4, q
 
 ### if 
 
-L'exécution conditionnelle est disponible en utilisant l'instruction `if`. 
-
-```{r}
-x = 0.1
-if( x < 0.2)
-  {
-     x <- x + 1
-     print("increment that number!\n")
-  }
-x
-```
 
 > Créez une variable contenant la chaîne de caractère de votre choix. A l'aide de l'instruction `if`, testez si cette chaîne contient la lettre "a". Si oui, écrivez "bingo!".
 
 ```{r}
-
-```
-
-L'instruction else peut être utilisée pour spécifier une autre option. Dans l'exemple ci-dessous, notez que l'instruction else doit être sur la même ligne que l'accolade de fin pour le bloc if précédent.
-
-
-```{r}
-x = 2.0
-if ( x < 0.2)
- {
-    x <- x + 1
-    print("increment that number!\n")
- } else
- {
-    x <- x - 1
-    print("nah, make it smaller.\n");
- }
-x
+var="Il va être l'heure de partir"
+var1=gsub("a","i",var)
+if  (var!=var1)
+  {
+    print("Bingo")
+  }
 ```
 
 
-Enfin, les instructions if peuvent être enchaînées.
-
-```{r}
-x = 1.0
-if(x < 0.2)
-{
-    x <- x + 1
-    cat("increment that number!\n")
-} else if (x < 2.0)
-{
-   x <- 2.0*x
-   cat("not big enough!\n")
-} else
-{
-    x <- x - 1
-    cat("nah, make it smaller.\n");
-}
-x
-```
 
 ### for
 
-La boucle for peut être utilisée pour répéter un ensemble d'instructions.
-
-Un exemple est donné ci-dessous:
-
-```{r}
-for(lupe in seq(0,1,by=0.3))
-{
-    cat(lupe,"\n");
-}
-x <- c(1,2,4,8,16)
-
-for(loop in x)
-{
-    cat("value of loop: ",loop,"\n");
-}
-```
 
 > Créer une variable initiée à la valeur 0. A l'aide d'une boucle `for`, ajoutez lui tous les multiples de 5 entre 0 et 100. Affichez le résultat.
 
-```{r}
+Proposition 1 :
 
+```{r}
+var=0
+for (k in seq(0,100,by=5)) {
+    var=var+k
+}
+print(var)
 ```
 
-Vous verrez plus loin une autre manière de faire des itérations avec les fonctions apply qui seront alors à privilégier.
+
 
 
 ### while
 
-La boucle while peut être utilisée pour répéter une série d'instructions, et elle est souvent utilisée lorsque vous ne savez pas à l'avance le nombre d'instructions qui seront exécutées. 
-
-```{r}
-lupe <- 1;
-x <- 1
-while(x < 4)
- {
-    x <- rnorm(1,mean=2,sd=3)
-    cat("trying this value: ",x," (",lupe," times in loop)\n");
-    lupe <- lupe + 1
- }
-```
 
 > Créer une variable initiée à la valeur 2. Tant qu'elle est inférieure à 2048, multipliez-là par deux. Affichez le nombre de multiplication que vous avez fait.
 
+Proposition 1 :
 ```{r}
-
+var=2
+compteur=0
+while(var<2048)
+{
+    var=var*2
+    compteur=compteur+1
+    cat("v=", var, "i:", compteur, "\n")
+}
+print(compteur)
 ```
 
 
@@ -871,143 +809,57 @@ while(x < 4)
 
 ### Présentation
 
-Une nouvelle fonction est créée par une construction de la forme :
-
-
-```{r, eval=FALSE} 
-fun_name <- function(arglist)
-{
-expr
-}
-``` 
-
-avec :
-
-* fun_name : le nom d’un objet où est stockéee la fonction.
-* arglist : une liste d’arguments formels. Elle peut être vide (dans ce cas la fonction n'a pas d’arguments), avoir quelques noms formels séparés par des virgules, avoir des arguments de la forme nom = valeur pour donner une valeur par défaut à l'argument.
-* expr : typiquement un bloc d’expressions.
-
-Dans la fonction il peut y avoir un appel à return(val) qui arrête
-la fonction et renvoie la valeur val. Si rien n’est précisé la fonction
-renvoie la valeur de la dernière expression du bloc.
-
-
-Par exemple: 
-
-```{r}
-
-somme <- function(a,b)
-{ 
-  return(a+b)
-  }
-
-somme(1,5)
-```
-
-La valeur retournée par la fonction est celle contenue dans `return`
-ou la derniere valeur de la fonction.
-
-```{r}
-somme <- function(a,b)
-{
-  a+b
-}
-
-somme(1,5)
-
-```
-
-Vous pouvez aussi appeler d'autres fonctions dans vos fonctions :
-
-```{r}
-
-newDef <- function(a,b)
- {
-     x = runif(10,a,b)
-     mean(x)
- }
-newDef(-1,1)
-
-newDef
-function(a,b)
-{
-   x = runif(10,a,b)
-   mean(x)
-}
-x <- newDef(0,1)
-x
-
-```
-
-
 ### Arguments des fonctions 
 
-
-Les arguments sont transmis dans l'ordre : R essaiera de faire correspondre les arguments nommés et de faire correspondre le reste de gauche à droite. Ils peuvent aussi être spécifiés explicitement, cependant.
-
-
-```{r} 
-newDef(b=10,a=1)
-newDef(10,1)
-```
-
-
-Une autre tâche courante consiste à avoir une fonction qui renvoie plusieurs éléments. Cela peut être accompli en renvoyant une liste d'éléments. On peut accéder aux objets dans une liste en utilisant la même notation `$` utilisée pour les trames de données.
-
-```{r}
-c = c(1,2,3,4,5)
-petites_stats <- function(x)
-{
-  m = mean(x)
-  min = min(x)
-  max = max(x)
-  len = length(x)
-  return(list(min=min,max=max,len=len,mean=mean))
-}
-result <- petites_stats(c)
-result
-result$min
-result$mean
-```
-
-
-Un autre problème potentiel peut survenir lors de l'utilisation d'une fonction dans R. Si une variable précédemment indéfinie apparaît, R regardera la liste des arguments de la fonction. Ensuite, il regardera dans l'espace de travail actuel. Si vous ne faites pas attention, R trouvera la valeur à un endroit où vous ne l'attendez pas, et votre fonction retournera une valeur qui n'est pas correcte. Soyez très prudent sur les noms des variables, en particulier lorsque vous utilisez des fonctions.
-
-
 ### Pratiquons, pratiquons
-
 
 #### Exercice 1
 
 > Faire une fonction "paire" qui prend un nombre x, et renvoie TRUE ou FALSE si ce nombre est pair.
 
+* Proposition 1 :
 
-```{r,eval=F}
+```{r}
+paire <- function(x)
+{
+  if (x%%2 == 0)
+  {
+    return(TRUE)
+  } else
+  {
+    return(FALSE)
+  }
+}
+```
+
+ * Proposition 2 : 
+ 
+```{r}
 paire <- function(x) {
-  [...]
-  return()
+  return (x%%2 == 0)
 }
 ```
 
 
-```{r ,eval=F}
+```{r ,eval=T}
 paire(2)
 paire(5)
 paire(2.3)
 ```
 
-
 > Faire une fonction "somme_carre"" qui prend 2 nombres x et y, et renvoie la somme des carrés de ces 2 nombres.
 
+Proposition 1 :
 
-```{r,eval=F}
-somme_carre <- function(x,y) {
-  [...]
-  return()
+```{r ,eval=T}
+
+somme_carre <- function(x,y) 
+  {
+  return(x**2 + y**2)
 }
 ```
 
-```{r ,eval=F}
+```{r ,eval=T}
 somme_carre(2,563)
 somme_carre(7,95)
 somme_carre(-2, 4)
@@ -1016,15 +868,18 @@ somme_carre(-2, 4)
 
 > Faire une fonction qui trace un histogramme, l'enregistre en pdf, en mettant la couleur et le titre en option. 
 
-```{r,eval=F}
-trace_histo <- function(x,file="histo.pdf",[...]) {
-  [...]
+http://rfunction.com/archives/812
+
+```{r}
+    trace_histo <- function(x,file="histo.pdf", titre = 'Title', couleur = 1) {
+      pdf(file)
+      hist(x, col = couleur, main = titre)
+      dev.off()
 }
 ```
 
 ```{r ,eval=F}
 x=runif(1000)
-
 trace_histo(x, file="histo.pdf",titre="Super titre",couleur="red")
 ```
 
@@ -1032,7 +887,10 @@ trace_histo(x, file="histo.pdf",titre="Super titre",couleur="red")
 > Faire une fonction "filtre_positif" qui prend un vecteur de nombres, et renvoie les valeurs positives.
 
 ```{r ,eval=F}
-
+filtre_positif <- function(x)
+{ return(x[x>0])    
+}
+filtre_positif(c(-2,3,9,-1,5))
 ```
 
 
@@ -1040,101 +898,109 @@ trace_histo(x, file="histo.pdf",titre="Super titre",couleur="red")
 
 > Créer	une	séquence d'ADN aléatoire de	1000 nucléotides. Combien de	fois est présent chaque	nucléotide ?	
 
-```{r ,eval=F}
+```{r ,eval=T}
+sequence_ADN_compte<-function() {
+  seq_nt=sample(c("A","T","G","C"),1000,replace=T)
+  return(table(seq_nt))
+}
 
+sequence_ADN_compte()
 ```
 
 > Lancer cette fonction 1000 fois et représenter la distribution du nombre de "A". Ajouter une verticale sur le graphique qui montre la moyenne attendue. Mettre un titre.
   	
+  	
+```{r}
+generation_seq<-function(n) {
+  seq_nt=sample(c("A","T","G","C"),n,replace=T)
+  return(seq_nt)
+}
+
+freq <- c()
+for (k in seq(1,1000))
+{
+  freq <- c(freq,table(generation_seq(1000))[1])
+}
+hist(freq,col = 'red', main = 'Distribution du nombre de A\ndans une séquence de 1000 bases', xlab = 'Nombre de A')
+abline(v = 250, col = 'green')
+```
+
+
+
+
 > Encapsuler la manip précédente dans une fonction, qui prend le nucléotide demandé en argument, une couleur pour le graphique et le sauve.
+
+
+```{r}
+generation_seq<-function(n) {
+  seq_nt=sample(c("A","T","G","C"),n,replace=T)
+  return(seq_nt)
+}
+
+hist_nt_X <- function(nt = "A" , couleur = "blue") {
+  freq <- c()
+  for (k in seq(1,1000)){
+      freq <- c(freq,table(generation_seq(1000))[nt])
+  }
+  hist(freq, col = couleur, main = paste('Distribution du nombre de', nt, '\ndans une séquence de 1000 bases'), xlab = paste('Nombre de A'))
+  abline(v = 250, col = 'green')
+}
+
+hist_nt_X()
+```
+
+```{r}
+generation_seq<-function(n) {
+  seq_nt=sample(c("A","T","G","C"),n,replace=T)
+  return(seq_nt)
+}
+
+hist_nt_X <- function(nt = "A" , couleur = "blue") {
+  freq = sapply(1:1000, function(x) {table(generation_seq(1000))[nt]})
+  hist(freq, col = couleur, main = paste('Distribution du nombre de', nt, '\ndans une séquence de 1000 bases'), xlab = paste('Nombre de A'))
+  abline(v = 250, col = 'green')
+}
+
+hist_nt_X()
+```
+
+
+
 
 > Appliquer cette fonction pour tous les nucléotides.
 
+```{r}
+hist_nt_X("A","red")
+hist_nt_X("T","green")
+hist_nt_X("G","blue")
+hist_nt_X("C","orange")
+```
 
+
+```{r}
+sapply(c("A","T","G","C"), hist_nt_X)
+```
 
 ### Precicions sur les fonctions
 
 
 #### L’argument spécial point-point-point
 
-L'argument point-point-point (...) permet à une fonction d'accepter un nombre quelconque d’arguments.
-L'argument point-point-point indique que la fonction accepte n'importe quoi d’autre comme argument.
-Ce qu’il adviendra de ces arguments est déterminé par la fonction.
-En général ils sont transmis à d'autres fonctions.
-Par exemple, une fonction graphique de haut niveau transmettra l’argument point-point-point à des fonctions graphiques de bas niveau pour traitement.
-
-Supposons que nous voulions définir une fonction qui dessine un nuage de points et y ajoute une droite de régression :
-
-```{r, eval=FALSE} 
-f <- function(x, y, ...) {
-plot.default(x = x, y = y, ...)
-abline(coef = lm(y~x)$coef)
-}
-f(1:10,1:10)
-```
-
-Comme nous avons transmis l’argument point-point-point à plot.default(), tout ce que plot.default() sait faire, la fonction f() sait le faire également.
-
-```{r, eval=FALSE} 
-f(1:10, 1:10, main = "Titre de ce graphique", pch = 19, col = "blue",
-las = 1, panel.first = grid(col = "pink", lty = "solid"))
-```
-
 #### Illustration de la neutralisation de l’affichage automatique dans les fonctions
-
-Si l'on souhaite afficher des choses dans une fonction (bien pratique pour débugguer), utiliser la fonction print.
-
-```{r, eval=FALSE} 
-f1 <- function(x = pi) { x ; 0}
-f1()
-[1] 0
-f2 <- function(x = pi) { print(x) ; 0}
-f2()
-```
 
 #### Détermination de la valeur d'une variable dans une fonction
 
-
-Quand une expression fait appel à une variable, comment la valeur de cette variable est-elle déterminée ?
-
-Si une variable n’est pas trouvée à l’intérieur de la fonction, elle est recherchée en dehors de la fonction. Tout ce que l’on a à retenir est qu'une variable définie à l'exterieur de la fonction est accessible aussi dans la fonction.
-Si deux variables avec le même nom sont définies à l'intérieur et à l'extérieur de la fonction, c’est la variable locale qui sera utilisée.
-Une erreur aura lieu si aucune variable avec le nom demandé n’est trouvée.
-
-```{r, eval=FALSE} 
-mavariable <- 1
-mafonction1 <- function() {
-mavariable <- 5
-print(mavariable)
-}
-mafonction1()
-mavariable
-mafonction2 <- function() {
-print(mavariable)
-}
-mafonction2()
-```
-
-
 ### La famille des fonctions apply (comment faire une boucle en R)
 
-Les différentes versions des commandes apply permettent de prendre une fonction et d'exécuter une opération sur chaque partie des données. Il existe une grande variété de ces commandes, mais nous n'en examinons que deux. Le premier ensemble, lapply et sapply, est utilisé pour appliquer une fonction à chaque élément d'une liste. Le deuxième, tapply, est utilisé pour appliquer une fonction sur chaque ensemble divisé par un ensemble donné de facteurs.
 
 #### Opérations sur les listes et les vecteurs
-
-Tout d'abord, la commande lapply est utilisée pour prendre une liste d'éléments et effectuer une fonction sur chaque membre de la liste. Autrement dit, la liste comprend un certain nombre d'objets différents. Vous voulez effectuer une opération sur chaque objet de la liste. Vous pouvez utiliser lappply pour indiquer à R de parcourir chaque élément de la liste et d'effectuer l'action souhaitée sur chaque élément.
-
-```{r, eval=FALSE}
-lapply(list(9,16,24), sqrt)
-lapply(list(1,2,3), function(x){x*x})
-```
 
 
 > Faire une fonction qui renvoie la somme des carrée d'une liste de nombres.
 
-```{r, eval=FALSE}
-somme_carre_list <- function( ... ) {
-  ...
+```{r, eval=TRUE}
+somme_carre_list <- function( lili ) {
+  sum(sapply(lili, function(x){x**2}))
 }
 
 somme_carre_list(list(1,2,3,4,5,6))
@@ -1142,62 +1008,16 @@ somme_carre_list(list(1,2,3,4,5,6))
 ```
 
 
-
-Dans l'exemple suivant, une liste est créée avec trois éléments. Le premier est un ensemble de nombres générés aléatoirement avec une distribution normale. Le second est un ensemble de nombres générés aléatoirement avec une distribution exponentielle. Le dernier est un ensemble de facteurs. Un résumé est ensuite effectué sur chaque élément de la liste.
-
-```{r,eval=FALSE}
-x <- list(bibi=rnorm(200,mean=1,sd=10),
-            bobo=rexp(300,10.0),
-            babar=as.factor(c("a","b","b","b","c","c")))
-lapply(x,summary)
-```
-
-La commande lapply retourne une liste. Les entrées de la liste portent le même nom que les entrées de la liste qui lui est transmise en entrée. Les valeurs de chaque entrée sont les résultats de l'application de la fonction. La fonction sapply est similaire, mais la différence est qu'elle essaie de transformer le résultat en un vecteur ou une matrice si possible. Si cela n'a pas de sens, alors il retourne une liste comme la commande lapply. 
-
-```{r,eval=FALSE}
-x <- list(a=rnorm(8,mean=1,sd=10),b=rexp(10,10.0))
-x
-val <- lapply(x,mean)
-typeof(val)
-val
-val$a
-val$b
-other <- sapply(x,mean)
-typeof(other)
-other
-other[1]
-other[2]
-```
-
-
 #### Opérations groupées par modalités d'un facteur
-
-La fonction tapply prend une liste de données, généralement un vecteur, un facteur, et une fonction. Il applique ensuite la fonction à chaque sous-ensemble de données correspondant à chaque modalité du facteur.
-
-```{r,eval=FALSE}
-val <- data.frame(a=c(1,2,10,20,5,50),
-                    b=as.factor(c("a","a","b","b","a","b")))
-val
-result <- tapply(val$a,val$b,mean)
-typeof(result)
-result
-result[1]
-result[2]
-result <- tapply(val$a,val$b,summary)
-typeof(result)
-result
-result$a
-```
-
 
 #### Opérations sur un tableau
 
 La fonction apply prend un tableau, et une fonction. Elle peut appliquer la fonction soit sur les lignes, soit sur les colonnes, soit sur les deux ; par exemple elle permet de calculer la somme d'un tableau ligne par ligne ou colonne par colonne. 
 
-```{r,eval=FALSE}
-val <- data.frame(a=runif(10,1,10),
-                    b=runif(10,1,10),
-                  c=runif(10,1,10))
+```{r,eval=TRUE}
+val <- data.frame(a=runif(5,1,10),
+                    b=runif(5,1,10),
+                  c=runif(5,1,10))
 val
 
 val$mean = apply(val,1,mean)
@@ -1211,13 +1031,20 @@ val
 
 > Faire la meme chose sur val2.
 
-```{r,eval=FALSE}
-val2 <- data.frame(name=LETTERS[1:10],
-                  a=runif(10,1,10),
-                    b=runif(10,1,10),
-                  c=runif(10,1,10))
+```{r, eval=TRUE}
+val2 <- data.frame(name=LETTERS[1:5],
+                  a=runif(5,1,10),
+                    b=runif(5,1,10),
+                  c=runif(5,1,10),
+                  stringsAsFactors = F) 
 val2
 
+val2$mean = apply(val2[,2:ncol(val2)],1,mean)
+
+val
+
+val2[nrow(val2)+1,] = c("total", apply(val2[,2:ncol(val2)],2,sum))
+val2
 ```
 
 ### Pratiquons, pratiquons
@@ -1226,73 +1053,108 @@ val2
 
 > Chargez le tableau 'iris'. Créez un vecteur contenant autant d'éléments que de lignes dans le tableau, dans lequel vous placerez la chaîne "plus grand que 5" si la longueur des sépales est supérieure à 5, et la chaîne "moins grand que 5" dans le cas contraire. Faites le de deux manières différentes, à l'aide d'une boucle for.
 
+```{r}
+data(iris)
+head(iris)
+
+x=rep("", nrow(iris))
+for (i in seq(1, nrow(iris))) {
+  if (iris$Sepal.Length[i]>5) {
+    x[i]='plus grand que 5'
+  } else {
+    x[i]='moins grand que 5'
+  }  
+}
+x
+
+sapply(iris$Sepal.Length,function(x){
+  if (x>5)
+  {
+      return("Plus grand que 5")
+  }else 
+  {
+      return("Moins grand que 5")
+  }
+}
+)
+
+l=rep(0, nrow(iris))
+l[iris[,"Sepal.Length"]>=5]='plus grand que 5'
+l[iris[,"Sepal.Length"]<5]='moins grand que 5'
+l
+```
+
+
+
 #### Exercice 4
 
 > Reprenez l'exercice précédent en utilisant cette fois-ci la fonction "apply".
 
+
+```{r}
+data(iris)
+head(iris)
+
+sapply(iris$Sepal.Length,function(x){
+  if (x>5)
+  {
+      return("Plus grand que 5")
+  }else 
+  {
+      return("Moins grand que 5")
+  }
+}
+)
+
+```
+
 > Pour chaque fleur, calculez, à l'aide de "apply", le produit de la longueur des pétales par leur largeur.
+
+```{r}
+data(iris)
+head(iris)
+
+surface_petale = apply( iris[, c('Petal.Length',"Petal.Width")],1,function(x){x[1]*x[2]})
+surface_petale
+
+#On est d'accord que cette question est complètement artificielle et que faire 
+surface_petale2 =  iris$Petal.Length * iris$Petal.Width # est plus rapide
+
+# On peut vérifier le nombre de fois ou les valeurs sont identiques (toutes ! ouf !)
+table(surface_petale == surface_petale2)
+
+```
+
 
 
 ## Exécuter un fichier
 
 ### Exécuter les commandes dans un fichier
 
-Un ensemble de commandes R peut être enregistré dans un fichier, puis exécuté comme si vous l'aviez tapé depuis la ligne de commande. La commande source est utilisée pour lire le fichier et exécuter les commandes dans la même séquence que celle donnée dans le fichier.
-
-```{r, eval=FALSE} 
-source('file.R')
-``` 
- 
-Si vous générez simplement le fichier, les commandes ne sont pas imprimées et les résultats des commandes ne sont pas imprimés. Cela peut être remédié en utilisant les options echo , print.eval et verbose.
-
-Certains exemples sont donnés en supposant qu'un fichier, simpleEx.R , se trouve dans le répertoire courant. Le contenu du fichier est donné ci-dessous:
-
-```{r}
- # Define a variable.
-x <- rnorm(10)
-
-# calculate the mean of x and print out the results.
-mux = mean(x)
-cat("The mean of x is ",mean(x),"\n")
-
-# print out a summary of the results
-summary(x)
-cat("The summary of x is \n",summary(x),"\n")
-print(summary(x))
-```
-
-Le fichier montre également l'utilisation de # pour spécifier des commentaires. Tout ce qui suit le # est ignoré. En outre, le fichier illustre l'utilisation de cat et print pour envoyer les résultats à la sortie standard. 
- 
-
-
 # Application sur un second jeu de données (lézards)
-
-
-Le  lézard des murailles (\textit{Podarcis muralis}) est très commun en Europe. 
-Son dos est d'une ennuyeuse couleur brune, probablement pas très visible des prédateurs. Par contre, le ventre des mâles peut prendre des couleurs fabuleuses. Tous les lézards muraux n'ont pas la même couleur, certains sont oranges, d'autres blancs ou jaunes. Les chercheurs ont récemment proposé que ces couleurs ont une fonction dans la signalisation sociale. Le lézard pourrait garder ses «vraies couleurs» cachées, loin des regards indiscrets des prédateurs, et les montrer aux autres lézards au moment approprié. 
-
-La selection sexuelle est l'un des principaux processus inpliqués dans l'émergence et le maintien des polymorphismes avec des variations de couleurs dans de nombreux taxa. Si c'est le cas ici, on s'attend à ce que l'intensité de la sélection sexuelle dans les populations soit corrélée avec l'importance du polymorphisme dans les populations. 
-
-
-
-Ici vous allez tester si l'intensité de la sélection sexuelle, estimée à partir du sex ratio, prédit la diversité des morphes chez \textit{Podarcis muralis}.
-
-![Podarcis muralis](data/image/morphs.jpg){ width=50% }
-
 
 > Importer le jeu de données contenu dans "data/appli2/lezard.csv" et afficher les 5 premières lignes.
 
-```{r, eval=FALSE} 
-# A vous de jouer
+```{r, eval=TRUE} 
+lezard = read.csv("data/appli2/lezard_per_pop.csv", sep = "\t", stringsAsFactors = F) #  "data/appli2/lezard_per_pop.csv" == "data/appli2/lezard.csv"
+head(lezard,5)
 ``` 
-
-Chacune des lignes représente une population où des individus ont été capturés. Le nombre de mâles, de femelles ainsi que le nombre de morphes observés a été répertorié. La colonne "richness" correspond au nombre de morphes dans la population et la colonne "eveness" correspond à la « régularité » de la répartition du nombre d'individus entre les morphes.
 
 
 > Calculer le nombre de populations (colonne "poblacio" dans la table), le nombre total de femelles, le nombre total de mâles, le nombre total d'individus.
   
-```{r, eval=FALSE} 
-# A vous de jouer (etc)
+```{r, eval=TRUE} 
+
+P_nb=length(lezard$poblacio)
+P_nb
+F_nb = sum(lezard$females)
+F_nb
+M_nb = sum(lezard$males)
+M_nb
+N_nb = sum(lezard$N)
+N_nb
+
+
 ``` 
 
 
@@ -1301,301 +1163,112 @@ Chacune des lignes représente une population où des individus ont été captur
 $$ Sex ratio = \frac{Nb_{male}}{Nb_{femelle}} $$
 
 
+```{r, eval=TRUE} 
+lezard$sex_ratio = lezard$males/lezard$females
+head(lezard)
+``` 
+
 
 > Restreindre votre jeu de données aux populations qui ont 50 lézards ou plus. Quelles populations passent le seuil ?
 
+```{r, eval=TRUE} 
+lezard$poblacio[lezard$N >= 50]
+lezard =  lezard[lezard$N >= 50,]
+``` 
+
 > Représenter en fonction du nombre de morphes (colonne "richness") la distribution des sex ratio. Qu'est-ce que vous observez ?
+
+```{r}
+boxplot(lezard$sex_ratio ~ lezard$richness)
+```
 
 > Représenter la « régularité » de la répartition du nombre d'individus entre les morphes (eveness) en fonction du sex ratio. Ajouter sur le graphe une droite de tendance. Que pouvez-vous conclure ?
 
+```{r}
+plot(lezard$evenness ~ lezard$sex_ratio)
+abline(lm(lezard$evenness ~ lezard$sex_ratio), col="red")
+
+
+```
+
+
 > Importer maintenant le jeu de données contenu dans "data/appli2/lezard2.csv". Il contient les caractéristiques (populations, morph, sexe) de chaque individu. Calculer le nombre de morphe pour chacun des sexes par population.
+
+
+```{r}
+lezard2 = read.csv("data/appli2/lezard_per_ind.csv", head=T, stringsAsFactors = F)
+lezard2 = lezard2[lezard2$pop %in% lezard$poblacio,]
+head(lezard2)
+
+lezardM = lezard2[lezard2$sexe == "M",]
+lezardF = lezard2[lezard2$sexe == "F",]
+nb_morphe_M = tapply(lezardM$morphe, lezardM$pop, function (x) { return((length(unique(x))))})
+nb_morphe_F = tapply(lezardF$morphe, lezardF$pop, function (x) { return((length(unique(x))))})
+
+
+head(nb_morphe_M)
+head(nb_morphe_F)
+```
+
 
 L'indice de shannon est un indice permettant de mesurer la diversité spécifique. 
 Sa formule est:
 
 $$ S = - \sum \limits_{i=1}^n p_i ln(p_i)$$ avec $n$ le nombre de morphes dans la population et $p_i$  la proportion du $i^{eme}$ morphe dans la population
 
+
 > Faire une fonction pour calculer cet indice puis calculez-le pour chacune des populations.
 
-> Avez vous bien utilisé la famille apply, et la fonction "table" ? Sinon, corrigez les lignes suivantes pour le faire :
-
-```{r, eval=FALSE} 
-calc_shannon <- function(x) {
-  p = length(x)
+```{r}
+shannon <- function(x) {
+  p = table(x)/length(x)
   p=p[p>0]
-  s = p
+  s = -sum(p * log(p))
   return(s)
 }
 
-shannon_l = tapply(x, x, calc_shannon)
-``` 
+calc_by_pop = function (df) {
+    return(tapply(df$morphe, df$pop, shannon))
+}
+        
+```
+
+
+> Avez vous bien utilisé la famille apply, et la fonction "table" ? Sinon, corrigez les lignes suivantes pour le faire :
 
 > Représenter l'indice de shannon en fonction du sex ratio. Ajouter sur le graphe une droite de tendance. Que pouvez vous conclure ?
 
+```{r} 
+shannon_pop = calc_by_pop(lezard2)
+lezard$shannon_MF = shannon_pop[lezard$poblacio] ## ATTENTION, à l'ordre des population
+plot(lezard$shannon_MF  ~ lezard$sex_ratio, ylim = c(0,max(shannon_pop)+1))
+abline(lm(lezard$shannon_MF  ~ lezard$sex_ratio), col  = "red")
+
+summary(lm(lezard$shannon_MF  ~ lezard$sex_ratio))
+
+``` 
+
+```{r} 
+make_plot_lm <- function (df_pop, df_ind) {
+  shannon_pop = calc_by_pop(df_ind)
+  df_pop$shannon = shannon_pop[df_pop$poblacio]
+  plot(df_pop$shannon ~ df_pop$sex_ratio, ylim = c(0,max(df_pop$shannon)+1), xlim = c(0,max(df_pop$sex_ratio)+0.1))
+  abline(lm(df_pop$shannon ~ df_pop$sex_ratio), col  = "red")
+  summary(lm(df_pop$shannon ~ df_pop$sex_ratio))
+}
+
+make_plot_lm(lezard, lezard2)
+``` 
 > Faire de-même en calculant l'indice de shannon par sexe. Que pouvez vous conclure ?
 
+```{r} 
+print("F")
+make_plot_lm(lezard, lezard2[lezard2$sexe == "F",])
+print("M")
+make_plot_lm(lezard, lezard2[lezard2$sexe == "M",])
 
-
+``` 
 
 # Application sur un troisième jeu de données (les abeilles) et initiation à ggplot2
 
-Nosema ceranae est un champignon microscopique, qui provoque une maladie répandue chez abeilles.
-Ce microchampignon n'existe hors des cellules de son hôte que sous la forme de spores métaboliquement inactives. Ces spores, infectieuses, permettent la transmission de maladies entre individus. 
-
-![Nosema ceranae](data/image/Nosema1.jpg){ width=30% }	
-
-Daren Eiri et ses collaborateurs (PLOS One, 2015; doi:10.1371/journal.pone.0126330) ont exposé des larves d'abeille de trois jours à une dose unique de spores de \textit{Nosema ceranae} de 40 000 (40 K), 10 000 (10 K), zéro ou 40 K autoclavée.
-Ils ont ensuite compté le nombre de spores chez les larves d'abeilles de 8 jours, et chez les adultes, ainsi que mesuré la durée de vie des abeilles.
-
-
-> Importer le jeu de données contenu dans "data/appli3/NosemaS1_Table.xls" et afficher les 5 premières lignes.
-
-
-Chacune des lignes représente une abeille étudiée. L'identifiant de la colonie, et le poids de l'abeille à l'émergence ont été répertoriés.
-
-> Calculer :
-
-  * le nombre total d'abeilles
-  * le nombre d'abeilles par type de traitement
-  * le poids moyen des abeilles, en mg par traitement (le stocker dans une nouvelle colonne de la table) : avez-vous l'impression qu'il soit différent ?
-  
-> Représenter la distribution du poids en mg en fonction de la colonie.
-
-> Faire une fonction qui représente, pour une colonie donnée, la distribution du poids en fonction du traitement.
-
-# Démarrage de ggplot2 en douceur...
-
-
-```{r, eval=FALSE} 
-library(ggplot2)
-p = ggplot(data = df1, aes(y = `Bee weight (g)`, x = `Treatment (# spores)`))
-p
-```
-
-Aucun graphique ne s’affiche ici : en effet, ce que l’on a stocké, dans l’objet p, n’est pas un graphique complet, mais une base de travail. Cette base définit les coordonnées y du graphique dans l’argument aes (aesthetics). 
-
-
-Rajoutons désormais un objet géométrique, geom_point, qui va projeter, sur le graphique, des points aux coordonnées précédemment définies.
-
-```{r, eval=FALSE} 
-p + geom_point()
-```
-
-Divisons le graphique en projetant les points de chaque colonie dans une facette différente du graphique. Utiliser facet_grid :
-
-
-```{r, eval=FALSE} 
-p + geom_point()+facet_grid(.~ `Colony Label`)
-```
-
-Le graphique ci-dessus présente un problème fréquent : l’axe horizontal du graphique est illisible. Grâce à l’argument scale_x_continuous, on va pouvoir clarifier cet axe en n’y faisant figurer que certaines valeurs :
-
-```{r, eval=FALSE} 
-p + geom_point() +
-  facet_grid(. ~ `Colony Label`) +
-  scale_x_continuous(breaks = c(0, 10000, 40000))
-```
-
-Ensuite on peut aussi changer les étiquettes des axes, c'est nettement plus joli, non ? Ha bon, tant pis.
-
-```{r, eval=FALSE} 
-p + geom_point() +
-  facet_grid(. ~ `Colony Label`) +
-  scale_x_continuous(breaks = c(0, 10000, 40000), labels=c("0","1e4","4e4"))
-```
-
-On souhaite encore procéder à une dernière modification, en rajoutant une régression locale à travers les points de chaque facette. Pas que ça ait grand sens, sur 3 concentrations, mais bon. Au passage, si on modifie l'objet p, on a moins de lignes à copier-coller.
-
-```{r, eval=FALSE} 
- p <- p + geom_point() +
-  facet_grid(. ~ `Colony Label`) +
-  scale_x_continuous(breaks = c(0, 10000, 40000), labels=c("0","1e4","4e4"))
-
-p + geom_smooth(method = "loess", se = FALSE,
-                size = 1, color = "black")
-```                
-    
-Si on veut des axes in french : 
-                
-```{r, eval=FALSE} 
- p +
- geom_smooth(method = "loess", se = FALSE,
-                size = 1, color = "black") + 
-  labs(x= "Traitement (nb spores)",y = "Poids des abeilles (g)\n")
-```                
-
-
-Si on aime la sobriété des couleurs :
-
-```{r, eval=FALSE} 
- ggplot(data = df1, aes(y = `Bee weight (g)`, x = `Treatment (# spores)`)) + geom_point(color = "grey50") +
-  facet_grid(. ~ `Colony Label`) +
-  scale_x_continuous(breaks = c(0, 10000, 40000), labels=c("0","1e4","4e4"))+
-geom_smooth(method = "loess", se = FALSE,
-                size = 1, color = "black") + 
-labs(x= "Traitement (nb spores)",y = "Poids des abeilles (g)\n")+
-      theme_bw() +
-  theme(strip.background = element_rect(fill = "grey90", color = "grey50"),
-        strip.text = element_text(size = rel(1)),
-        panel.grid = element_blank())
-```         
-
-Pourquoi pas un boxplot, soyons fous. Attention pour les boxplots il faut donner un factor en x. Mais sinon on a basculé très facilement de la visualisation sous forme de niveaux de traitements à une visualisation par boxplots. Ces basculements sont très faciles à envisager dès que l’on maîtrise les principaux éléments de ggplot2. Ca tombe bien : plus qu'un dernier exercice, et vous attaquez le TP ggplot2.
-
-```{r, eval=FALSE} 
-ggplot(data = df1, aes(y = `Bee weight (g)`, x = factor(`Treatment (# spores)`)))+ geom_boxplot() +
-facet_grid(. ~ `Colony Label`) +
-scale_x_discrete(labels = c("0","+","++"))+
-labs(x= "Traitement (nb spores)",y = "Poids des abeilles (g)\n")
-
-```   
-
-
-> Importer maintenant le jeu de données dans "NosemaS4_Table.xls" et afficher les 5 premières lignes (qui correspondent aux 5 premières abeilles). La première colonne est le traitement, la seconde est la durée de vie de l'abeille.
-
-> Reproduire la Figure 3 de l'article Eiri et al. 
-
-![Figure 3 de Eiri et al](data/image/fig3.png){ width=50% }
-
-
-Pour cela il est possible de procéder par étapes:
-
-* Fabriquer un vecteur qui contient les ages en jours de 1 à 40
-* Récupérer la sous-table qui contient les abeilles contrôles
-* Fabriquer une fonction qui compte, pour un âge donné, la proportion d'abeilles qui ont survécu au moins jusqu'à cet âge
-* Appliquer cette fonction à tous les âges
-* Faire un graphique qui montre les aâs en fonction des pourcentages de survie pour les contrôles
-* Ajouter sur le graphique les pourcentages de survie pour les 10K, et 40K.
-* Ajouter les légendes
-* Enregistrer votre figure au format pdf
-
-
-# Où trouver de l'aide plus tard ?
-
-Lors de ce TP vous pouvez poser toutes les questions que vous voulez aux professeurs mais comment faire plus tard ?
-
-## Aide en ligne
-**R** dispose d'une aide en ligne très complète, mais dont l'usage n'est pas forcément très simple. D'une part car elle est intégralement en anglais, d'autre part car son organisation prend un certain temps à être maîtrisée.
-
-### Aide sur une fonction
-
-La fonction la plus utile est sans doute `help` (ou son équivalent `?`) qui permet d'afficher la page d'aide liée à une ou plusieurs fonctions. Celle-ci permet de lister les arguments de la fonction, d'avoir des informations détaillées sur son fonctionnement, les résultats qu'elle retourne, etc.
-
-Pour accéder à l'aide de la fonction `mean`, par exemple, il vous suffit de saisir directement :
-
-```{r, eval=FALSE, tidy=FALSE}
-?mean
-```
-
-ou bien
-
-```{r, eval=FALSE}
-help("mean")
-```
-
-## Ressources sur le Web
-
-De nombreuses ressources existent en ligne, mais la plupart sont en anglais, il faudra donc formuler vos requêtes en anglais.
-
-### Moteur de recherche
-
-Le fait que le logiciel s'appelle **R** ne facilite malheureusement pas les recherches sur le Web... La solution à ce problème a été trouvée grâce à la constitution d'un moteur de recherche *ad hoc* à partir de **Google**, nommé **Rseek** : http://www.rseek.org/.
-
-Les requêtes saisies dans **Rseek** sont exécutées dans des corpus prédéfinis liés à **R**, notamment les documents et manuels, les listes de discussion ou le code source du programme.
-
-
-### Antisèches (cheatsheet)
-
-On peut trouver un peu partout sur internet des antisèches (*cheatsheets* en anglais) qui sont 
-en général un fichier **PDF** résumant les principales fonctions d'une extension ou
-d'une problématique donnée. Ces antisèches peuvent être imprimées afin de les avoir facilement 
-à portée de main.
-
-Pour les trouver, il suffit d'effectuer une recherche **Google** avec les mots-clés
-`R cheatsheet` ou `<pkg> cheatsheet` en remplacant `<pkg>` par le nom du package qui
-nous intéresse.
-
-Certaines sont également disponibles directement dans **RStudio**, dans le menu `Help > Cheatsheets`.
-
-
-### Aide en ligne
-
-Le site **R documentation** propose un accès clair et rapide à la documentation de **R** et des extensions hébergées sur le **CRAN** (ainsi que certaines extensions hébergées sur **GitHub**). Il permet notamment de rechercher et naviguer facilement entre les pages des différentes fonctions : www.rdocumentation.org.
-
-### Ressources officielles
-
-La documentation officielle de **R** est accessible en ligne depuis le site du projet : www.r-project.org.
-Les liens de l'entrée *Documentation* du menu de gauche vous permettent d'accéder à différentes ressources.
-
-Les *manuels* sont des documents complets de présentation de certains aspects de **R**. Ils sont accessibles
-en ligne, ou téléchargeables au format **PDF** :<br /><http://cran.r-project.org/manuals.html>.
-
-On notera plus particulièrement *An introduction to R*, normalement destiné aux débutants, mais qui
-nécessite quand même un minimum d'aisance en informatique et en statistiques :<br />
-<http://cran.r-project.org/doc/manuals/R-intro.html>.
-
-*R Data Import/Export* explique notamment comment importer des données depuis d'autres logiciels :<br />
-<http://cran.r-project.org/doc/manuals/R-data.html>.
-
-### Ouvrages, blogs, MOOCs...
-
-Parmi les ressources en français, on peut citer notamment [R et espace](https://framabook.org/r-et-espace/), manuel d’initiation à la programmation avec R appliqué à l’analyse de l’information géographique, librement téléchargeable en ligne. 
-
-La très bonne *Introduction à R et au tidyverse* de Julien Barnier disponible sur <https://juba.github.io/tidyverse/>.
-
-La section [Contributed documentation](https://cran.r-project.org/other-docs.html) du site officiel de R contient également des liens vers différents documents en français, plus ou moins accessibles et plus ou moins récemment mis à jour.
-
-Le pôle bioinformatique lyonnais (PBIL) propose depuis longtemps une somme très importante de documents, qui comprend des cours complets de statistiques utilisant R :
-
-- [http://pbil.univ-lyon1.fr/R/](http://pbil.univ-lyon1.fr/R/)
-
-Plusieurs blogs francophones autour de R sont également actifs, parmi lesquels :
-
-- [ElementR](https://elementr.hypotheses.org/), le blog du groupe du même nom, qui propose de nombreuses ressources sur R en général et en particulier sur la cartographie ou l'analyse de réseaux.
-- [R-atique](http://perso.ens-lyon.fr/lise.vaudor/), blog animé par Lise Vaudor, propose régulièrement des articles intéressants et accessibles sur des méthodes d'analyse ou sur des extensions R.
-
-
-Enfin, le site *France Université Numérique* propose régulièrement des sessions de cours en ligne, parmi lesquels une  [Introduction à la statistique avec R](https://www.fun-mooc.fr/courses/course-v1:UPSUD+42001+session08/about) et un cours sur l'[Analyse des données multidimensionnelles](https://www.fun-mooc.fr/courses/agrocampusouest/40001S03/session03/about).
-
-On peut aussi citer :
-
-* [Logiciel R et programmation](http://egallic.fr/Enseignement/R/m1_stat_eco_logiciel_R.pdf) par @3wen
-* [Programmer en R](https://fr.wikibooks.org/wiki/Programmer_en_R), wikibook collaboratif (licence CC-BY-SA)
-* [R et espace](https://framabook.org/r-et-espace/) : manuel d’initiation à la programmation avec R appliqué à l’analyse de l’information géographique, librement téléchargeable en ligne.
-* [Introduction à la programmation en R](https://cran.r-project.org/doc/contrib/Goulet_introduction_programmation_R.pdf)
-* [C'est l'enfeR](https://bioinfo-fr.net/cest-lenfer) donne des exemples de code simple avec R qui donnent des résultats surprenants.
-
-Et enfin, une liste de ressources francophones : <https://github.com/frrrenchies/frrrenchies/>.
-
-
-### Ressources francophones
-
-Il existe des ressources en français sur l'utilisation de **R**, mais peu sont réellement destinées aux débutants, elles nécessitent en général des bases à la fois en informatique et en statistique.
-
-Le document le plus abordable et le plus complet est sans doute *R pour les débutants*, d'Emmanuel
-Paradis, accessible au format **PDF** :<br /><http://cran.r-project.org/doc/contrib/Paradis-rdebuts_fr.pdf>.
-
-La somme de documentation en français la plus importante liée à **R** est sans nulle doute celle mise
-à disposition par le Pôle bioinformatique lyonnais. Leur site propose des cours complets de statistique
-utilisant **R** :<br /><http://pbil.univ-lyon1.fr/R/enseignement.html>.
-
-La plupart des documents sont assez pointus niveau mathématique et plutôt orientés biostatistique,
-mais on trouvera des documents plus introductifs ici :<br /><http://pbil.univ-lyon1.fr/R/html/cours1>.
-
-
-
-### StackOverflow
-
-Le site **StackOverflow** (qui fait partie de la famille des sites **StackExchange**) comprend une section
-(anglophone) dédiée à **R** qui permet de poser des questions et en général d'obtenir des réponses assez
-rapidement :<br /><http://stackoverflow.com/questions/tagged/r>.
-
-La première chose à faire, évidemment, est de vérifier que sa question n'a pas déjà été posée.
-
-
-# Sources
-
-http://larmarange.github.io/analyse-R/intro-ggplot2.html
-
-http://www.cyclismo.org/tutorial/R/
-
+Correction sur demande
