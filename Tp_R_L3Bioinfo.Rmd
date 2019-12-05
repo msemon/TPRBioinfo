@@ -2955,7 +2955,7 @@ Ici vous allez tester si l'intensité de la sélection sexuelle, estimée à par
 ![Podarcis muralis](data/image/morphs.jpg){ width=50% }
 
 
-> Importer le jeu de données contenu dans "data/appli2/lezard.csv" et afficher les 5 premières lignes.
+> Importer le jeu de données contenu dans "data/appli2/lezard_per_pop.csv" et afficher les 5 premières lignes.
 
 ```{r, eval=FALSE} 
 # A vous de jouer
@@ -2983,7 +2983,7 @@ $$ Sex ratio = \frac{Nb_{male}}{Nb_{femelle}} $$
 
 > Représenter la « régularité » de la répartition du nombre d'individus entre les morphes (eveness) en fonction du sex ratio. Ajouter sur le graphe une droite de tendance. Que pouvez-vous conclure ?
 
-> Importer maintenant le jeu de données contenu dans "data/appli2/lezard2.csv". Il contient les caractéristiques (populations, morph, sexe) de chaque individu. Calculer le nombre de morphe pour chacun des sexes par population.
+> Importer maintenant le jeu de données contenu dans "data/appli2/lezard_per_ind.csv". Il contient les caractéristiques (populations, morph, sexe) de chaque individu. Calculer le nombre de morphe pour chacun des sexes par population.
 
 L'indice de shannon est un indice permettant de mesurer la diversité spécifique. 
 Sa formule est:
