@@ -2,7 +2,7 @@
 title: "Tutoriel d'initiation à R"
 author: "Carine Rey, Magali Naville & Marie Sémon"
 
-date: "Dernière mise à jour: 24 avril 2019" 
+date: "Dernière mise à jour: 06 décembre 2019" 
 output:
   #pdf_document:
   #  toc: true
@@ -26,13 +26,7 @@ output:
 
 Le but de ces séances est d’apprendre à utiliser R dans des cas concrets, à produire un rapport reproductible, et à représenter des données avec R de manière optimale. Vous aborderez également l’analyse de données.
 
-Il y aura 3 séances de 4h de TP consacrées à R :
-
- * 13 mars (après-midi)
- * 24 avril (après-midi)
- * 26 avril (matin)
-
-Ce document servira pour les 3 séances.
+Il y aura 3 séances de 4h de TP consacrées à R. Ce document servira pour les 3 séances.
 
 Il a été largement inspiré du site suivant (dans lequel vous pourrez également trouver (en anglais) des exemples d'application des tests statistiques du type de ceux que vous avez pratiqués en biostatistiques) : http://www.cyclismo.org/tutorial/R/, ainsi que de ce tutoriel en français : http://larmarange.github.io/analyse-R/.
 
@@ -481,14 +475,8 @@ install.packages("readr", dep=TRUE, repos="http://cran.rstudio.com/")
 ```
 
 ```
-## Installing package into '/home/crey02/R/x86_64-pc-linux-gnu-library/3.4'
+## Installing package into '/home/mnaville/R/x86_64-pc-linux-gnu-library/3.4'
 ## (as 'lib' is unspecified)
-```
-
-```
-## Warning in install.packages("readr", dep = TRUE, repos = "http://
-## cran.rstudio.com/"): installation of package 'readr' had non-zero exit
-## status
 ```
 
 ```r
@@ -496,7 +484,7 @@ install.packages("questionr", dep=TRUE, repos="http://cran.rstudio.com/")
 ```
 
 ```
-## Installing package into '/home/crey02/R/x86_64-pc-linux-gnu-library/3.4'
+## Installing package into '/home/mnaville/R/x86_64-pc-linux-gnu-library/3.4'
 ## (as 'lib' is unspecified)
 ```
 
@@ -1173,8 +1161,8 @@ a+b
 ```
 
 ```
-## Warning in a + b: la taille d'un objet plus long n'est pas multiple de la
-## taille d'un objet plus court
+## Warning in a + b: la taille d'un objet plus long n'est pas multiple de la taille
+## d'un objet plus court
 ```
   
 Lorsque vous travaillez dans R et que vous créez de nouveaux vecteurs, il peut être facile de perdre la trace des variables que vous avez définies. Pour obtenir une liste de toutes les variables qui ont été définies, utilisez la commande ls():
@@ -1366,8 +1354,7 @@ mean(l[1])
 ```
 
 ```
-## Warning in mean.default(l[1]): argument is not numeric or logical:
-## returning NA
+## Warning in mean.default(l[1]): argument is not numeric or logical: returning NA
 ```
 
 Nous obtenons un message d'erreur. En effet, **R** ne sait pas calculer une moyenne à partir d'une liste. Ce qu'il lui faut, c'est un vecteur de valeurs numériques. Autrement dit, ce que nous cherchons à obtenir c'est le contenu même du premier élément de notre liste et non une liste à un seul élément.
@@ -2002,8 +1989,6 @@ typeof(tree$CHBR)
 
 ## Pratiquons, pratiquons
 
-NB Certains exercices (notés avec un *) nécessitent l'utilisation de fonctions qui n'ont pas été présentées dans ce tutoriel. A vous de les rechercher sur internet !
-
 ### Vecteurs
 
 > Créez un vecteur contenant les chiffres 1 à 6. Affichez la classe de ce vecteur.
@@ -2369,7 +2354,7 @@ Dans les exemples ci-dessous, un ensemble de données est défini en utilisant l
 
 ```r
 x <- rnorm(100,sd=5,mean=20)
-y <- 2.5*x-1.0+rnorm(10,sd=9,mean=0)
+y <- 2.5*x-1.0+rnorm(100,sd=9,mean=0)
 plot(x,y)
 cor(x,y)
 ```
@@ -2384,19 +2369,11 @@ Définissez d'abord un ensemble de nombres aléatoires, puis tracez-les (ce mêm
 
 ```r
 x <- rnorm(50,sd=5,mean=20)
-y <- 2.5*x - 1.0 + rnorm(10,sd=9,mean=0)
+y <- 2.5*x - 1.0 + rnorm(50,sd=9,mean=0)
 
 plot(x,y,xlab="Independent",ylab="Dependent",main="Random Stuff")
 x1 <- runif(25,15,25)
-y1 <- 2.5*x1 - 1.0 + runif(8,-6,6)
-```
-
-```
-## Warning in 2.5 * x1 - 1 + runif(8, -6, 6): la taille d'un objet plus long
-## n'est pas multiple de la taille d'un objet plus court
-```
-
-```r
+y1 <- 2.5*x1 - 1.0 + runif(25,-6,6)
 points(x1,y1,col=2)
 ```
 
@@ -2751,7 +2728,7 @@ while(x < 4)
  }
 ```
 
-> Créer une variable initiée à la valeur 2. Tant qu'elle est inférieure à 2048, multipliez-là par deux. Affichez le nombre de multiplication que vous avez fait.
+> Créer une variable initiée à la valeur 2. Tant qu'elle est inférieure à 2048, multipliez-là par deux. Affichez le nombre de multiplications que vous avez fait.
 
 
 
@@ -3187,7 +3164,7 @@ Ici vous allez tester si l'intensité de la sélection sexuelle, estimée à par
 ![Podarcis muralis](data/image/morphs.jpg){ width=50% }
 
 
-> Importer le jeu de données contenu dans "data/appli2/lezard.csv" et afficher les 5 premières lignes.
+> Importer le jeu de données contenu dans "data/appli2/lezard_per_pop.csv" et afficher les 5 premières lignes.
 
 
 ```r
@@ -3217,7 +3194,7 @@ $$ Sex ratio = \frac{Nb_{male}}{Nb_{femelle}} $$
 
 > Représenter la « régularité » de la répartition du nombre d'individus entre les morphes (eveness) en fonction du sex ratio. Ajouter sur le graphe une droite de tendance. Que pouvez-vous conclure ?
 
-> Importer maintenant le jeu de données contenu dans "data/appli2/lezard2.csv". Il contient les caractéristiques (populations, morph, sexe) de chaque individu. Calculer le nombre de morphe pour chacun des sexes par population.
+> Importer maintenant le jeu de données contenu dans "data/appli2/lezard_per_ind.csv". Il contient les caractéristiques (populations, morph, sexe) de chaque individu. Calculer le nombre de morphe pour chacun des sexes par population.
 
 L'indice de shannon est un indice permettant de mesurer la diversité spécifique. 
 Sa formule est:
