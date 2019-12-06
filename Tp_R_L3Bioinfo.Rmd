@@ -4,10 +4,10 @@ author: "Carine Rey, Magali Naville & Marie Sémon"
 
 date: "Dernière mise à jour: `r format(Sys.Date(), format = '%d %B %Y')`" 
 output:
-  #pdf_document:
-  #  toc: true
-  #  number_sections: true
-  #  highlight: tango
+  pdf_document:
+    toc: true
+    number_sections: true
+    highlight: tango
   html_document:
     keep_md: true
     #code_folding: show
