@@ -2,7 +2,7 @@
 title: "Tutoriel d'initiation à R"
 author: "Carine Rey, Magali Naville & Marie Sémon"
 
-date: "Dernière mise à jour: 24 avril 2019" 
+date: "Dernière mise à jour: 06 décembre 2019" 
 output:
   #pdf_document:
   #  toc: true
@@ -481,14 +481,8 @@ install.packages("readr", dep=TRUE, repos="http://cran.rstudio.com/")
 ```
 
 ```
-## Installing package into '/home/crey02/R/x86_64-pc-linux-gnu-library/3.4'
+## Installing package into '/home/cdechaud/R/x86_64-pc-linux-gnu-library/3.5'
 ## (as 'lib' is unspecified)
-```
-
-```
-## Warning in install.packages("readr", dep = TRUE, repos = "http://
-## cran.rstudio.com/"): installation of package 'readr' had non-zero exit
-## status
 ```
 
 ```r
@@ -496,7 +490,7 @@ install.packages("questionr", dep=TRUE, repos="http://cran.rstudio.com/")
 ```
 
 ```
-## Installing package into '/home/crey02/R/x86_64-pc-linux-gnu-library/3.4'
+## Installing package into '/home/cdechaud/R/x86_64-pc-linux-gnu-library/3.5'
 ## (as 'lib' is unspecified)
 ```
 
@@ -2369,7 +2363,7 @@ Dans les exemples ci-dessous, un ensemble de données est défini en utilisant l
 
 ```r
 x <- rnorm(100,sd=5,mean=20)
-y <- 2.5*x-1.0+rnorm(10,sd=9,mean=0)
+y <- 2.5*x-1.0+rnorm(100,sd=9,mean=0)
 plot(x,y)
 cor(x,y)
 ```
@@ -2384,19 +2378,11 @@ Définissez d'abord un ensemble de nombres aléatoires, puis tracez-les (ce mêm
 
 ```r
 x <- rnorm(50,sd=5,mean=20)
-y <- 2.5*x - 1.0 + rnorm(10,sd=9,mean=0)
+y <- 2.5*x - 1.0 + rnorm(50,sd=9,mean=0)
 
 plot(x,y,xlab="Independent",ylab="Dependent",main="Random Stuff")
 x1 <- runif(25,15,25)
-y1 <- 2.5*x1 - 1.0 + runif(8,-6,6)
-```
-
-```
-## Warning in 2.5 * x1 - 1 + runif(8, -6, 6): la taille d'un objet plus long
-## n'est pas multiple de la taille d'un objet plus court
-```
-
-```r
+y1 <- 2.5*x1 - 1.0 + runif(25,-6,6)
 points(x1,y1,col=2)
 ```
 
@@ -3187,7 +3173,7 @@ Ici vous allez tester si l'intensité de la sélection sexuelle, estimée à par
 ![Podarcis muralis](data/image/morphs.jpg){ width=50% }
 
 
-> Importer le jeu de données contenu dans "data/appli2/lezard.csv" et afficher les 5 premières lignes.
+> Importer le jeu de données contenu dans "data/appli2/lezard_per_pop.csv" et afficher les 5 premières lignes.
 
 
 ```r
@@ -3217,7 +3203,7 @@ $$ Sex ratio = \frac{Nb_{male}}{Nb_{femelle}} $$
 
 > Représenter la « régularité » de la répartition du nombre d'individus entre les morphes (eveness) en fonction du sex ratio. Ajouter sur le graphe une droite de tendance. Que pouvez-vous conclure ?
 
-> Importer maintenant le jeu de données contenu dans "data/appli2/lezard2.csv". Il contient les caractéristiques (populations, morph, sexe) de chaque individu. Calculer le nombre de morphe pour chacun des sexes par population.
+> Importer maintenant le jeu de données contenu dans "data/appli2/lezard_per_ind.csv". Il contient les caractéristiques (populations, morph, sexe) de chaque individu. Calculer le nombre de morphe pour chacun des sexes par population.
 
 L'indice de shannon est un indice permettant de mesurer la diversité spécifique. 
 Sa formule est:
