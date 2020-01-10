@@ -4,10 +4,10 @@ author: "Carine Rey, Magali Naville & Marie Sémon"
 
 date: "Dernière mise à jour: `r format(Sys.Date(), format = '%d %B %Y')`" 
 output:
-  #pdf_document:
-  #  toc: true
-  #  number_sections: true
-  #  highlight: tango
+  pdf_document:
+    toc: true
+    number_sections: true
+    highlight: tango
   html_document:
     keep_md: true
     #code_folding: show
@@ -28,13 +28,7 @@ knitr::opts_chunk$set(echo = TRUE, results="hide", fig.keep = "none", cache = T)
 
 Le but de ces séances est d’apprendre à utiliser R dans des cas concrets, à produire un rapport reproductible, et à représenter des données avec R de manière optimale. Vous aborderez également l’analyse de données.
 
-Il y aura 3 séances de 4h de TP consacrées à R :
-
- * 13 mars (après-midi)
- * 24 avril (après-midi)
- * 26 avril (matin)
-
-Ce document servira pour les 3 séances.
+Il y aura 3 séances de 4h de TP consacrées à R. Ce document servira pour les 3 séances.
 
 Il a été largement inspiré du site suivant (dans lequel vous pourrez également trouver (en anglais) des exemples d'application des tests statistiques du type de ceux que vous avez pratiqués en biostatistiques) : http://www.cyclismo.org/tutorial/R/, ainsi que de ce tutoriel en français : http://larmarange.github.io/analyse-R/.
 
@@ -1849,8 +1843,6 @@ typeof(tree$CHBR)
 
 ## Pratiquons, pratiquons
 
-NB Certains exercices (notés avec un *) nécessitent l'utilisation de fonctions qui n'ont pas été présentées dans ce tutoriel. A vous de les rechercher sur internet !
-
 ### Vecteurs
 
 > Créez un vecteur contenant les chiffres 1 à 6. Affichez la classe de ce vecteur.
@@ -2535,7 +2527,7 @@ while(x < 4)
  }
 ```
 
-> Créer une variable initiée à la valeur 2. Tant qu'elle est inférieure à 2048, multipliez-là par deux. Affichez le nombre de multiplication que vous avez fait.
+> Créer une variable initiée à la valeur 2. Tant qu'elle est inférieure à 2048, multipliez-là par deux. Affichez le nombre de multiplications que vous avez fait.
 
 ```{r}
 
